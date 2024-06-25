@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7533EA012C2AACDC00E79429 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7533EA002C2AACDC00E79429 /* AddBookView.swift */; };
+		7533EA032C2AACF700E79429 /* BookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7533EA022C2AACF700E79429 /* BookModel.swift */; };
 		BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E65AF2C29066300C855A2 /* LeafApp.swift */; };
 		BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E65B12C29066300C855A2 /* ContentView.swift */; };
 		BB5E65B42C29066400C855A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B32C29066400C855A2 /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7533EA002C2AACDC00E79429 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddBookView.swift; path = Leaf/AddBookView.swift; sourceTree = SOURCE_ROOT; };
+		7533EA022C2AACF700E79429 /* BookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookModel.swift; path = Leaf/BookModel.swift; sourceTree = SOURCE_ROOT; };
 		BB5E65AC2C29066300C855A2 /* Leaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB5E65AF2C29066300C855A2 /* LeafApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafApp.swift; sourceTree = "<group>"; };
 		BB5E65B12C29066300C855A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,6 +39,7 @@
 		7533E9FB2C2AAC2000E79429 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7533EA002C2AACDC00E79429 /* AddBookView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -49,6 +54,7 @@
 		7533E9FD2C2AAC3500E79429 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7533EA022C2AACF700E79429 /* BookModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -162,6 +168,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
+				7533EA012C2AACDC00E79429 /* AddBookView.swift in Sources */,
+				7533EA032C2AACF700E79429 /* BookModel.swift in Sources */,
 				BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
