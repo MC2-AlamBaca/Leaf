@@ -32,25 +32,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3635E7F32C2A7E95005068B7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		3635E7F42C2A7EA0005068B7 /* View */ = {
+		7533E9FB2C2AAC2000E79429 /* View */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		3635E7F52C2A7EA7005068B7 /* ViewModel */ = {
+		7533E9FC2C2AAC2B00E79429 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7533E9FD2C2AAC3500E79429 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BB5E65A32C29066200C855A2 = {
@@ -72,9 +72,9 @@
 		BB5E65AE2C29066300C855A2 /* Leaf */ = {
 			isa = PBXGroup;
 			children = (
-				3635E7F42C2A7EA0005068B7 /* View */,
-				3635E7F52C2A7EA7005068B7 /* ViewModel */,
-				3635E7F32C2A7E95005068B7 /* Model */,
+				7533E9FD2C2AAC3500E79429 /* Model */,
+				7533E9FC2C2AAC2B00E79429 /* ViewModel */,
+				7533E9FB2C2AAC2000E79429 /* View */,
 				BB5E65AF2C29066300C855A2 /* LeafApp.swift */,
 				BB5E65B12C29066300C855A2 /* ContentView.swift */,
 				BB5E65B32C29066400C855A2 /* Assets.xcassets */,
