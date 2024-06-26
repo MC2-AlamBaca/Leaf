@@ -8,11 +8,37 @@
 import SwiftUI
 
 struct AllBookView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+    @State private var searchText = ""
+       
+       var book: [Book]
+       
+       
+       var body: some View {
+           NavigationStack {
+               ZStack{
+                   //if book already exist
+                   if !book.isEmpty{
+                       //do something if book already exist
+                       
+                   }else{
+                           VStack{
+                               Text("AllBookView")
+                           }
+                           .navigationTitle("Books")
+                           .toolbar{
+                               ToolbarItem(placement: .topBarTrailing) {
+                                   NavigationLink(destination: AddBookView(), label: {
+                                       Text("Add Book")
+                                   })
+                               }
+                           }
+                           .searchable(text: $searchText)
+                   }
+               }
+           }
+       }
 }
 
 #Preview {
-    AllBookView()
+    AllBookView(book: [])
 }
