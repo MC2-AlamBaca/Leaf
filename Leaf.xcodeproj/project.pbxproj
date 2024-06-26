@@ -10,6 +10,7 @@
 		363C1A202C2BD36B00E6AF91 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A1F2C2BD36B00E6AF91 /* Book.swift */; };
 		363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A212C2BD37500E6AF91 /* AllBookView.swift */; };
 		363C1A242C2BD37F00E6AF91 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A232C2BD37F00E6AF91 /* ViewModel.swift */; };
+		363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A252C2BD96C00E6AF91 /* AddBookView.swift */; };
 		BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E65AF2C29066300C855A2 /* LeafApp.swift */; };
 		BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E65B12C29066300C855A2 /* ContentView.swift */; };
 		BB5E65B42C29066400C855A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B32C29066400C855A2 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		363C1A1F2C2BD36B00E6AF91 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		363C1A212C2BD37500E6AF91 /* AllBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBookView.swift; sourceTree = "<group>"; };
 		363C1A232C2BD37F00E6AF91 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		363C1A252C2BD96C00E6AF91 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
 		BB5E65AC2C29066300C855A2 /* Leaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB5E65AF2C29066300C855A2 /* LeafApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafApp.swift; sourceTree = "<group>"; };
 		BB5E65B12C29066300C855A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 			isa = PBXGroup;
 			children = (
 				363C1A212C2BD37500E6AF91 /* AllBookView.swift */,
+				363C1A252C2BD96C00E6AF91 /* AddBookView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				363C1A242C2BD37F00E6AF91 /* ViewModel.swift in Sources */,
+				363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */,
 				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
 				BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */,
 				363C1A202C2BD36B00E6AF91 /* Book.swift in Sources */,
