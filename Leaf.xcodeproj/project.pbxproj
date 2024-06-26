@@ -17,6 +17,7 @@
 		BB5E65B72C29066400C855A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B62C29066400C855A2 /* Preview Assets.xcassets */; };
 		BBF71AD42C2BFADA004AF08F /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF71AD32C2BFADA004AF08F /* Note.swift */; };
 		BBF71AD62C2BFCF8004AF08F /* RowBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF71AD52C2BFCF8004AF08F /* RowBookView.swift */; };
+		BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF71AD82C2C102A004AF08F /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		BBF71AD32C2BFADA004AF08F /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		BBF71AD52C2BFCF8004AF08F /* RowBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowBookView.swift; sourceTree = "<group>"; };
 		BBF71AD72C2C05EF004AF08F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BBF71AD82C2C102A004AF08F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				363C1A1F2C2BD36B00E6AF91 /* Book.swift */,
 				BBF71AD32C2BFADA004AF08F /* Note.swift */,
+				BBF71AD82C2C102A004AF08F /* ImagePicker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -184,6 +187,7 @@
 				363C1A242C2BD37F00E6AF91 /* ViewModel.swift in Sources */,
 				363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */,
 				BBF71AD62C2BFCF8004AF08F /* RowBookView.swift in Sources */,
+				BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */,
 				BBF71AD42C2BFADA004AF08F /* Note.swift in Sources */,
 				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
 				BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */,
@@ -327,7 +331,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We want to access your camera";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We wan to access your library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -359,7 +363,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We want to access your camera";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We wan to access your library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
