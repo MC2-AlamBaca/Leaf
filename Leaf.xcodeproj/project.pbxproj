@@ -15,6 +15,8 @@
 		BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E65B12C29066300C855A2 /* ContentView.swift */; };
 		BB5E65B42C29066400C855A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B32C29066400C855A2 /* Assets.xcassets */; };
 		BB5E65B72C29066400C855A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B62C29066400C855A2 /* Preview Assets.xcassets */; };
+		BBF71AD42C2BFADA004AF08F /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF71AD32C2BFADA004AF08F /* Note.swift */; };
+		BBF71AD62C2BFCF8004AF08F /* RowBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF71AD52C2BFCF8004AF08F /* RowBookView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,9 @@
 		BB5E65B12C29066300C855A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BB5E65B32C29066400C855A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB5E65B62C29066400C855A2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BBF71AD32C2BFADA004AF08F /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		BBF71AD52C2BFCF8004AF08F /* RowBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowBookView.swift; sourceTree = "<group>"; };
+		BBF71AD72C2C05EF004AF08F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +50,7 @@
 			children = (
 				363C1A212C2BD37500E6AF91 /* AllBookView.swift */,
 				363C1A252C2BD96C00E6AF91 /* AddBookView.swift */,
+				BBF71AD52C2BFCF8004AF08F /* RowBookView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -53,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				363C1A1F2C2BD36B00E6AF91 /* Book.swift */,
+				BBF71AD32C2BFADA004AF08F /* Note.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -84,6 +91,7 @@
 		BB5E65AE2C29066300C855A2 /* Leaf */ = {
 			isa = PBXGroup;
 			children = (
+				BBF71AD72C2C05EF004AF08F /* Info.plist */,
 				363C1A1E2C2BD35C00E6AF91 /* ViewModel */,
 				363C1A1D2C2BD34C00E6AF91 /* Model */,
 				363C1A1C2C2BD34300E6AF91 /* View */,
@@ -175,6 +183,8 @@
 			files = (
 				363C1A242C2BD37F00E6AF91 /* ViewModel.swift in Sources */,
 				363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */,
+				BBF71AD62C2BFCF8004AF08F /* RowBookView.swift in Sources */,
+				BBF71AD42C2BFADA004AF08F /* Note.swift in Sources */,
 				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
 				BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */,
 				363C1A202C2BD36B00E6AF91 /* Book.swift in Sources */,
@@ -315,6 +325,9 @@
 				DEVELOPMENT_TEAM = PBDYVYYKCK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Leaf/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We want to access your camera";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -344,6 +357,9 @@
 				DEVELOPMENT_TEAM = PBDYVYYKCK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Leaf/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We want to access your camera";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

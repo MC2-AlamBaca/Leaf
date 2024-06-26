@@ -6,39 +6,35 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AllBookView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query var books: [Book]
+    @State private var presentCreateFolderSheet: Bool = false
     @State private var searchText = ""
-       
-       var book: [Book]
-       
        
        var body: some View {
            NavigationStack {
-               ZStack{
-                   //if book already exist
-                   if !book.isEmpty{
-                       //do something if book already exist
-                       
-                   }else{
-                           VStack{
-                               Text("AllBookView")
-                           }
-                           .navigationTitle("Books")
-                           .toolbar{
-                               ToolbarItem(placement: .topBarTrailing) {
-                                   NavigationLink(destination: AddBookView(), label: {
-                                       Text("Add Book")
-                                   })
-                               }
-                           }
-                           .searchable(text: $searchText)
+                RowBookView()
+                   .navigationTitle("Books")
+                   .toolbar{
+                       ToolbarItem(placement: .topBarTrailing) {
+                           NavigationLink(destination: AddBookView(), label: {
+                               Text("Add Book")
+                           })
+                       }
                    }
-               }
+                   .searchable(text: $searchText)
+        
+                   //if book already exist
+                   
+                           
+               
            }
        }
 }
 
 #Preview {
-    AllBookView(book: [])
+    AllBookView()
 }
