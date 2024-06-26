@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
+
 @main
 struct LeafApp: App {
+    @Environment(\.modelContext) var modelContext
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AllBookView()
         }
+        .modelContainer(for: [Book.self, Note.self])
     }
 }
