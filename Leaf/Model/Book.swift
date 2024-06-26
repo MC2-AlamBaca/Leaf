@@ -6,21 +6,24 @@
 //
 
 import Foundation
-import SwiftUI
 import SwiftData
 
 @Model
 final class Book {
-    var uuid : String = UUID().uuidString
+    @Attribute(.unique) let id: UUID
     var title : String
     var author : String
-    var bookCover : Data?
-    var goal : [String]
+    @Attribute(.externalStorage) var bookCover :Data?
+    var goals: [String]
     
-    init(title: String, author: String, bookCover: Data? = nil, goal: [String]) {
+    @Relationship(deleteRule: .cascade) var notes: [Note]?
+    
+    init(title: String, author: String, bookCover: Data? = nil, goals: [String], notes: [Note]? = nil) {
+        self.id = UUID()
         self.title = title
         self.author = author
         self.bookCover = bookCover
-        self.goal = goal
+        self.goals = goals
+        self.notes = notes
     }
 }
