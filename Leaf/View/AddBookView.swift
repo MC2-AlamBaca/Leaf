@@ -8,7 +8,6 @@ struct AddBookView: View {
     @State private var photoData: Data?
     @State private var showCamera = false
     @State private var inputImage: UIImage?
-    @State private var selectedPhoto: PhotosPickerItem?
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -52,23 +51,10 @@ struct AddBookView: View {
                         .frame(maxWidth: .infinity, maxHeight: 300)
                 }
                 Divider()
-                VStack {
-                    PhotosPicker(selection: $selectedPhoto, matching: .images, photoLibrary: .shared()) {
-                        Label("Select image...", systemImage: "photo.on.rectangle")
-                    }
-                    .onChange(of: selectedPhoto) { newItem in
-                        Task {
-                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                photoData = data
-                            }
-                        }
-                    }
-                    Spacer()
-                    Button(action: {
-                        showCamera = true
-                    }) {
-                        Label("Take Photo", systemImage: "camera")
-                    }
+                Button(action: {
+                    showCamera = true
+                }) {
+                    Label("Take Photo", systemImage: "camera")
                 }
             }
         }
