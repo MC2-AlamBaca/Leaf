@@ -11,7 +11,7 @@ import SwiftData
 struct AllNoteView: View {
     @Environment(\.modelContext) private var modelContext
     @Query var notes: [Note]
-     var book: Book
+    var book: Book
     @State private var presentCreateFolderSheet: Bool = false
     @State private var searchText = ""
        
