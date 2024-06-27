@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36222CF32C2D747900165D1D /* BookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36222CF22C2D747900165D1D /* BookView.swift */; };
 		363C1A202C2BD36B00E6AF91 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A1F2C2BD36B00E6AF91 /* Book.swift */; };
 		363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A212C2BD37500E6AF91 /* AllBookView.swift */; };
 		363C1A242C2BD37F00E6AF91 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A232C2BD37F00E6AF91 /* ViewModel.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		36222CF22C2D747900165D1D /* BookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookView.swift; sourceTree = "<group>"; };
 		363C1A1F2C2BD36B00E6AF91 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		363C1A212C2BD37500E6AF91 /* AllBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBookView.swift; sourceTree = "<group>"; };
 		363C1A232C2BD37F00E6AF91 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				363C1A252C2BD96C00E6AF91 /* AddBookView.swift */,
 				BBF71AD52C2BFCF8004AF08F /* RowBookView.swift */,
 				BB47CAA22C2C62D600C70E6C /* AllNoteView.swift */,
+				36222CF22C2D747900165D1D /* BookView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				363C1A242C2BD37F00E6AF91 /* ViewModel.swift in Sources */,
 				363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */,
 				BBF71AD62C2BFCF8004AF08F /* RowBookView.swift in Sources */,
+				36222CF32C2D747900165D1D /* BookView.swift in Sources */,
 				BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */,
 				BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */,
 				BBF71AD42C2BFADA004AF08F /* Note.swift in Sources */,

@@ -13,36 +13,52 @@ struct AllBookView: View {
     @Query var books: [Book]
     @State private var presentCreateFolderSheet: Bool = false
     @State private var searchText = ""
+    
+    var filteredBooks: [Book] {
+        if searchText.isEmpty {
+            return books
+        }else{
+            let filteredBooks = books.compactMap { book in
+                
+                let titleContainsQuery = book.title.range(of: searchText, options: .caseInsensitive) != nil
+              
+                return titleContainsQuery ? book : nil
+            }
+            return filteredBooks
+        }
+    }
        
        var body: some View {
            NavigationStack {
-               ZStack{
-                   if !books.isEmpty {
-                       RowBookView()
-                          .navigationTitle("Books")
-                          .toolbar{
-                              ToolbarItem(placement: .topBarTrailing) {
-                                  NavigationLink(destination: AddBookView(), label: {
-                                      Text("Add Book")
-                                  })
-                              }
-                          }
-                   }else{
-                       RowBookView()
-                           .navigationTitle("Books")
-                           .toolbar{
-                               ToolbarItem(placement: .topBarTrailing) {
-                                   NavigationLink(destination: AddBookView(), label: {
-                                       Text("Add Book")
-                                   })
+                   ZStack{
+                       if !books.isEmpty {
+                           RowBookView(filteredBooks:filteredBooks)
+                               .navigationTitle("Books")
+                               .toolbar{
+                                   ToolbarItem(placement: .topBarTrailing) {
+                                       NavigationLink(destination: AddBookView(), label: {
+                                           Text("Add Book")
+                                       })
+                                   }
                                }
-                           }
-                       Text("you have no books please add some")
-                   }
-               }   
+                       }else{
+                           RowBookView(filteredBooks:filteredBooks)
+                               .navigationTitle("Books")
+                               .toolbar{
+                                   ToolbarItem(placement: .topBarTrailing) {
+                                       NavigationLink(destination: AddBookView(), label: {
+                                           Text("Add Book")
+                                       })
+                                   }
+                               }
+                           Text("you have no books please add some")
+                    }
+               }
            }
-           .searchable(text: $searchText)
+           .searchable(text: $searchText, prompt: "Search for Book")
        }
+    
+    
 }
 
 #Preview {
