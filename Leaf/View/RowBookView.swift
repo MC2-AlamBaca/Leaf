@@ -3,13 +3,13 @@ import SwiftData
 
 struct RowBookView: View {
     @Environment(\.modelContext) var modelContext
-    @Query var books: [Book]
+//    @Query var books: [Book]
     @State private var image = UIImage(named: "book-logo")!
-    
+    let filteredBooks : [Book]
     var body: some View {
         NavigationStack {
             List {
-                ForEach(books) { book in
+                ForEach(filteredBooks) { book in
                     NavigationLink(destination: AllNoteView(book: book)) {
                         if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                             HStack {
@@ -75,5 +75,5 @@ struct RowBookView: View {
 
 
 #Preview {
-    RowBookView()
+    RowBookView(filteredBooks:[])
 }
