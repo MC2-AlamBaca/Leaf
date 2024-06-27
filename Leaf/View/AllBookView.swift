@@ -16,22 +16,32 @@ struct AllBookView: View {
        
        var body: some View {
            NavigationStack {
-                RowBookView()
-                   .navigationTitle("Books")
-                   .toolbar{
-                       ToolbarItem(placement: .topBarTrailing) {
-                           NavigationLink(destination: AddBookView(), label: {
-                               Text("Add Book")
-                           })
-                       }
+               ZStack{
+                   if !books.isEmpty {
+                       RowBookView()
+                          .navigationTitle("Books")
+                          .toolbar{
+                              ToolbarItem(placement: .topBarTrailing) {
+                                  NavigationLink(destination: AddBookView(), label: {
+                                      Text("Add Book")
+                                  })
+                              }
+                          }
+                   }else{
+                       RowBookView()
+                           .navigationTitle("Books")
+                           .toolbar{
+                               ToolbarItem(placement: .topBarTrailing) {
+                                   NavigationLink(destination: AddBookView(), label: {
+                                       Text("Add Book")
+                                   })
+                               }
+                           }
+                       Text("you have no books please add some")
                    }
-                   .searchable(text: $searchText)
-        
-                   //if book already exist
-                   
-                           
-               
+               }   
            }
+           .searchable(text: $searchText)
        }
 }
 

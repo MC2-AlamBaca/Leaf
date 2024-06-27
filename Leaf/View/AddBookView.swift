@@ -23,47 +23,74 @@ struct AddBookView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                bookCoverSection
-                detailBookSection
-                purposeSection
-            }
-            .navigationTitle("Add Book")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save", action: saveBook)
+            VStack {
+                Form {
+                    bookCoverSection
+                    detailBookSection
+                    purposeSection
                 }
+                .navigationTitle("Add Book")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Save", action: saveBook)
+                    }
+                }
+                .sheet(isPresented: $showCamera, onDismiss: loadImage) {
+                    ImagePicker(image: $inputImage)
             }
-            .sheet(isPresented: $showCamera, onDismiss: loadImage) {
-                ImagePicker(image: $inputImage)
             }
         }
     }
     
     private var bookCoverSection: some View {
-        Section(header: Text("Book Cover")) {
-            VStack {
-                if let photoData = photoData, let uiImage = UIImage(data: photoData) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity, maxHeight: 300)
-                }
-                Divider()
-                Button(action: {
-                    showCamera = true
-                }) {
-                    Label("Take Photo", systemImage: "camera")
+            Section(header: Text("Book Cover")) {
+                VStack {
+                    if let photoData = photoData, !photoData.isEmpty, let uiImage = UIImage(data: photoData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity, maxHeight: 300)
+                    } else {
+                        Image(systemName: "camera")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(.gray)
+                            .padding(70)
+                    }
+                    
+                    Divider()
+                    
+                    Button(action: {
+                                    showCamera = true
+                                }) {
+                                    Text("Take Photo")
+                                        .frame(maxWidth: .infinity) // This will make the text centered within the button
+                                }
+                    
                 }
             }
         }
-    }
+    
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book")) {
-            TextField("Enter Title", text: $title)
-            TextField("Enter Author", text: $author)
+            HStack{
+                Text("Title")
+                  .font(Font.custom("SF Pro", size: 17))
+                  .foregroundColor(.black)
+                  .frame(width: 60, height: 22, alignment: .leading)
+                TextField("Enter Title", text: $title)
+            }
+            
+            HStack {
+                Text("Author")
+                  .font(Font.custom("SF Pro", size: 17))
+                  .foregroundColor(.black)
+                  .frame(width: 60, height: 22, alignment: .leading)
+                TextField("Enter Author", text: $author)
+            }
         }
     }
     
