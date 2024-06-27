@@ -9,6 +9,12 @@ struct AddBookView: View {
     @State private var showCamera = false
     @State private var inputImage: UIImage?
     
+    // Add additional state variable for editing
+    @State private var isEditing = false
+    
+    // Optional: Add binding for existing book if editing
+    var existingBook: Book?
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
@@ -29,66 +35,78 @@ struct AddBookView: View {
                     detailBookSection
                     purposeSection
                 }
-                .navigationTitle("Add Book")
+                .navigationTitle(isEditing ? "Edit Book" : "Add Book") // Adjust title based on editing status
+                
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save", action: saveBook)
-                    }
-                }
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button(isEditing ? "Update" : "Save", action: isEditing ? updateBook : saveBook) // Update button action based on editing status
+                                }
+                            }
                 .sheet(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
-            }
+                }
             }
         }
+        .onAppear {
+                   // Populate fields if editing
+                   if let book = existingBook {
+                       title = book.title
+                       author = book.author
+                       selectedGoals = Set(book.goals)
+                       photoData = book.bookCover
+                       isEditing = true
+                       print("Editing Book ID: \(book.id)") //pengen liat
+                   }
+               }
     }
     
     private var bookCoverSection: some View {
-            Section(header: Text("Book Cover")) {
-                VStack {
-                    if let photoData = photoData, !photoData.isEmpty, let uiImage = UIImage(data: photoData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity, maxHeight: 300)
-                    } else {
-                        Image(systemName: "camera")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.gray)
-                            .padding(70)
-                    }
-                    
-                    Divider()
-                    
-                    Button(action: {
-                                    showCamera = true
-                                }) {
-                                    Text("Take Photo")
-                                        .frame(maxWidth: .infinity) // This will make the text centered within the button
-                                }
-                    
+        Section(header: Text("Book Cover")) {
+            VStack {
+                if let photoData = photoData, !photoData.isEmpty, let uiImage = UIImage(data: photoData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: 300)
+                } else {
+                    Image(systemName: "camera")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.gray)
+                        .padding(70)
                 }
+                
+                Divider()
+                
+                Button(action: {
+                    showCamera = true
+                }) {
+                    Text("Take Photo")
+                        .frame(maxWidth: .infinity) // This will make the text centered within the button
+                }
+                
             }
         }
+    }
     
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book")) {
             HStack{
                 Text("Title")
-                  .font(Font.custom("SF Pro", size: 17))
-                  .foregroundColor(.black)
-                  .frame(width: 60, height: 22, alignment: .leading)
+                    .font(Font.custom("SF Pro", size: 17))
+                    .foregroundColor(.black)
+                    .frame(width: 60, height: 22, alignment: .leading)
                 TextField("Enter Title", text: $title)
             }
             
             HStack {
                 Text("Author")
-                  .font(Font.custom("SF Pro", size: 17))
-                  .foregroundColor(.black)
-                  .frame(width: 60, height: 22, alignment: .leading)
+                    .font(Font.custom("SF Pro", size: 17))
+                    .foregroundColor(.black)
+                    .frame(width: 60, height: 22, alignment: .leading)
                 TextField("Enter Author", text: $author)
             }
         }
@@ -124,8 +142,10 @@ struct AddBookView: View {
         }
         
         let book = Book(title: title, author: author, bookCover: photoData, goals: Array(selectedGoals))
+        
         context.insert(book)
         do {
+            print("New Book ID: \(book.id)") // Debug print to check the ID
             try context.save()
             dismiss()
         } catch {
@@ -136,6 +156,24 @@ struct AddBookView: View {
     private func loadImage() {
         guard let inputImage = inputImage else { return }
         photoData = inputImage.jpegData(compressionQuality: 0.8)
+    }
+    
+    private func updateBook() {
+        guard let existingBook = existingBook else { return }
+        existingBook.title = title
+        existingBook.author = author
+        existingBook.bookCover = photoData
+        existingBook.goals = Array(selectedGoals)
+        
+
+        
+        do {
+            print("Updating Book ID: \(existingBook.id)") // Debug print to check the ID
+            try context.save()
+            dismiss()
+        } catch {
+            print("Failed to update book: \(error.localizedDescription)")
+        }
     }
 }
 

@@ -3,9 +3,12 @@ import SwiftData
 
 struct RowBookView: View {
     @Environment(\.modelContext) var modelContext
-//    @Query var books: [Book]
+    @Query var books: [Book]
     @State private var image = UIImage(named: "book-logo")!
     let filteredBooks : [Book]
+    @State private var isShowingEditView = false
+       @State private var selectedBookID: UUID? // Track selected book ID for editing
+    
     var body: some View {
         NavigationStack {
             List {
@@ -37,6 +40,14 @@ struct RowBookView: View {
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
+                        Button { // Set selectedBookID and show edit view
+                            editBook(book: book)
+                            selectedBookID = book.id
+                            isShowingEditView = true
+                                               } label: {
+                                                   Label("Edit", systemImage: "pencil")
+                                               }
+                                               .tint(.blue)
                     }
                     .swipeActions(edge: .leading, allowsFullSwipe: true) {
                         Button {
@@ -54,6 +65,13 @@ struct RowBookView: View {
 //                    EditButton()
 //                }
 //            }
+            // Navigate to EditBookView with selectedBookID when isShowingEditView is true
+            .sheet(isPresented: $isShowingEditView) {
+                if let selectedBookID = selectedBookID,
+                   let selectedBook = books.first(where: { $0.id == selectedBookID }) {
+                    AddBookView(existingBook: selectedBook)
+                }
+            }
         }
     }
     
@@ -71,6 +89,14 @@ struct RowBookView: View {
         // For example, you might set a `isPinned` property on the book
         print("Pinning book: \(book.title)")
     }
+    
+    func editBook(book: Book) {
+           // Implement your edit logic here, e.g., navigate to an edit view
+           // Example: Navigate to an edit view passing `book` as a parameter
+           // Replace with your navigation or edit action logic
+           print("Editing book: \(book.title)")
+        print(selectedBookID)
+       }
 }
 
 
