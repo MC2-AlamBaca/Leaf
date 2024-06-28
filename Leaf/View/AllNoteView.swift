@@ -8,51 +8,69 @@
 import SwiftUI
 import SwiftData
 
-//struct AllNoteView: View {
-//    @Environment(\.modelContext) private var modelContext
-//    @Query var notes: [Note]
-//    var book: Book
-//    @State private var presentCreateFolderSheet: Bool = false
-//    @State private var searchText = ""
-//       
-//       var body: some View {
-//           NavigationStack {
-//                Text ("Kosong")
-//                   .navigationTitle(book.title)
-//                   .toolbar{
-//                       ToolbarItem(placement: .topBarTrailing) {
-//                           NavigationLink(destination: AddNoteView(), label: {
-//                               Text("Add Notes")
-//                           })
-//                       }
-//                   }
-//                   .searchable(text: $searchText)
-//        
-//                   //if book already exist
-//                   
-//                           
-//               
-//           }
-//       }
-//}
-
-
 struct AllNoteView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query var notes: [Note]
+    @State private var searchText = ""
     var book: Book
     
     var body: some View {
         NavigationStack {
-            RowNoteView()
-            .navigationTitle("Notes")
+            ZStack {
+                if let notes = book.notes, !notes.isEmpty {
+                    List {
+                        ForEach(filteredNotes) { note in
+                            NavigationLink(destination: NoteDetailView(note: note)) {
+                                VStack(alignment: .leading) {
+                                    Text(note.title)
+                                        .font(.headline)
+                                    Text(note.content.prefix(50) + "...")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        }
+                        .onDelete(perform: deleteNotes)
+                    }
+                } else {
+                    Text("You have no notes for this book. Please add some.")
+                }
+            }
+            .navigationTitle(book.title)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: AddNoteView(book: book)) {
-                        Image(systemName: "plus")
+                        Text("Add Note")
                     }
                 }
             }
+            .searchable(text: $searchText, prompt: "Search notes")
+        }
+    }
+    
+    private var filteredNotes: [Note] {
+        guard let notes = book.notes else { return [] }
+        if searchText.isEmpty {
+            return notes
+        } else {
+            return notes.filter { note in
+                note.title.localizedCaseInsensitiveContains(searchText) ||
+                note.content.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
+    
+    private func deleteNotes(at offsets: IndexSet) {
+        guard var notes = book.notes else { return }
+        for index in offsets {
+            let note = notes[index]
+            modelContext.delete(note)
+            notes.remove(at: index)
+        }
+        book.notes = notes
+        do {
+            try modelContext.save()
+        } catch {
+            print("Error deleting note: \(error.localizedDescription)")
         }
     }
 }
@@ -90,8 +108,7 @@ private let dateFormatter: DateFormatter = {
 
 //struct AllNoteView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        let sampleBook = Book(title: "Atomic Habir", author:"James Clear", goals: ["Goal1","Goal2"])
-//        
-//        AllNoteView(book: sampleBook.title)
+//        var book = Book
+//        AllNoteView(book: book)
 //    }
 //}

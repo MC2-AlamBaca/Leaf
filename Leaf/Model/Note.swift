@@ -18,9 +18,9 @@ final class Note {
     var lastModified: Date
     var prompt: String
     var tag: [String?]?
-    @Relationship(inverse: \Book.notes) var books: [Book]
+    @Relationship var books: Book?
     
-    init(title: String, imageNote: Data? = nil, page: Int? = nil, content: String, lastModified: Date, prompt: String, tag: [String?]? = nil, books: [Book]) {
+    init(title: String, imageNote: Data? = nil, page: Int? = nil, content: String, lastModified: Date, prompt: String, tag: [String?]? = nil, books: Book?) {
         self.id = UUID()
         self.title = title
         self.imageNote = imageNote
