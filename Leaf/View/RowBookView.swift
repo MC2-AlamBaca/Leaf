@@ -3,7 +3,7 @@ import SwiftData
 
 struct RowBookView: View {
     @Environment(\.modelContext) var modelContext
-//    @Query var books: [Book]
+    @Query var books: [Book]
     @State private var image = UIImage(named: "book-logo")!
     let filteredBooks : [Book]
     var body: some View {
