@@ -118,10 +118,10 @@ struct AddBookView: View {
     }
     
     private func saveBook() {
-        guard !title.isEmpty, !author.isEmpty, let photoData = photoData else {
-            // Show an alert or some feedback to the user
-            return
-        }
+//        guard !title.isEmpty, !author.isEmpty else {
+//            // Show an alert or some feedback to the user that fields are empty
+//            return
+//        }
         
         let book = Book(title: title, author: author, bookCover: photoData, goals: Array(selectedGoals))
         context.insert(book)
