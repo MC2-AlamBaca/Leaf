@@ -40,7 +40,7 @@ struct AddNoteView: View {
                 TextField("Enter tags, separated by commas", text: $tags)
             }
             Button(action: addNote) {
-                Text("Add Note")
+                Text("Save")
             }
         }
         .navigationTitle("Add Note")
@@ -54,15 +54,22 @@ struct AddNoteView: View {
                     prompt: prompt,
                     tag: tags.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) },
                     // Assign the current book to the note
-                    books: []
+                    books: book
                 )
         modelContext.insert(newNote)
-        do {
-            try modelContext.save()
-            dismiss()
-        } catch {
-            print(error.localizedDescription)
-        }
+            
+        if book.notes == nil {
+                book.notes = [newNote]
+            } else {
+                book.notes?.append(newNote)
+            }
+            
+            do {
+                try modelContext.save()
+                dismiss()
+            } catch {
+                print("Error saving note: \(error.localizedDescription)")
+            }
     }
 }
 

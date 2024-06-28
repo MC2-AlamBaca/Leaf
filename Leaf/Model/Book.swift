@@ -16,7 +16,7 @@ final class Book {
     @Attribute(.externalStorage) var bookCover :Data?
     var goals: [String]
     
-    @Relationship(deleteRule: .cascade) var notes: [Note]?
+    @Relationship(deleteRule: .cascade) var notes: [Note]? = []
     
     init(title: String, author: String, bookCover: Data? = nil, goals: [String], notes: [Note]? = nil) {
         self.id = UUID()
