@@ -8,9 +8,11 @@ struct AddBookView: View {
     @State private var photoData: Data?
     @State private var showCamera = false
     @State private var inputImage: UIImage?
+    @StateObject private var viewModel = PhotoViewModel()
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    
     
     let availableGoals = [
         "Deepen your self-understanding",
@@ -118,15 +120,16 @@ struct AddBookView: View {
     }
     
     private func saveBook() {
-        guard !title.isEmpty, !author.isEmpty, let photoData = photoData else {
-            // Show an alert or some feedback to the user
-            return
-        }
+//        guard !title.isEmpty, !author.isEmpty else {
+//            // Show an alert or some feedback to the user that fields are empty
+//            return
+//        }
         
         let book = Book(title: title, author: author, bookCover: photoData, goals: Array(selectedGoals))
         context.insert(book)
         do {
             try context.save()
+            viewModel.saveDataToPhoto()
             dismiss()
         } catch {
             print(error.localizedDescription)
@@ -145,20 +148,25 @@ struct GoalItemView: View {
     let toggleAction: () -> Void
     
     var body: some View {
-        Text(goal)
-            .font(.body)
-            .multilineTextAlignment(.center)
-            .padding()
-            .background(isSelected ? Color.blue : Color.gray)
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .onTapGesture {
-                toggleAction()
-            }
-            .frame(width: 150, height: 100)
+        VStack {
+            Text(goal)
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(isSelected ? Color.blue : Color.gray)
+                .foregroundColor(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .onTapGesture {
+                    toggleAction()
+                }
+                .frame(width: 150, height: 100)
+                .shadow(radius: isSelected ? 10 : 5)  // Adding a shadow for better UI feedback
+                .animation(.easeInOut, value: isSelected) // Smooth transition for selection state
+        }
+        .frame(width: 150, height: 100)  // Ensure the card size is fixed
     }
 }
-
 struct AddBookView_Previews: PreviewProvider {
     static var previews: some View {
         AddBookView()
