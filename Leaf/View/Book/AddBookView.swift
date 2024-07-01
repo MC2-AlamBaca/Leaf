@@ -46,7 +46,7 @@ struct AddBookView: View {
                 }
                 .navigationTitle(isEditing ? "Edit Book" : "Add Book")
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem() {
                         Button(isEditing ? "Update" : "Save") {
                             if isEditing {
                                 updateBook()
@@ -71,9 +71,8 @@ struct AddBookView: View {
                     photoData = book.bookCover
                     isEditing = true
                 }
-            }
-        }
-    }
+            } }}
+
     
     private var bookCoverSection: some View {
         Section(header: Text("Book Cover")) {
