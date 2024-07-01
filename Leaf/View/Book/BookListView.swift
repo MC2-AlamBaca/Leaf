@@ -13,7 +13,8 @@ struct BookListView: View {
     let books: [Book]
     
     @State private var isShowingEditView = false
-    @State private var selectedBookID: UUID? // Track selected book ID for editing
+//    @State private var selectedBookID: UUID? // Track selected book ID for editing
+    @State private var selectedBook: Book? // Track selected book for editing
     
     
     var body: some View {
@@ -31,8 +32,6 @@ struct BookListView: View {
                     Button() {
                         // Set selectedBookID and show edit view
                         editBook(book)
-                        selectedBookID = book.id
-                        isShowingEditView = true
                     } label: {
                         Label("Edit", systemImage: "pencil")
                     }
@@ -47,13 +46,8 @@ struct BookListView: View {
                     .tint(.yellow)
                 }
             }
-            // Navigate to EditBookView with selectedBookID when isShowingEditView is true
-            .sheet(isPresented: $isShowingEditView) {
-                if let selectedBookID = selectedBookID,
-                   let selectedBook = books.first(where: { $0.id == selectedBookID }) {
-                    AddBookView(existingBook: selectedBook)
-                }
-            }
+        }.sheet(item: $selectedBook) { book in
+            AddBookView(existingBook: book)
         }
     }
     
@@ -72,11 +66,15 @@ struct BookListView: View {
     }
     
     private func editBook(_ book: Book) {
-           // Implement your edit logic here, e.g., navigate to an edit view
-           // Example: Navigate to an edit view passing `book` as a parameter
-           // Replace with your navigation or edit action logic
-        let editView = AddBookView(existingBook: book)
-       }
+//        selectedBookID = book.id
+//        DispatchQueue.main.async {
+//            isShowingEditView = true
+//        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                   isShowingEditView = true
+//               }
+        selectedBook = book
+    }
 }
 //#Preview {
 //    BookListView()
