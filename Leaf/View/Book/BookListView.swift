@@ -12,9 +12,14 @@ struct BookListView: View {
     @Environment(\.modelContext) var modelContext
     let books: [Book]
     
+    
+    var sortedBooks: [Book] {
+        books.sorted {$0.isPinned && !$1.isPinned}
+    }
+    
     var body: some View {
         List {
-            ForEach(books) { book in
+            ForEach(sortedBooks) { book in
                 NavigationLink(destination: AllNoteView(book: book)) {
                     BookRowView(book: book)
                 }
@@ -29,9 +34,13 @@ struct BookListView: View {
                     Button {
                         pinBook(book: book)
                     } label: {
-                        Label("Pin", systemImage: "pin")
+                        if book.isPinned {
+                            Label("Unpin", systemImage: "pin.slash")
+                        } else {
+                            Label("Pin", systemImage: "pin")
+                        }
                     }
-                    .tint(.yellow)
+                    .tint(book.isPinned ? .red : .yellow)
                 }
             }
         }
@@ -47,6 +56,16 @@ struct BookListView: View {
     }
     
     private func pinBook(book: Book) {
+        book.isPinned.toggle()
+        
+        //book.isPinned.toggle()
+        // Save the updated book back to the context
+        do {
+            
+            try modelContext.save()
+        } catch {
+            print("Failed to save context after pinning book: \(error.localizedDescription)")
+        }
         // Implement pinning logic
         print("Pinning book: \(book.title)")
     }

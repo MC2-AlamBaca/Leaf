@@ -20,7 +20,7 @@ struct AddBookView: View {
         "Ignite your motivation",
         "Expand your skills and knowledge",
         "Overcome challenges",
-        "Enhance relationships and communication",
+        "Boost discussion and relationships",
         "Discover inner peace and happiness"
     ]
     
