@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B2249B62C324AD300C7ABBA /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2249B52C324AD300C7ABBA /* Goal.swift */; };
 		363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A212C2BD37500E6AF91 /* AllBookView.swift */; };
 		363C1A242C2BD37F00E6AF91 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */; };
 		363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A252C2BD96C00E6AF91 /* AddBookView.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B2249B52C324AD300C7ABBA /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		363C1A212C2BD37500E6AF91 /* AllBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBookView.swift; sourceTree = "<group>"; };
 		363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 		363C1A252C2BD96C00E6AF91 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
