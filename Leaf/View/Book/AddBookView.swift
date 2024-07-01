@@ -15,14 +15,32 @@ struct AddBookView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
-    let availableGoals = [
-        "Deepen your self-understanding",
-        "Ignite your motivation",
-        "Expand your skills and knowledge",
-        "Overcome challenges",
-        "Enhance relationships and communication",
-        "Discover inner peace and happiness"
-    ]
+//    let availableGoals = [
+//        "Deepen your self-understanding",
+//        "Ignite your motivation",
+//        "Expand your skills and knowledge",
+//        "Overcome challenges",
+//        "Enhance relationships and communication",
+//        "Discover inner peace and happiness"
+//    ]
+    
+//    Box (title: "Deepen your self-understanding", image: "deepenYourSelfUnderstanding_Goal 1"),
+//    Box (title: "Ignite your motivation", image: "igniteYourMotivation_Goal"),
+//    Box (title: "Expand your skills and knowledge", image: "expandYourSkillsAndKnowledge_Goal"),
+//    Box (title: "Overcome challenges", image: "overcomeChallenges_Goal"),
+//    Box (title: "Enhance relationships and communication", image: "enhanceRelationshipAndCommunication_Goal"),
+//    Box (title: "Discover inner peace and happiness", image: "discoverInnerPeaceAndHappiness_Goal")
+    
+    
+        let availableGoals: [Goal] = [
+            Goal(title: "Deepen your self-understanding", imageName: "deepenYourSelfUnderstanding_Goal", imgColor: Color("color1")),
+            Goal(title: "Ignite your motivation", imageName: "igniteYourMotivation_Goal", imgColor: Color("color1")),
+            Goal(title: "Expand your skills and knowledge", imageName: "expandYourSkillsAndKnowledge_Goal", imgColor: Color("color1")),
+            Goal(title: "Overcome challenges", imageName: "overcomeChallenges_Goal", imgColor: Color("color1")),
+            Goal(title: "Enhance relationships and communication", imageName: "enhanceRelationshipAndCommunication_Goal", imgColor: Color("color1")),
+            Goal(title: "Discover inner peace and happiness", imageName: "discoverInnerPeaceAndHappiness_Goal", imgColor: Color("color1"))
+        ]
+    
     
     var body: some View {
         NavigationStack {
@@ -33,10 +51,18 @@ struct AddBookView: View {
                     purposeSection
                 }
                 .navigationTitle("Add Book")
+                
                 .navigationBarTitleDisplayMode(.inline)
+                
+                .foregroundColor(Color.color1)
+                
                 .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text("add")
+                    }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("Save", action: saveBook )
+                        .foregroundStyle(Color.color2)
                     }
                 }
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
@@ -62,7 +88,7 @@ struct AddBookView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.color2)
                         .padding(70)
                 }
                 
@@ -82,8 +108,10 @@ struct AddBookView: View {
         Section(header: Text("Detail Book")) {
             HStack {
                 Text("Title")
-                  .font(Font.custom("SF Pro", size: 17))
-                  .frame(width: 60, height: 22, alignment: .leading)
+                    .font(Font.custom("SF Pro", size: 17))
+                    .frame(width: 60, height: 22, alignment: .leading)
+                    .foregroundStyle(Color.color1)
+                          
                 TextField("Enter Title", text: $title)
             }
             
@@ -91,6 +119,8 @@ struct AddBookView: View {
                 Text("Author")
                   .font(Font.custom("SF Pro", size: 17))
                   .frame(width: 60, height: 22, alignment: .leading)
+                  .foregroundStyle(Color.color1)
+                
                 TextField("Enter Author", text: $author)
             }
         }
@@ -98,24 +128,28 @@ struct AddBookView: View {
     
     private var purposeSection: some View {
         Section(header: Text("What's your purpose for this book?")) {
-            LazyVGrid(columns: [
-                GridItem(.fixed(150)),
-                GridItem(.fixed(150))
-            ], spacing: 16) {
-                ForEach(availableGoals, id: \.self) { goal in
-                    GoalItemView(
-                        goal: goal,
-                        isSelected: selectedGoals.contains(goal),
-                        toggleAction: {
-                            if selectedGoals.contains(goal) {
-                                selectedGoals.remove(goal)
-                            } else {
-                                selectedGoals.insert(goal)
+            ScrollView {
+                LazyVGrid(columns: [
+                    GridItem(.fixed(150), spacing: 16),
+                    GridItem(.fixed(150), spacing: 16)
+                ], spacing: 16) {
+                    ForEach(availableGoals, id: \.self) { goal in
+                        GoalItemView(
+                            goal: goal,
+                            isSelected: selectedGoals.contains(goal.title),
+                            toggleAction: {
+                                if selectedGoals.contains(goal.title) {
+                                    selectedGoals.remove(goal.title)
+                                } else {
+                                    selectedGoals.insert(goal.title)
+                                    print (goal.imageName)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
-            }
+            }//
+            .padding (.all, 16)
         }
     }
     
@@ -159,30 +193,48 @@ struct AddBookView: View {
 }
 
 struct GoalItemView: View {
-    let goal: String
+    let goal: Goal
     let isSelected: Bool
     let toggleAction: () -> Void
     
     var body: some View {
         VStack {
-            Text(goal)
-                .font(.body)
-                .multilineTextAlignment(.center)
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(isSelected ? Color.blue : Color.gray)
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .onTapGesture {
-                    toggleAction()
-                }
-                .frame(width: 150, height: 100)
-                .shadow(radius: isSelected ? 10 : 5)  // Adding a shadow for better UI feedback
-                .animation(.easeInOut, value: isSelected) // Smooth transition for selection state
+            VStack {
+                Image(goal.imageName) // Use the image name to load the image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+//                    .foregroundColor(goal.imgColor)
+                    .colorMultiply(isSelected ? Color.white : Color.color1)
+//                    .foregroundColor (isSelected ? Color.black: Color("color1"))
+                
+                Text(goal.title)
+                .font(.system(size: 14, weight: .regular, design: .rounded))
+                .multilineTextAlignment(.center) // Ensure text is centered and readable
+                .padding([.leading, .trailing], 5) // Add horizontal padding to avoid text being too close to the edges
+                .frame(maxWidth: .infinity) // Ensure the text takes available space
+                .foregroundColor(isSelected ? Color.white : Color.color1)
+            }
+            
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
+            .background(isSelected ? Color.color2 : Color.color3)
+            .foregroundColor(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .onTapGesture {
+                toggleAction()
+            }
+            
+            .frame(width: 150, height: 150)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .shadow(radius: isSelected ? 10 : 5)  // Adding a shadow for better UI feedback
+            .animation(.easeInOut, value: isSelected) // Smooth transition for selection state
         }
-        .frame(width: 150, height: 100)  // Ensure the card size is fixed
+        .padding(.all,1)
+        /*.frame(width: 150, height: 100)*/  // Ensure the card size is fixed
     }
 }
+
 
 struct AddBookView_Previews: PreviewProvider {
     static var previews: some View {
