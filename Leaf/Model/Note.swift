@@ -18,9 +18,10 @@ final class Note {
     var lastModified: Date
     var prompt: String
     var tag: [String?]?
+    var isPinned: Bool
     @Relationship var books: Book?
     
-    init(title: String, imageNote: Data? = nil, page: Int? = nil, content: String, lastModified: Date, prompt: String, tag: [String?]? = nil, books: Book?) {
+    init(title: String, imageNote: Data? = nil, page: Int? = nil, content: String, lastModified: Date, prompt: String, tag: [String?]? = nil, isPinned: Bool = false, books: Book?) {
         self.id = UUID()
         self.title = title
         self.imageNote = imageNote
@@ -29,6 +30,7 @@ final class Note {
         self.lastModified = lastModified
         self.prompt = prompt
         self.tag = tag
+        self.isPinned = isPinned
         self.books = books
     }
 }

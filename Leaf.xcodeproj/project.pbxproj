@@ -12,8 +12,7 @@
 		363C1A242C2BD37F00E6AF91 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */; };
 		363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A252C2BD96C00E6AF91 /* AddBookView.swift */; };
 		BB1F53422C2D8E6400A509B8 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */; };
-		BB1F534A2C2D984000A509B8 /* RowNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F53492C2D984000A509B8 /* RowNoteView.swift */; };
-		BB1F534E2C2E516E00A509B8 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F534D2C2E516E00A509B8 /* Note.swift */; };
+		BB1F534A2C2D984000A509B8 /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F53492C2D984000A509B8 /* NoteListView.swift */; };
 		BB1F53502C2E5A1900A509B8 /* TagInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F534F2C2E5A1900A509B8 /* TagInputView.swift */; };
 		BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB47CAA22C2C62D600C70E6C /* AllNoteView.swift */; };
 		BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E65AF2C29066300C855A2 /* LeafApp.swift */; };
@@ -25,7 +24,12 @@
 		BBA41C822C31547500B741ED /* FilterBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C812C31547500B741ED /* FilterBadgeView.swift */; };
 		BBA41C842C31549F00B741ED /* BookListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C832C31549F00B741ED /* BookListView.swift */; };
 		BBA41C872C3183C500B741ED /* SortFilterModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C862C3183C500B741ED /* SortFilterModalView.swift */; };
-		BBA41C8A2C318BAB00B741ED /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C892C318BAB00B741ED /* Book.swift */; };
+		BBA467092C32B16F004DF66A /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA467082C32B16F004DF66A /* NoteDetailView.swift */; };
+		BBA4670B2C32B429004DF66A /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA4670A2C32B429004DF66A /* NoteViewModel.swift */; };
+		BBA4670F2C32BF49004DF66A /* NoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA4670E2C32BF49004DF66A /* NoteRowView.swift */; };
+		BBA467112C32C302004DF66A /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA467102C32C302004DF66A /* Note.swift */; };
+		BBA467132C32C3B8004DF66A /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA467122C32C3B8004DF66A /* Book.swift */; };
+		BBA467162C32CB34004DF66A /* SortFilterNoteModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA467152C32CB34004DF66A /* SortFilterNoteModalView.swift */; };
 		BBF71AD62C2BFCF8004AF08F /* BookRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF71AD52C2BFCF8004AF08F /* BookRowView.swift */; };
 		BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF71AD82C2C102A004AF08F /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
@@ -36,8 +40,7 @@
 		363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 		363C1A252C2BD96C00E6AF91 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
 		BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
-		BB1F53492C2D984000A509B8 /* RowNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowNoteView.swift; sourceTree = "<group>"; };
-		BB1F534D2C2E516E00A509B8 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		BB1F53492C2D984000A509B8 /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
 		BB1F534F2C2E5A1900A509B8 /* TagInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagInputView.swift; sourceTree = "<group>"; };
 		BB47CAA22C2C62D600C70E6C /* AllNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNoteView.swift; sourceTree = "<group>"; };
 		BB5E65AC2C29066300C855A2 /* Leaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,7 +53,12 @@
 		BBA41C812C31547500B741ED /* FilterBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBadgeView.swift; sourceTree = "<group>"; };
 		BBA41C832C31549F00B741ED /* BookListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListView.swift; sourceTree = "<group>"; };
 		BBA41C862C3183C500B741ED /* SortFilterModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortFilterModalView.swift; sourceTree = "<group>"; };
-		BBA41C892C318BAB00B741ED /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		BBA467082C32B16F004DF66A /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
+		BBA4670A2C32B429004DF66A /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
+		BBA4670E2C32BF49004DF66A /* NoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRowView.swift; sourceTree = "<group>"; };
+		BBA467102C32C302004DF66A /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		BBA467122C32C3B8004DF66A /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		BBA467152C32CB34004DF66A /* SortFilterNoteModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortFilterNoteModalView.swift; sourceTree = "<group>"; };
 		BBF71AD52C2BFCF8004AF08F /* BookRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRowView.swift; sourceTree = "<group>"; };
 		BBF71AD72C2C05EF004AF08F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BBF71AD82C2C102A004AF08F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -70,11 +78,8 @@
 		363C1A1C2C2BD34300E6AF91 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BB47CAA22C2C62D600C70E6C /* AllNoteView.swift */,
+				BBA467142C32C8A4004DF66A /* Note */,
 				BBA41C882C31871C00B741ED /* Book */,
-				BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */,
-				BB1F53492C2D984000A509B8 /* RowNoteView.swift */,
-				BB1F534F2C2E5A1900A509B8 /* TagInputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -83,9 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				BBF71AD82C2C102A004AF08F /* ImagePicker.swift */,
-				BB1F534D2C2E516E00A509B8 /* Note.swift */,
-				BBA41C892C318BAB00B741ED /* Book.swift */,
-				2B2249B52C324AD300C7ABBA /* Goal.swift */,
+				BBA467102C32C302004DF66A /* Note.swift */,
+				BBA467122C32C3B8004DF66A /* Book.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -95,6 +99,7 @@
 			children = (
 				363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */,
 				BBA41C7D2C3153DF00B741ED /* BookViewModel.swift */,
+				BBA4670A2C32B429004DF66A /* NoteViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -150,6 +155,20 @@
 				363C1A252C2BD96C00E6AF91 /* AddBookView.swift */,
 			);
 			path = Book;
+			sourceTree = "<group>";
+		};
+		BBA467142C32C8A4004DF66A /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				BB47CAA22C2C62D600C70E6C /* AllNoteView.swift */,
+				BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */,
+				BB1F53492C2D984000A509B8 /* NoteListView.swift */,
+				BB1F534F2C2E5A1900A509B8 /* TagInputView.swift */,
+				BBA467082C32B16F004DF66A /* NoteDetailView.swift */,
+				BBA4670E2C32BF49004DF66A /* NoteRowView.swift */,
+				BBA467152C32CB34004DF66A /* SortFilterNoteModalView.swift */,
+			);
+			path = Note;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,7 +241,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBA4670B2C32B429004DF66A /* NoteViewModel.swift in Sources */,
 				BBA41C842C31549F00B741ED /* BookListView.swift in Sources */,
+				BBA467132C32C3B8004DF66A /* Book.swift in Sources */,
+				BBA467112C32C302004DF66A /* Note.swift in Sources */,
 				363C1A242C2BD37F00E6AF91 /* PhotoViewModel.swift in Sources */,
 				BBA41C7E2C3153DF00B741ED /* BookViewModel.swift in Sources */,
 				363C1A262C2BD96C00E6AF91 /* AddBookView.swift in Sources */,
@@ -231,16 +253,16 @@
 				BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */,
 				BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */,
 				BBA41C802C31540A00B741ED /* FilterMenuView.swift in Sources */,
+				BBA467092C32B16F004DF66A /* NoteDetailView.swift in Sources */,
 				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
+				BBA4670F2C32BF49004DF66A /* NoteRowView.swift in Sources */,
+				BBA467162C32CB34004DF66A /* SortFilterNoteModalView.swift in Sources */,
 				BBA41C872C3183C500B741ED /* SortFilterModalView.swift in Sources */,
 				BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */,
 				BB1F53502C2E5A1900A509B8 /* TagInputView.swift in Sources */,
-				BB1F534A2C2D984000A509B8 /* RowNoteView.swift in Sources */,
-				2B2249B62C324AD300C7ABBA /* Goal.swift in Sources */,
-				BBA41C8A2C318BAB00B741ED /* Book.swift in Sources */,
+				BB1F534A2C2D984000A509B8 /* NoteListView.swift in Sources */,
 				363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */,
 				BB1F53422C2D8E6400A509B8 /* AddNoteView.swift in Sources */,
-				BB1F534E2C2E516E00A509B8 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
