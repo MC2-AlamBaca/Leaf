@@ -37,7 +37,7 @@ struct AddBookView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Form {
                     bookCoverSection
