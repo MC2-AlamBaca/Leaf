@@ -38,8 +38,7 @@ struct AllBookView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: AddBookView()) {
-                        Text("Add Book")
-                            .font(.system(size: 16, weight: .regular, design: .serif))
+                        Image(systemName: "plus")
                     }
                 }
             }

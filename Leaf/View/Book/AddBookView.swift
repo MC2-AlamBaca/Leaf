@@ -12,6 +12,12 @@ struct AddBookView: View {
     @State private var alertMessage = ""
     @StateObject private var viewModel = PhotoViewModel()
     
+    // Add additional state variable for editing
+    @State private var isEditing = false
+    
+    // Optional: Add binding for existing book if editing
+    var existingBook: Book?
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
@@ -32,11 +38,11 @@ struct AddBookView: View {
                     detailBookSection
                     purposeSection
                 }
-                .navigationTitle("Add Book")
+                .navigationTitle(isEditing ? "Edit Book" : "Add Book")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save", action: saveBook )
+                        Button(isEditing ? "Update" : "Save", action: isEditing ? updateBook : saveBook)
                     }
                 }
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
@@ -47,6 +53,15 @@ struct AddBookView: View {
                 }
             }
         }
+        .onAppear {
+                    if let book = existingBook {
+                        title = book.title
+                        author = book.author
+                        selectedGoals = Set(book.goals)
+                        photoData = book.bookCover
+                        isEditing = true
+                    }
+                }
     }
     
     private var bookCoverSection: some View {
@@ -149,6 +164,21 @@ struct AddBookView: View {
             dismiss()
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    private func updateBook() {
+        guard let existingBook = existingBook else { return }
+        existingBook.title = title
+        existingBook.author = author
+        existingBook.bookCover = photoData
+        existingBook.goals = Array(selectedGoals)
+        
+        do {
+            try context.save()
+            dismiss()
+        } catch {
+            print("Failed to update book: \(error.localizedDescription)")
         }
     }
     
