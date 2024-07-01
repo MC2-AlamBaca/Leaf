@@ -1,11 +1,6 @@
 import SwiftUI
 import PhotosUI
 
-struct Goal: Hashable {
-    let title: String
-    let imageName: String
-    let imgColor: Color
-}
 
 struct AddBookView: View {
     @State private var title = ""
@@ -198,26 +193,28 @@ struct GoalItemView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: goal.imageName) // Placeholder system image, replace with actual image loading
+            // Load the image using the asset name
+            Image(goal.imageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
-                .foregroundColor(isSelected ? .blue : .gray) // Adjust colors based on selection
+                .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
             
             Text(goal.title)
                 .font(.system(size: 14))
                 .multilineTextAlignment(.center)
-                .foregroundColor(isSelected ? .blue : .black) // Adjust colors based on selection
+                .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
-        .background(isSelected ? Color.yellow : Color.clear) // Adjust background color based on selection
+        .background(isSelected ? Color.color1 : Color.color2) // Adjust background color based on selection
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onTapGesture {
             toggleAction()
         }
     }
 }
+
 
 struct AddBookView_Previews: PreviewProvider {
     static var previews: some View {
