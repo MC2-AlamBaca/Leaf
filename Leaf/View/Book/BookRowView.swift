@@ -13,9 +13,15 @@ struct BookRowView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             VStack(alignment: .leading) {
-                Text(book.title)
-                    .font(.headline)
-                    .fontDesign(.serif)
+                HStack {
+                    Text(book.title)
+                        .font(.headline)
+                        .fontDesign(.serif)
+                    
+                    if book.isPinned {
+                        Image(systemName: "pin.fill")
+                    }
+                }
                 Text(book.author)
                     .font(.subheadline)
                     .foregroundColor(.secondary)

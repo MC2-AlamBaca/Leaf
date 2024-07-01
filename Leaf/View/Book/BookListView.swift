@@ -12,14 +12,17 @@ struct BookListView: View {
     @Environment(\.modelContext) var modelContext
     let books: [Book]
     
-    @State private var isShowingEditView = false
-//    @State private var selectedBookID: UUID? // Track selected book ID for editing
+    
+    var sortedBooks: [Book] {
+        books.sorted {$0.isPinned && !$1.isPinned}
+    }
+
     @State private var selectedBook: Book? // Track selected book for editing
     
     
     var body: some View {
         List {
-            ForEach(books) { book in
+            ForEach(sortedBooks) { book in
                 NavigationLink(destination: AllNoteView(book: book)) {
                     BookRowView(book: book)
                 }
@@ -41,9 +44,13 @@ struct BookListView: View {
                     Button {
                         pinBook(book)
                     } label: {
-                        Label("Pin", systemImage: "pin")
+                        if book.isPinned {
+                            Label("Unpin", systemImage: "pin.slash")
+                        } else {
+                            Label("Pin", systemImage: "pin")
+                        }
                     }
-                    .tint(.yellow)
+                    .tint(book.isPinned ? .red : .yellow)
                 }
             }
         }.sheet(item: $selectedBook) { book in
@@ -59,8 +66,18 @@ struct BookListView: View {
             print("Failed to save context after deleting book: \(error.localizedDescription)")
         }
     }
+
+    private func pinBook(book: Book) {
+        book.isPinned.toggle()
+        
+        // Save the updated book back to the context
+        do {
+            
+            try modelContext.save()
+        } catch {
+            print("Failed to save context after pinning book: \(error.localizedDescription)")
+        }
     
-    private func pinBook(_ book: Book) {
         // Implement pinning logic
         print("Pinning book: \(book.title)")
     }
