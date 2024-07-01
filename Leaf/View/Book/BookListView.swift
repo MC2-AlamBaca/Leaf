@@ -67,7 +67,7 @@ struct BookListView: View {
         }
     }
 
-    private func pinBook(book: Book) {
+    private func pinBook(_ book: Book) {
         book.isPinned.toggle()
         
         // Save the updated book back to the context
