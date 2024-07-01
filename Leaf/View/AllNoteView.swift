@@ -35,11 +35,12 @@ struct AllNoteView: View {
                     Text("You have no notes for this book. Please add some.")
                 }
             }
-            .navigationTitle(book.title)
+            .navigationTitle(book.title).fontDesign(.serif)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: AddNoteView(book: book)) {
                         Text("Add Note")
+                            .fontDesign(.serif)
                     }
                 }
             }
@@ -79,22 +80,41 @@ struct NoteDetailView: View {
     var note: Note
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(note.title)
-                .font(.largeTitle)
-            if let imageData = note.imageNote, let image = UIImage(data: imageData) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
+        ScrollView {
+            VStack(alignment: .leading) {
+                
+                Text(note.title)
+                    .font(.largeTitle)
+                    .fontDesign(.serif)
+                if let imageData = note.imageNote, let image = UIImage(data: imageData) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                }
+                Text("Page: \(note.page ?? 0)")
+                Text(note.content)
+                Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
+                Text("Prompt: \(note.prompt)")
+                Text("Content: \(note.content)")
+                if let tags = note.tag, !tags.isEmpty {
+                    Text("Tags:")
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(tags.compactMap { $0 }, id: \.self) { tag in
+                                Text(tag)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .background(Color.blue.opacity(0.2))
+                                    .cornerRadius(15)
+                            }
+                        }
+                    }
+                }
+                Spacer()
             }
-            Text("Page: \(note.page ?? 0)")
-            Text(note.content)
-            Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
-            Text("Prompt: \(note.prompt)")
-            Text("Tags: \(note.tag?.compactMap { $0 }.joined(separator: ", ") ?? "No Tags")")
-            Spacer()
-        }
-        .padding()
+            .padding()
+        }//ScrollView
+        
     }
 }
 

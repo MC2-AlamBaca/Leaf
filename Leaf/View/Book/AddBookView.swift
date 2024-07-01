@@ -8,11 +8,12 @@ struct AddBookView: View {
     @State private var photoData: Data?
     @State private var showCamera = false
     @State private var inputImage: UIImage?
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     @StateObject private var viewModel = PhotoViewModel()
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    
     
     let availableGoals = [
         "Deepen your self-understanding",
@@ -35,53 +36,53 @@ struct AddBookView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save", action: saveBook)
+                        Button("Save", action: saveBook )
                     }
                 }
-                .sheet(isPresented: $showCamera, onDismiss: loadImage) {
+                .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
-            }
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Incomplete Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
             }
         }
     }
     
     private var bookCoverSection: some View {
-            Section(header: Text("Book Cover")) {
-                VStack {
-                    if let photoData = photoData, !photoData.isEmpty, let uiImage = UIImage(data: photoData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity, maxHeight: 300)
-                    } else {
-                        Image(systemName: "camera")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.gray)
-                            .padding(70)
-                    }
-                    
-                    Divider()
-                    
-                    Button(action: {
-                                    showCamera = true
-                                }) {
-                                    Text("Take Photo")
-                                        .frame(maxWidth: .infinity) // This will make the text centered within the button
-                                }
-                    
+        Section(header: Text("Book Cover")) {
+            VStack {
+                if let photoData = photoData, !photoData.isEmpty, let uiImage = UIImage(data: photoData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: 300)
+                } else {
+                    Image(systemName: "camera")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.gray)
+                        .padding(70)
+                }
+                
+                Divider()
+                
+                Button(action: {
+                    showCamera = true
+                }) {
+                    Text("Take Photo")
+                        .frame(maxWidth: .infinity) // This will make the text centered within the button
                 }
             }
         }
-    
+    }
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book")) {
-            HStack{
+            HStack {
                 Text("Title")
                   .font(Font.custom("SF Pro", size: 17))
-                  .foregroundColor(.black)
                   .frame(width: 60, height: 22, alignment: .leading)
                 TextField("Enter Title", text: $title)
             }
@@ -89,7 +90,6 @@ struct AddBookView: View {
             HStack {
                 Text("Author")
                   .font(Font.custom("SF Pro", size: 17))
-                  .foregroundColor(.black)
                   .frame(width: 60, height: 22, alignment: .leading)
                 TextField("Enter Author", text: $author)
             }
@@ -120,12 +120,28 @@ struct AddBookView: View {
     }
     
     private func saveBook() {
-//        guard !title.isEmpty, !author.isEmpty else {
-//            // Show an alert or some feedback to the user that fields are empty
-//            return
-//        }
+        guard !title.isEmpty else {
+            alertMessage = "Please enter the book title."
+            showAlert = true
+            return
+        }
         
-        let book = Book(title: title, author: author, bookCover: photoData, goals: Array(selectedGoals))
+        guard !selectedGoals.isEmpty else {
+            alertMessage = "Please select at least one goal."
+            showAlert = true
+            return
+        }
+        
+        let defaultAuthor = "-"
+        let defaultPhotoData = UIImage(systemName: "book.fill")?.jpegData(compressionQuality: 0.8)
+        
+        let book = Book(
+            title: title,
+            author: author.isEmpty ? defaultAuthor : author,
+            bookCover: photoData ?? defaultPhotoData,
+            goals: Array(selectedGoals),
+            isPinned: false)
+        
         context.insert(book)
         do {
             try context.save()
@@ -167,6 +183,7 @@ struct GoalItemView: View {
         .frame(width: 150, height: 100)  // Ensure the card size is fixed
     }
 }
+
 struct AddBookView_Previews: PreviewProvider {
     static var previews: some View {
         AddBookView()
