@@ -29,13 +29,6 @@ final class Book {
         self.notes = notes
     }
     
-//    init(title: String, author: String, bookCover: Data? = nil, goals: [String], notes: [Note]? = nil) {
-//        self.id = UUID()
-//        self.title = title
-//        self.author = author
-//        self.bookCover = bookCover
-//        self.goals = goals
-//        self.notes = notes
-//    }
+
 }
 

@@ -4,6 +4,7 @@
 //
 //  Created by Diky Nawa Dwi Putra on 26/06/24.
 //
+
 import SwiftUI
 import SwiftData
 
@@ -21,13 +22,17 @@ struct AllBookView: View {
                     }
                 }
                 
-                BookListView(books: viewModel.filteredBooks(books))
+                if !books.isEmpty{
+                    BookListView(books: viewModel.filteredBooks(books))
+                }
+                else {
+                    Text("You have no books yet")
+                }
+                
+                
             }
             .navigationTitle("Books")
             .toolbar {
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    FilterMenuView(viewModel: viewModel, allGoals: Array(Set(books.flatMap { $0.goals })))
-//                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         viewModel.isShowingSortFilterModal = true
@@ -44,12 +49,15 @@ struct AllBookView: View {
             }
             .searchable(text: $viewModel.searchText, prompt: "Search for Books")
             .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
-                            SortFilterModalView(viewModel: viewModel, allGoals: Array(Set(books.flatMap { $0.goals })))
-                        }
+                SortFilterModalView(viewModel: viewModel, allGoals: Array(Set(books.flatMap { $0.goals })))
+            }
         }
     }
 }
 
-#Preview {
-    AllBookView()
+// Mock Data and ViewModel for Preview
+struct AllBookView_Previews: PreviewProvider {
+    static var previews: some View {
+        AllBookView()
+    }
 }
