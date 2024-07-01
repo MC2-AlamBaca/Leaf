@@ -1,6 +1,12 @@
 import SwiftUI
 import PhotosUI
 
+struct Goal: Hashable {
+    let title: String
+    let imageName: String
+    let imgColor: Color
+}
+
 struct AddBookView: View {
     @State private var title = ""
     @State private var author = ""
@@ -10,74 +16,63 @@ struct AddBookView: View {
     @State private var inputImage: UIImage?
     @State private var showAlert = false
     @State private var alertMessage = ""
-    @StateObject private var viewModel = PhotoViewModel()
-    
-    // Add additional state variable for editing
-    @State private var isEditing = false
     
     // Optional: Add binding for existing book if editing
     var existingBook: Book?
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-   
     
+    // Add additional state variable for editing
+    @State private var isEditing = false
     
-        let availableGoals: [Goal] = [
-            Goal(title: "Deepen your self-understanding", imageName: "deepenYourSelfUnderstanding_Goal", imgColor: Color("color1")),
-            Goal(title: "Ignite your motivation", imageName: "igniteYourMotivation_Goal", imgColor: Color("color1")),
-            Goal(title: "Expand your skills and knowledge", imageName: "expandYourSkillsAndKnowledge_Goal", imgColor: Color("color1")),
-            Goal(title: "Overcome challenges", imageName: "overcomeChallenges_Goal", imgColor: Color("color1")),
-            Goal(title: "Enhance relationships and communication", imageName: "enhanceRelationshipAndCommunication_Goal", imgColor: Color("color1")),
-            Goal(title: "Discover inner peace and happiness", imageName: "discoverInnerPeaceAndHappiness_Goal", imgColor: Color("color1"))
-        ]
-    
-
-   
-
+    // Goals data for demonstration
+    let availableGoals: [Goal] = [
+        Goal(title: "Deepen your self-understanding", imageName: "deepenYourSelfUnderstanding_Goal", imgColor: Color("color1")),
+        Goal(title: "Ignite your motivation", imageName: "igniteYourMotivation_Goal", imgColor: Color("color1")),
+        Goal(title: "Expand your skills and knowledge", imageName: "expandYourSkillsAndKnowledge_Goal", imgColor: Color("color1")),
+        Goal(title: "Overcome challenges", imageName: "overcomeChallenges_Goal", imgColor: Color("color1")),
+        Goal(title: "Enhance relationships and communication", imageName: "enhanceRelationshipAndCommunication_Goal", imgColor: Color("color1")),
+        Goal(title: "Discover inner peace and happiness", imageName: "discoverInnerPeaceAndHappiness_Goal", imgColor: Color("color1"))
+    ]
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 Form {
                     bookCoverSection
                     detailBookSection
                     purposeSection
                 }
-              
                 .navigationTitle(isEditing ? "Edit Book" : "Add Book")
-                .navigationBarTitleDisplayMode(.inline)
-                
-                .foregroundColor(Color.color1)
-                
                 .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text("add")
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing)    
-
-                        Button(isEditing ? "Update" : "Save", action: isEditing ? updateBook : saveBook)
-                      .foregroundStyle(Color.color2)
-
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(isEditing ? "Update" : "Save") {
+                            if isEditing {
+                                updateBook()
+                            } else {
+                                saveBook()
+                            }
+                        }
                     }
                 }
-                .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
+                .sheet(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
                 }
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text("Incomplete Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
             }
-        }
-        .onAppear {
-                    if let book = existingBook {
-                        title = book.title
-                        author = book.author
-                        selectedGoals = Set(book.goals)
-                        photoData = book.bookCover
-                        isEditing = true
-                    }
+            .onAppear {
+                if let book = existingBook {
+                    title = book.title
+                    author = book.author
+                    selectedGoals = Set(book.goals)
+                    photoData = book.bookCover
+                    isEditing = true
                 }
+            }
+        }
     }
     
     private var bookCoverSection: some View {
@@ -93,7 +88,7 @@ struct AddBookView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.color2)
+                        .foregroundColor(.blue) // Change color as needed
                         .padding(70)
                 }
                 
@@ -103,7 +98,7 @@ struct AddBookView: View {
                     showCamera = true
                 }) {
                     Text("Take Photo")
-                        .frame(maxWidth: .infinity) // This will make the text centered within the button
+                        .frame(maxWidth: .infinity)
                 }
             }
         }
@@ -111,23 +106,8 @@ struct AddBookView: View {
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book")) {
-            HStack {
-                Text("Title")
-                    .font(Font.custom("SF Pro", size: 17))
-                    .frame(width: 60, height: 22, alignment: .leading)
-                    .foregroundStyle(Color.color1)
-                          
-                TextField("Enter Title", text: $title)
-            }
-            
-            HStack {
-                Text("Author")
-                  .font(Font.custom("SF Pro", size: 17))
-                  .frame(width: 60, height: 22, alignment: .leading)
-                  .foregroundStyle(Color.color1)
-                
-                TextField("Enter Author", text: $author)
-            }
+            TextField("Enter Title", text: $title)
+            TextField("Enter Author", text: $author)
         }
     }
     
@@ -147,14 +127,13 @@ struct AddBookView: View {
                                     selectedGoals.remove(goal.title)
                                 } else {
                                     selectedGoals.insert(goal.title)
-                                    print (goal.imageName)
                                 }
                             }
                         )
                     }
                 }
-            }//
-            .padding (.all, 16)
+                .padding(.all, 16)
+            }
         }
     }
     
@@ -179,12 +158,12 @@ struct AddBookView: View {
             author: author.isEmpty ? defaultAuthor : author,
             bookCover: photoData ?? defaultPhotoData,
             goals: Array(selectedGoals),
-            isPinned: false)
+            isPinned: false
+        )
         
         context.insert(book)
         do {
             try context.save()
-            viewModel.saveDataToPhoto()
             dismiss()
         } catch {
             print(error.localizedDescription)
@@ -193,6 +172,7 @@ struct AddBookView: View {
     
     private func updateBook() {
         guard let existingBook = existingBook else { return }
+        
         existingBook.title = title
         existingBook.author = author
         existingBook.bookCover = photoData
@@ -219,42 +199,26 @@ struct GoalItemView: View {
     
     var body: some View {
         VStack {
-            VStack {
-                Image(goal.imageName) // Use the image name to load the image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-//                    .foregroundColor(goal.imgColor)
-                    .colorMultiply(isSelected ? Color.white : Color.color1)
-//                    .foregroundColor (isSelected ? Color.black: Color("color1"))
-                
-                Text(goal.title)
-                .font(.system(size: 14, weight: .regular, design: .rounded))
-                .multilineTextAlignment(.center) // Ensure text is centered and readable
-                .padding([.leading, .trailing], 5) // Add horizontal padding to avoid text being too close to the edges
-                .frame(maxWidth: .infinity) // Ensure the text takes available space
-                .foregroundColor(isSelected ? Color.white : Color.color1)
-            }
+            Image(systemName: goal.imageName) // Placeholder system image, replace with actual image loading
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .foregroundColor(isSelected ? .blue : .gray) // Adjust colors based on selection
             
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
-            .background(isSelected ? Color.color2 : Color.color3)
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .onTapGesture {
-                toggleAction()
-            }
-            
-            .frame(width: 150, height: 150)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: isSelected ? 10 : 5)  // Adding a shadow for better UI feedback
-            .animation(.easeInOut, value: isSelected) // Smooth transition for selection state
+            Text(goal.title)
+                .font(.system(size: 14))
+                .multilineTextAlignment(.center)
+                .foregroundColor(isSelected ? .blue : .black) // Adjust colors based on selection
         }
-        .padding(.all,1)
-        /*.frame(width: 150, height: 100)*/  // Ensure the card size is fixed
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+        .background(isSelected ? Color.yellow : Color.clear) // Adjust background color based on selection
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .onTapGesture {
+            toggleAction()
+        }
     }
 }
-
 
 struct AddBookView_Previews: PreviewProvider {
     static var previews: some View {
