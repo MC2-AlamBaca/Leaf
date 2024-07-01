@@ -12,24 +12,15 @@ struct AddBookView: View {
     @State private var alertMessage = ""
     @StateObject private var viewModel = PhotoViewModel()
     
+    // Add additional state variable for editing
+    @State private var isEditing = false
+    
+    // Optional: Add binding for existing book if editing
+    var existingBook: Book?
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    
-//    let availableGoals = [
-//        "Deepen your self-understanding",
-//        "Ignite your motivation",
-//        "Expand your skills and knowledge",
-//        "Overcome challenges",
-//        "Enhance relationships and communication",
-//        "Discover inner peace and happiness"
-//    ]
-    
-//    Box (title: "Deepen your self-understanding", image: "deepenYourSelfUnderstanding_Goal 1"),
-//    Box (title: "Ignite your motivation", image: "igniteYourMotivation_Goal"),
-//    Box (title: "Expand your skills and knowledge", image: "expandYourSkillsAndKnowledge_Goal"),
-//    Box (title: "Overcome challenges", image: "overcomeChallenges_Goal"),
-//    Box (title: "Enhance relationships and communication", image: "enhanceRelationshipAndCommunication_Goal"),
-//    Box (title: "Discover inner peace and happiness", image: "discoverInnerPeaceAndHappiness_Goal")
+   
     
     
         let availableGoals: [Goal] = [
@@ -41,6 +32,9 @@ struct AddBookView: View {
             Goal(title: "Discover inner peace and happiness", imageName: "discoverInnerPeaceAndHappiness_Goal", imgColor: Color("color1"))
         ]
     
+
+   
+
     
     var body: some View {
         NavigationStack {
@@ -50,8 +44,8 @@ struct AddBookView: View {
                     detailBookSection
                     purposeSection
                 }
-                .navigationTitle("Add Book")
-                
+              
+                .navigationTitle(isEditing ? "Edit Book" : "Add Book")
                 .navigationBarTitleDisplayMode(.inline)
                 
                 .foregroundColor(Color.color1)
@@ -60,9 +54,11 @@ struct AddBookView: View {
                     ToolbarItem(placement: .principal) {
                         Text("add")
                     }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save", action: saveBook )
-                        .foregroundStyle(Color.color2)
+                    ToolbarItem(placement: .navigationBarTrailing)    
+
+                        Button(isEditing ? "Update" : "Save", action: isEditing ? updateBook : saveBook)
+                      .foregroundStyle(Color.color2)
+
                     }
                 }
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
@@ -73,6 +69,15 @@ struct AddBookView: View {
                 }
             }
         }
+        .onAppear {
+                    if let book = existingBook {
+                        title = book.title
+                        author = book.author
+                        selectedGoals = Set(book.goals)
+                        photoData = book.bookCover
+                        isEditing = true
+                    }
+                }
     }
     
     private var bookCoverSection: some View {
@@ -183,6 +188,21 @@ struct AddBookView: View {
             dismiss()
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    private func updateBook() {
+        guard let existingBook = existingBook else { return }
+        existingBook.title = title
+        existingBook.author = author
+        existingBook.bookCover = photoData
+        existingBook.goals = Array(selectedGoals)
+        
+        do {
+            try context.save()
+            dismiss()
+        } catch {
+            print("Failed to update book: \(error.localizedDescription)")
         }
     }
     
