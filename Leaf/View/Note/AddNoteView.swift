@@ -37,51 +37,55 @@ struct AddNoteView: View {
     ]
     
     var body: some View {
-        Form {
-            photoSection
-            Section(header: Text("Title")) {
-                TextField("Enter title", text: $title)
-            }
-            Section(header: Text("Page")) {
-                TextField("Enter page number", text: $page)
-                    .keyboardType(.numberPad)
-            }
-            Section(header: Text("Prompt")) {
-                Picker("Select Goal", selection: $selectedGoal) {
-                    ForEach(book.goals, id: \.self) { goal in
-                        Text(goal).tag(goal as String?)
-                    }
+        NavigationStack{
+            Form {
+                photoSection
+                Section(header: Text("Title")) {
+                    TextField("Enter title", text: $title)
                 }
-                .onChange(of: selectedGoal) { newValue in
-                    if let goal = newValue,
-                       let prompts = goalsWithPrompts.first(where: { $0.goal == goal })?.prompts {
-                        goalPrompts = prompts
-                    } else {
-                        goalPrompts = []
-                    }
+                Section(header: Text("Page")) {
+                    TextField("Enter page number", text: $page)
+                        .keyboardType(.numberPad)
                 }
-                if !goalPrompts.isEmpty {
-                    Picker("Select Prompt", selection: $prompt) {
-                        ForEach(goalPrompts, id: \.self) { prompt in
-                            Text(prompt).tag(prompt)
+                Section(header: Text("Prompt")) {
+                    Picker("Select Goal", selection: $selectedGoal) {
+                        ForEach(book.goals, id: \.self) { goal in
+                            Text(goal).tag(goal as String?)
                         }
                     }
-                } else {
-                    Text("No prompts available for the selected goal")
-                        .foregroundColor(.gray)
+                    .onChange(of: selectedGoal) { newValue in
+                        if let goal = newValue,
+                           let prompts = goalsWithPrompts.first(where: { $0.goal == goal })?.prompts {
+                            goalPrompts = prompts
+                        } else {
+                            goalPrompts = []
+                        }
+                    }
+                    if !goalPrompts.isEmpty {
+                        Picker("Select Prompt", selection: $prompt) {
+                            ForEach(goalPrompts, id: \.self) { prompt in
+                                Text(prompt).tag(prompt)
+                            }
+                        }
+                    } else {
+                        Text("No prompts available for the selected goal")
+                            .foregroundColor(.gray)
+                    }
                 }
-            }
-            Section(header: Text("Content")) {
-                TextEditor(text: $content)
-            }
-            Section(header: Text("Tags")) {
-                TagInputView(tags: $tags)
-            }
-            Button(action: addNote) {
-                Text("Save")
+                Section(header: Text("Content")) {
+                    TextEditor(text: $content)
+                }
+                Section(header: Text("Tags")) {
+                    TagInputView(tags: $tags)
+                }
             }
         }
         .navigationTitle("Add Note")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save", action: addNote)
+            }
+        }
         .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
             ImagePicker(image: $inputImage)
         }
