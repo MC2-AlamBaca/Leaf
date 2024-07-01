@@ -25,6 +25,7 @@ struct RowNoteView: View {
                             Text(note.content)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
+                                .lineLimit(5)
                         }
                         Spacer()
                         Text("\(note.lastModified)")
@@ -60,8 +61,7 @@ struct RowNoteView: View {
     }
     
     func pinNote(note: Note) {
-        // Implement your pinning logic here if needed
-        // For example, you might set a `isPinned` property on the note
+       //pin logic
         print("Pinning note: \(note.title)")
     }
 }
