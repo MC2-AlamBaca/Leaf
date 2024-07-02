@@ -55,7 +55,9 @@ struct BookListView: View {
             }
         }.sheet(item: $selectedBook) { book in
             AddBookView(existingBook: book)
+                
         }
+        .listRowSpacing(16)
     }
     
     private func deleteBook(_ book: Book) {
