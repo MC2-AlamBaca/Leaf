@@ -1,10 +1,3 @@
-//
-//  AddNoteView.swift
-//  Leaf
-//
-//  Created by Marizka Ms on 27/06/24.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -18,6 +11,7 @@ struct AddNoteView: View {
     @State private var tags: [String] = []
     @State private var photoData: Data?
     @State private var showCamera = false
+    @State private var showMarkup = false
     @State private var inputImage: UIImage?
     
     @State private var selectedGoal: String?
@@ -47,7 +41,7 @@ struct AddNoteView: View {
                     TextField("Enter page number", text: $page)
                         .keyboardType(.numberPad)
                 }
-                Section(header: Text("Prompt")) {
+                Section(header: Text("")) {
                     Picker("Select Goal", selection: $selectedGoal) {
                         ForEach(book.goals, id: \.self) { goal in
                             Text(goal).tag(goal as String?)
@@ -71,10 +65,10 @@ struct AddNoteView: View {
                         Text("No prompts available for the selected goal")
                             .foregroundColor(.gray)
                     }
+                    
+                        TextEditor(text: $content)
                 }
-                Section(header: Text("Content")) {
-                    TextEditor(text: $content)
-                }
+               
                 Section(header: Text("Tags")) {
                     TagInputView(tags: $tags)
                 }
@@ -89,6 +83,10 @@ struct AddNoteView: View {
         .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
             ImagePicker(image: $inputImage)
         }
+        .fullScreenCover(isPresented: $showMarkup) {
+            MarkupView(photoData: $photoData)
+        }
+
     }
     
     private var photoSection: some View {
@@ -130,7 +128,6 @@ struct AddNoteView: View {
             prompt: prompt,
             tag: tags,
             books: book
-           
         )
         modelContext.insert(newNote)
         
@@ -151,6 +148,7 @@ struct AddNoteView: View {
     private func loadImage() {
         guard let inputImage = inputImage else { return }
         photoData = inputImage.jpegData(compressionQuality: 0.8)
+        showMarkup = true
     }
 }
 
@@ -158,7 +156,6 @@ struct GoalPrompt {
     let goal: String
     let prompts: [String]
 }
-
 
 //struct AddNoteView_Previews: PreviewProvider {
 //    static var previews: some View {

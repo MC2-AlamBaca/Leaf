@@ -16,6 +16,9 @@ struct BookRowView: View {
     
     var body: some View {
             HStack() {
+                if book.isPinned {
+                  Image(systemName: "pin.fill")
+                }
                 if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
                         .resizable()
