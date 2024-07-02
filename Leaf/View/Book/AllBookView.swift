@@ -13,6 +13,13 @@ struct AllBookView: View {
     @Query var books: [Book]
     @StateObject private var viewModel = BookViewModel()
     
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle).withDesign(.serif)!, size: 48),
+            .foregroundColor: UIColor.color1 // Change this to your desired color
+        ]
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -32,18 +39,22 @@ struct AllBookView: View {
                 
             }
             .navigationTitle("Books")
+            .foregroundColor(.color2)
+            
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         viewModel.isShowingSortFilterModal = true
                     }) {
                         Image(systemName: "line.3.horizontal.decrease.circle")
+                            .foregroundColor(.color2)
                     }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: AddBookView()) {
                         Image(systemName: "plus")
+                            .foregroundColor(.color2)
                     }
                 }
             }

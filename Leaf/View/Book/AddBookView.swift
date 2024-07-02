@@ -50,7 +50,21 @@ struct AddBookView: View {
                             }
                         }
                     }
-                }.foregroundColor(.color1)
+                }
+                .foregroundColor(.color2)
+                
+                .navigationBarItems(leading:
+                                    Button(action: {
+                                        dismiss() // Dismiss action for custom "Back" button
+                                    }) {
+                                        Image(systemName: "chevron.left")
+                                            .foregroundColor(.color2) // Customize back button color
+                                            .imageScale(.large)
+                                        Text("Books")
+                                            .foregroundColor(.color2)
+                                    }
+                                )
+                
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
                 }
@@ -72,7 +86,7 @@ struct AddBookView: View {
     }
     
     private var bookCoverSection: some View {
-        Section(header: Text("Book Cover")) {
+        Section(header: Text("Book Cover").foregroundColor(.color2)) {
             VStack {
                 if let photoData = photoData, !photoData.isEmpty, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
@@ -94,6 +108,7 @@ struct AddBookView: View {
                     showCamera = true
                 }) {
                     Text("Take Photo")
+                        .foregroundColor(.color2)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.color1)
                 }
@@ -102,16 +117,16 @@ struct AddBookView: View {
     }
     
     private var detailBookSection: some View {
-        Section(header: Text("Detail Book")) {
-            TextField("Enter Title", text: $title)
-            TextField("Enter Author", text: $author)
+        Section(header: Text("Detail Book").foregroundColor(.color2)) {
+            TextField("Enter Title", text: $title).foregroundColor(.color1)
+            TextField("Enter Author", text: $author).foregroundColor(.color1)
         }
         
     }
         
     
     private var purposeSection: some View {
-        Section(header: Text("What's your purpose for this book?")) {
+        Section(header: Text("What's your purpose for this book?").foregroundColor(.color2)) {
             ScrollView {
                 LazyVGrid(columns: [
                     GridItem(.fixed(150), spacing: 16),
@@ -212,7 +227,7 @@ struct GoalItemView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
-        .background(isSelected ? Color(.color1) : Color(.color2)) // Adjust background color based on selection
+        .background(isSelected ? Color.color1 : Color.color3) // Adjust background color based on selection
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onTapGesture {
             toggleAction()
