@@ -11,19 +11,11 @@ import SwiftData
 struct NoteListView: View {
     @Environment(\.modelContext) private var modelContext
     var book: Book
-    @StateObject private var viewModel = NoteViewModel()
-    @Query private var notes: [Note]
-    
-//    init(books: Book) {
-//        self.book = books
-//        self._notes = Query(filter: #Predicate { note in
-//            note.books?.id == book.id
-//        })
-//    }
+    @StateObject var viewModel : NoteViewModel
     
     var body: some View {
         List {
-            ForEach(sortedAndFilteredNotes) { note in
+            ForEach(viewModel.filteredNotes(book.notes ?? [])) { note in
                 NavigationLink(destination: NoteDetailView(note: note)) {
                     NoteRowView(note: note)
                 }
@@ -44,21 +36,6 @@ struct NoteListView: View {
                 }
             }
         }
-    }
-    
-    private var sortedAndFilteredNotes: [Note] {
-        notes
-            .filter { note in
-                viewModel.searchText.isEmpty ||
-                note.title.localizedCaseInsensitiveContains(viewModel.searchText) ||
-                note.content.localizedCaseInsensitiveContains(viewModel.searchText)
-            }
-            .sorted { note1, note2 in
-                if note1.isPinned != note2.isPinned {
-                    return note1.isPinned && !note2.isPinned
-                }
-                return note1.lastModified > note2.lastModified
-            }
     }
     
     private func togglePinNote(_ note: Note) {

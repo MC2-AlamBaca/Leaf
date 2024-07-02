@@ -51,12 +51,11 @@ struct AddBookView: View {
                             } else {
                                 saveBook()
                             }
-                        }) {
-                            Text(isEditing ? "Update" : "Save")
-                                .foregroundColor(.color2) // Change the color here
+                                 // Change the color here
                         }
                     }
                 }
+                .foregroundColor(.color2)
                 
                 .navigationBarItems(leading:
                                     Button(action: {
