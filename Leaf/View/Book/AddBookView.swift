@@ -1,13 +1,13 @@
 import SwiftUI
 import PhotosUI
 
-
 struct AddBookView: View {
     @State private var title = ""
     @State private var author = ""
     @State private var selectedGoals = Set<String>()
     @State private var photoData: Data?
     @State private var showCamera = false
+    @State private var showMarkup = false
     @State private var inputImage: UIImage?
     @State private var showAlert = false
     @State private var alertMessage = ""
@@ -23,7 +23,7 @@ struct AddBookView: View {
     
     // Goals data for demonstration
     let availableGoals: [Goal] = [
-        Goal(title: "Deepen your self-understanding", imageName: "deepenYourSelfUnderstanding_Goal", imgColor: Color("color1")),
+        Goal(title: "Deepen your self-understanding", imageName: "deepenYourSelfUnderstanding_Goal", imgColor: Color("Color 1")),
         Goal(title: "Ignite your motivation", imageName: "igniteYourMotivation_Goal", imgColor: Color("color1")),
         Goal(title: "Expand your skills and knowledge", imageName: "expandYourSkillsAndKnowledge_Goal", imgColor: Color("color1")),
         Goal(title: "Overcome challenges", imageName: "overcomeChallenges_Goal", imgColor: Color("color1")),
@@ -44,8 +44,8 @@ struct AddBookView: View {
                 
                 
                 .toolbar {
-                    ToolbarItem {
-                        Button(action: {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(isEditing ? "Update" : "Save") {
                             if isEditing {
                                 updateBook()
                             } else {
@@ -70,7 +70,8 @@ struct AddBookView: View {
                                     }
                                 )
                 
-                .sheet(isPresented: $showCamera, onDismiss: loadImage) {
+                
+                .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
                 }
                 .alert(isPresented: $showAlert) {
@@ -85,8 +86,10 @@ struct AddBookView: View {
                     photoData = book.bookCover
                     isEditing = true
                 }
-            } }}
-
+            }
+        }
+        .fontDesign(.serif)
+    }
     
     private var bookCoverSection: some View {
         Section(header: Text("Book Cover").foregroundColor(.color2)) {
@@ -102,6 +105,7 @@ struct AddBookView: View {
                         .scaledToFit()
                         .frame(width: 25, height: 25)
                         .foregroundColor(.color4) // Change color as needed
+
                         .padding(70)
                 }
                 
@@ -112,6 +116,7 @@ struct AddBookView: View {
                 }) {
                     Text("Take Photo").foregroundColor(.color2)
                         .frame(maxWidth: .infinity)
+                        .foregroundColor(.color1)
                 }
             }
         }
@@ -122,7 +127,9 @@ struct AddBookView: View {
             TextField("Enter Title", text: $title) .foregroundColor(.color1)
             TextField("Enter Author", text: $author) .foregroundColor(.color1)
         }
+        
     }
+        
     
     private var purposeSection: some View {
         Section(header: Text("What's your purpose for this book?").foregroundColor(.color2)) {
@@ -228,12 +235,14 @@ struct GoalItemView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
         .background(isSelected ? Color.color1 : Color.color3) // Adjust background color based on selection
+
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onTapGesture {
             toggleAction()
         }
     }
 }
+
 
 
 struct AddBookView_Previews: PreviewProvider {

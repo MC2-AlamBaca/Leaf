@@ -41,7 +41,7 @@ struct NoteRowView: View {
                             .font(.caption)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
-                            .background(Color.green.opacity(0.1))
+                            .background(Color.color1.opacity(0.1))
                             .cornerRadius(4)
                     }
                 }

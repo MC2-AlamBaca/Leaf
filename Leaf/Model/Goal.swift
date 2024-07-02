@@ -21,3 +21,6 @@ struct Goal: Identifiable, Hashable {
     }
     
 }
+
+
+

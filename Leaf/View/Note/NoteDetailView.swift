@@ -10,6 +10,8 @@ import SwiftData
 
 struct NoteDetailView: View {
     var note: Note
+//    @State private var isEditing = false
+//    @State private var editedNote: Note?
     
     
     var body: some View {
@@ -24,11 +26,61 @@ struct NoteDetailView: View {
                         .resizable()
                         .scaledToFit()
                 }
-                Text("Page: \(note.page ?? 0)")
-                Text(note.content)
-                Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
-                Text("Prompt: \(note.prompt)")
-                Text("Content: \(note.content)")
+//                if isEditing {
+//                                   TextField("Title", text: Binding(
+//                                       get: { editedNote?.title ?? note.title },
+//                                       set: { editedNote?.title = $0 }
+//                                   ))
+//                                   .font(.largeTitle)
+//                                   .fontDesign(.serif)
+//                                   
+//                                   if let imageData = editedNote?.imageNote ?? note.imageNote, let image = UIImage(data: imageData) {
+//                                       Image(uiImage: image)
+//                                           .resizable()
+//                                           .scaledToFit()
+//                                   }
+//                                   
+//                                   TextField("Page", value: Binding(
+//                                       get: { editedNote?.page ?? note.page },
+//                                       set: { editedNote?.page = $0 }
+//                                   ), formatter: NumberFormatter())
+//                                   
+//                                   TextEditor(text: Binding(
+//                                       get: { editedNote?.content ?? note.content },
+//                                       set: { editedNote?.content = $0 }
+//                                   ))
+//                                   
+//                                   TextField("Prompt", text: Binding(
+//                                       get: { editedNote?.prompt ?? note.prompt },
+//                                       set: { editedNote?.prompt = $0 }
+//                                   ))
+//                                   
+//                                   Text("Tags:")
+//                                   ScrollView(.horizontal, showsIndicators: false) {
+//                                       HStack {
+//                                           ForEach(editedNote?.tag?.compactMap { $0 } ?? note.tag?.compactMap { $0 } ?? [], id: \.self) { tag in
+//                                                                           Text(tag)
+//                                                                               .padding(.horizontal, 10)
+//                                                                               .padding(.vertical, 5)
+//                                                                               .background(Color.blue.opacity(0.2))
+//                                                                               .cornerRadius(15)
+//                                                                       }
+//                                       }
+//                                   }
+//                } else {
+//                    Text(note.title)
+//                        .font(.largeTitle)
+//                        .fontDesign(.serif)
+//                    if let imageData = note.imageNote, let image = UIImage(data: imageData) {
+//                        Image(uiImage: image)
+//                            .resizable()
+//                            .scaledToFit()
+//                    }
+                    Text("Page: \(note.page ?? 0)")
+                    Text(note.content)
+                    Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
+                    Text("Prompt: \(note.prompt)")
+                    Text("Content: \(note.content)")
                 if let tags = note.tag, !tags.isEmpty {
                     Text("Tags:")
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -43,13 +95,56 @@ struct NoteDetailView: View {
                         }
                     }
                 }
-                Spacer()
             }
-            .padding()
+            Spacer()
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: AddNoteView(book: note.books!, note: note)) {
+                    Text("Edit")
+                }
+            }
+        }
+        .foregroundColor(.color1)
+        .padding()
         }//ScrollView
         
     }
-}
+    
+//private func startEditing() {
+//    editedNote = Note(
+//        title: note.title,
+//        imageNote: note.imageNote,
+//        page: note.page,
+//        content: note.content,
+//        lastModified: note.lastModified,
+//        prompt: note.prompt,
+//        tag: note.tag,
+//        books: note.books
+//    )
+//    isEditing = true
+//}
+//
+//private func saveNote() {
+//    guard let editedNote = editedNote else { return }
+//
+//    note.title = editedNote.title
+//    note.imageNote = editedNote.imageNote
+//    note.page = editedNote.page
+//    note.content = editedNote.content
+//    note.lastModified = Date() // Update the last modified date
+//    note.prompt = editedNote.prompt
+//    note.tag = editedNote.tag
+//
+//    // Save changes to the model context
+//    do {
+//        try note.books?.modelContext?.save()
+//        isEditing = false
+//    } catch {
+//        print("Failed to save note: \(error.localizedDescription)")
+//    }
+//}
+//}
 
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
