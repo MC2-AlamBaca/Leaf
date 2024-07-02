@@ -20,6 +20,7 @@ struct AddNoteView: View {
     @Environment(\.dismiss) private var dismiss
     
     var book: Book
+    var note: Note?
     
     let goalsWithPrompts: [GoalPrompt] = [
         GoalPrompt(goal: "Deepen your self-understanding", prompts: ["What did you learn about yourself?", "How did this change your perspective?"]),
@@ -29,6 +30,23 @@ struct AddNoteView: View {
         GoalPrompt(goal: "Enhance relationships and communication", prompts: ["How did this improve your relationships?", "What communication skills did you use?"]),
         GoalPrompt(goal: "Discover inner peace and happiness", prompts: ["What brought you peace?", "What made you happy?"])
     ]
+    
+    init(book: Book, note: Note? = nil) {
+        self.book = book
+        self.note = note
+        _title = State(initialValue: note?.title ?? "")
+        _content = State(initialValue: note?.content ?? "")
+        _page = State(initialValue: note?.page != nil ? String(note!.page!) : "")
+        _prompt = State(initialValue: note?.prompt ?? "")
+        _tags = State(initialValue: note?.tag?.compactMap { $0 } ?? [])
+        _photoData = State(initialValue: note?.imageNote)
+        _selectedGoal = State(initialValue: note?.books?.goals.first(where: { goal in
+            goalsWithPrompts.contains { $0.goal == goal }
+        }))
+        _goalPrompts = State(initialValue: note != nil ? (goalsWithPrompts.first(where: { $0.goal == note!.books?.goals.first(where: { goal in
+            goalsWithPrompts.contains { $0.goal == goal }
+        }) })?.prompts ?? []) : [])
+    }
     
     var body: some View {
         NavigationStack{
@@ -74,12 +92,12 @@ struct AddNoteView: View {
                 }
             }
         }
-        .navigationTitle("Add Note")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Save", action: addNote)
-            }
-        }
+        .navigationTitle(note == nil ? "Add Note" : "Edit Note")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(note == nil ? "Save" : "Update", action: addOrUpdateNote)
+                    }
+                }
         .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
             ImagePicker(image: $inputImage)
         }
@@ -118,23 +136,33 @@ struct AddNoteView: View {
         }
     }
 
-    private func addNote() {
-        let newNote = Note(
-            title: title,
-            imageNote: photoData,
-            page: Int(page),
-            content: content,
-            lastModified: Date(),
-            prompt: prompt,
-            tag: tags,
-            books: book
-        )
-        modelContext.insert(newNote)
-        
-        if book.notes == nil {
-            book.notes = [newNote]
+    private func addOrUpdateNote() {
+        if let note = note {
+            note.title = title
+            note.page = Int(page)
+            note.content = content
+            note.lastModified = Date()
+            note.prompt = prompt
+            note.tag = tags
+            note.imageNote = photoData
         } else {
-            book.notes?.append(newNote)
+            let newNote = Note(
+                title: title,
+                imageNote: photoData,
+                page: Int(page),
+                content: content,
+                lastModified: Date(),
+                prompt: prompt,
+                tag: tags,
+                books: book
+            )
+            modelContext.insert(newNote)
+            
+            if book.notes == nil {
+                book.notes = [newNote]
+            } else {
+                book.notes?.append(newNote)
+            }
         }
         
         do {
@@ -144,6 +172,7 @@ struct AddNoteView: View {
             print("Error saving note: \(error.localizedDescription)")
         }
     }
+        
     
     private func loadImage() {
         guard let inputImage = inputImage else { return }
