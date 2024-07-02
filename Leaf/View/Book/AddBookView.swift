@@ -53,6 +53,7 @@ struct AddBookView: View {
                 }.foregroundColor(.color1)
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
+                        .ignoresSafeArea()
                 }
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text("Incomplete Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))

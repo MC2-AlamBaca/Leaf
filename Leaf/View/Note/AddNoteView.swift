@@ -82,6 +82,7 @@ struct AddNoteView: View {
         }
         .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
             ImagePicker(image: $inputImage)
+                .ignoresSafeArea()
         }
         .fullScreenCover(isPresented: $showMarkup) {
             MarkupView(photoData: $photoData)
