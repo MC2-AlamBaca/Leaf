@@ -1,4 +1,3 @@
-
 import SwiftUI
 import PencilKit
 
@@ -9,48 +8,67 @@ struct MarkupView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        ZStack {
-            if let photoData = photoData, let uiImage = UIImage(data: photoData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .edgesIgnoringSafeArea(.all)
+        NavigationStack {
+            ZStack {
+                if let photoData = photoData, let uiImage = UIImage(data: photoData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .edgesIgnoringSafeArea(.all)
+                        .overlay(
+                            PencilKitManager(canvasView: $canvasView)
+                                .background(.clear) // Ensure the canvas is tappable
+                        )
+                }
             }
-            
-            PencilKitManager(canvasView: $canvasView)
-                .background(Color.white.opacity(0.01)) // Ensure the canvas is tappable
-            
-            VStack {
-                HStack(spacing: 20) {
+            .toolbar {
+                ToolbarItemGroup(placement: .automatic) {
                     Button("Clear") {
                         canvasView.drawing = PKDrawing()
                     }
-                    Button("Undo") {
-                        undoManager?.undo()
-                    }
-                    Button("Redo") {
-                        undoManager?.redo()
-                    }
+                    Button(action: {undoManager?.redo()}, label: {
+                        Image(systemName: "arrow.uturn.backward.circle")
+                    })
+                    Button(action: {undoManager?.redo()}, label: {
+                        Image(systemName: "arrow.uturn.forward.circle")
+                    })
                     Button("Save") {
                         saveDrawing()
                     }
                 }
-                .padding(20)
-                Spacer()
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", action: {
+                        dismiss()
+                    })
+                }
+            }
+        }
+        .onAppear {
+            if let photoData = photoData, let backgroundImage = UIImage(data: photoData) {
+                let imageView = UIImageView(image: backgroundImage)
+                imageView.frame = canvasView.bounds
+                canvasView.insertSubview(imageView, at: 0)
             }
         }
     }
     
     private func saveDrawing() {
-        if let drawingImage = canvasView.drawing.image(from: canvasView.bounds, scale: UIScreen.main.scale).jpegData(compressionQuality: 0.8) {
-            photoData = drawingImage
+        if let backgroundImage = UIImage(data: photoData ?? Data()) {
+            UIGraphicsBeginImageContextWithOptions(canvasView.bounds.size, false, 0)
+            backgroundImage.draw(in: canvasView.bounds)
+            canvasView.drawing.image(from: canvasView.bounds, scale: UIScreen.main.scale).draw(in: canvasView.bounds)
+            let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            if let combinedImageData = combinedImage?.jpegData(compressionQuality: 0.8) {
+                photoData = combinedImageData
+            }
         }
         dismiss()
     }
 }
 
-//struct MarkupView_Previews: PreviewProvider {
-//  static var previews: some View {
-//      MarkupView(photoData: <#Binding<Data?>#>)
-//  }
+//#Preview {
+//    MarkupView(undoManager: <#T##arg#>, canvasView: <#T##arg#>, photoData: <#T##Data?#>, dismiss: <#T##arg#>)
 //}
