@@ -5,6 +5,7 @@
 //  Created by Zahratul Wardah on 01/07/24.
 //
 import SwiftUI
+import SwiftData
 
 struct Goal: Identifiable, Hashable {
     let id: UUID
