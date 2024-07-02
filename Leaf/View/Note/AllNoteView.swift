@@ -19,9 +19,10 @@ struct AllNoteView: View {
         NavigationStack {
             VStack {
                 if let notes = book.notes, !notes.isEmpty {
-                    NoteListView(book: book)
-                } else {
-                    Text("You have no notes for this book yet")
+                    NoteListView(book: book, viewModel: viewModel)
+                }
+                else {
+                    NoteListView(book: book, viewModel: viewModel)
                 }
             }
             .navigationTitle(book.title)
@@ -41,12 +42,10 @@ struct AllNoteView: View {
                 }
             }
             .searchable(text: $viewModel.searchText, prompt: "Search for Note")
-//            .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
-//                SortFilterNoteModalView(viewModel: viewModel, allTags: Array(Set(book.notes.flatMap { $0.tag })))
-//            }
-
+            //            .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
+            //                SortFilterNoteModalView(viewModel: viewModel, allTags: Array(Set(book.notes.flatMap { $0.tag })))
+            //            }
         }
-
     }
 }
 
@@ -63,7 +62,7 @@ private let dateFormatter: DateFormatter = {
     // Create a mock ModelContainer
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Book.self, Note.self, configurations: config)
-
+    
     // Create a sample book with notes
     let book = Book(title: "Sample Book", author: "John Doe", goals: ["Goal1"], isPinned: true)
     
@@ -91,7 +90,7 @@ private let dateFormatter: DateFormatter = {
     
     // Ensure the book's notes array is updated
     book.notes = [note1, note2]
-
+    
     // Return the preview
     return AllNoteView(book: book)
         .modelContainer(container)

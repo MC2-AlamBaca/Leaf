@@ -14,6 +14,7 @@ class NoteViewModel: ObservableObject {
     @Published var sortOrder: SortOrder = .ascending
     @Published var selectedTag: String?
     @Published var isShowingSortFilterModal = false
+    @Published var book : Book?
     
     enum SortOrder {
         case ascending, descending
@@ -22,8 +23,11 @@ class NoteViewModel: ObservableObject {
     func filteredNotes(_ notes: [Note]) -> [Note] {
         var result = notes
         
-        if !searchText.isEmpty {
-            result = result.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        if searchText != "" {
+            result = result.filter { note in
+                note.title.localizedCaseInsensitiveContains(searchText) ||
+                note.content.localizedCaseInsensitiveContains(searchText)
+            }
         }
         
         if let tag = selectedTag {
