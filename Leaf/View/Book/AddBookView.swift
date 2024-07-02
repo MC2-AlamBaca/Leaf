@@ -40,6 +40,9 @@ struct AddBookView: View {
                     purposeSection
                 }
                 .navigationTitle(isEditing ? "Edit Book" : "Add Book")
+                .navigationBarBackButtonHidden(true) // Hide default back button
+                
+                
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(isEditing ? "Update" : "Save") {
@@ -48,6 +51,9 @@ struct AddBookView: View {
                             } else {
                                 saveBook()
                             }
+                        }) {
+                            Text(isEditing ? "Update" : "Save")
+                                .foregroundColor(.color2) // Change the color here
                         }
                     }
                 }
@@ -65,6 +71,7 @@ struct AddBookView: View {
                                     }
                                 )
                 
+
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
                 }
@@ -98,7 +105,8 @@ struct AddBookView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.color1) // Change color as needed
+                        .foregroundColor(.color4) // Change color as needed
+
                         .padding(70)
                 }
                 
@@ -118,8 +126,10 @@ struct AddBookView: View {
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book").foregroundColor(.color2)) {
+
             TextField("Enter Title", text: $title).foregroundColor(.color1)
             TextField("Enter Author", text: $author).foregroundColor(.color1)
+
         }
         
     }
@@ -218,16 +228,18 @@ struct GoalItemView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
+            
                 .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
             
             Text(goal.title)
                 .font(.system(size: 14))
                 .multilineTextAlignment(.center)
-                .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
+                .foregroundColor(isSelected ? .white : .color1) // Adjust colors based on selection
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
         .background(isSelected ? Color.color1 : Color.color3) // Adjust background color based on selection
+
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onTapGesture {
             toggleAction()
