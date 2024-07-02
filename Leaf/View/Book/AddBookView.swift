@@ -40,17 +40,36 @@ struct AddBookView: View {
                     purposeSection
                 }
                 .navigationTitle(isEditing ? "Edit Book" : "Add Book")
+                .navigationBarBackButtonHidden(true) // Hide default back button
+                
+                
                 .toolbar {
-                    ToolbarItem() {
-                        Button(isEditing ? "Update" : "Save") {
+                    ToolbarItem {
+                        Button(action: {
                             if isEditing {
                                 updateBook()
                             } else {
                                 saveBook()
                             }
+                        }) {
+                            Text(isEditing ? "Update" : "Save")
+                                .foregroundColor(.color2) // Change the color here
                         }
                     }
                 }
+                
+                .navigationBarItems(leading:
+                                    Button(action: {
+                                        dismiss() // Dismiss action for custom "Back" button
+                                    }) {
+                                        Image(systemName: "chevron.left")
+                                            .foregroundColor(.color2) // Customize back button color
+                                            .imageScale(.large)
+                                        Text("Books")
+                                            .foregroundColor(.color2)
+                                    }
+                                )
+                
                 .sheet(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
                 }
@@ -70,7 +89,7 @@ struct AddBookView: View {
 
     
     private var bookCoverSection: some View {
-        Section(header: Text("Book Cover")) {
+        Section(header: Text("Book Cover").foregroundColor(.color2)) {
             VStack {
                 if let photoData = photoData, !photoData.isEmpty, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
@@ -82,7 +101,7 @@ struct AddBookView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.blue) // Change color as needed
+                        .foregroundColor(.color4) // Change color as needed
                         .padding(70)
                 }
                 
@@ -91,7 +110,7 @@ struct AddBookView: View {
                 Button(action: {
                     showCamera = true
                 }) {
-                    Text("Take Photo")
+                    Text("Take Photo").foregroundColor(.color2)
                         .frame(maxWidth: .infinity)
                 }
             }
@@ -99,14 +118,14 @@ struct AddBookView: View {
     }
     
     private var detailBookSection: some View {
-        Section(header: Text("Detail Book")) {
-            TextField("Enter Title", text: $title)
-            TextField("Enter Author", text: $author)
+        Section(header: Text("Detail Book").foregroundColor(.color2)) {
+            TextField("Enter Title", text: $title) .foregroundColor(.color1)
+            TextField("Enter Author", text: $author) .foregroundColor(.color1)
         }
     }
     
     private var purposeSection: some View {
-        Section(header: Text("What's your purpose for this book?")) {
+        Section(header: Text("What's your purpose for this book?").foregroundColor(.color2)) {
             ScrollView {
                 LazyVGrid(columns: [
                     GridItem(.fixed(150), spacing: 16),
@@ -198,16 +217,17 @@ struct GoalItemView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
+            
                 .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
             
             Text(goal.title)
                 .font(.system(size: 14))
                 .multilineTextAlignment(.center)
-                .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
+                .foregroundColor(isSelected ? .white : .color1) // Adjust colors based on selection
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
-        .background(isSelected ? Color.color1 : Color.color2) // Adjust background color based on selection
+        .background(isSelected ? Color.color1 : Color.color3) // Adjust background color based on selection
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onTapGesture {
             toggleAction()
