@@ -57,6 +57,7 @@ struct AddBookView: View {
                         }
                     }
                 }
+                .foregroundColor(.color2)
                 
                 .navigationBarItems(leading:
                                     Button(action: {
@@ -70,7 +71,7 @@ struct AddBookView: View {
                                     }
                                 )
                 
-                
+
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
                 }
@@ -114,7 +115,8 @@ struct AddBookView: View {
                 Button(action: {
                     showCamera = true
                 }) {
-                    Text("Take Photo").foregroundColor(.color2)
+                    Text("Take Photo")
+                        .foregroundColor(.color2)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.color1)
                 }
@@ -124,8 +126,10 @@ struct AddBookView: View {
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book").foregroundColor(.color2)) {
-            TextField("Enter Title", text: $title) .foregroundColor(.color1)
-            TextField("Enter Author", text: $author) .foregroundColor(.color1)
+
+            TextField("Enter Title", text: $title).foregroundColor(.color1)
+            TextField("Enter Author", text: $author).foregroundColor(.color1)
+
         }
         
     }
