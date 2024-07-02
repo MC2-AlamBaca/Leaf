@@ -5,6 +5,9 @@ struct BookRowView: View {
     
     var body: some View {
         HStack {
+            if book.isPinned {
+                Image(systemName: "pin.fill")
+            }
             if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -14,14 +17,13 @@ struct BookRowView: View {
             }
             VStack(alignment: .leading) {
                 HStack {
+                    
                     Text(book.title)
                         .font(.headline)
                         .fontDesign(.serif)
-                    
-                    if book.isPinned {
-                        Image(systemName: "pin.fill")
+            
                     }
-                }
+                
                 Text(book.author)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
