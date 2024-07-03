@@ -42,12 +42,19 @@ struct AllNoteView: View {
                 }
             }
             .searchable(text: $viewModel.searchText, prompt: "Search for Note")
-            //            .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
-            //                SortFilterNoteModalView(viewModel: viewModel, allTags: Array(Set(book.notes.flatMap { $0.tag })))
-            //            }
+            .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
+                //SortFilterNoteModalView(viewModel: viewModel, allTags: Array(Set(book.notes.flatMap { $0.tag })))
+                SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
+            }
         }
     }
-}
+    
+    private func getAllTags() -> [String] {
+            let allTags = book.notes?.compactMap { $0.tag }.flatMap { $0 } ?? []
+            return Array(Set(allTags.compactMap { $0 }))
+        }
+    }
+
 
 
 

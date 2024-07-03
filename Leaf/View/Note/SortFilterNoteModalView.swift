@@ -17,10 +17,10 @@ struct SortFilterNoteModalView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Sort")) {
+                Section(header: Text("Sort Order")) {
                     Picker("Sort Order", selection: $viewModel.sortOrder) {
-                        Text("Ascending").tag(BookViewModel.SortOrder.ascending)
-                        Text("Descending").tag(BookViewModel.SortOrder.descending)
+                        Text("Ascending").tag(NoteViewModel.SortOrder.ascending)
+                        Text("Descending").tag(NoteViewModel.SortOrder.descending)
                     }
                     .pickerStyle(.inline)
                 }
@@ -28,7 +28,7 @@ struct SortFilterNoteModalView: View {
                 Section(header: Text("Filter by Tag")) {
                     ForEach(["All Tags"] + allTags, id: \.self) { tag in
                         Button(action: {
-                            viewModel.selectedTag = tag == "All Goals" ? nil : tag
+                            viewModel.selectedTag = tag == "All Tags" ? nil : tag
                             dismiss()
                         }) {
                             HStack {
