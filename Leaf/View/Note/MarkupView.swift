@@ -6,6 +6,7 @@ struct MarkupView: View {
     @State private var canvasView = PKCanvasView()
     @Binding var photoData: Data?
     @Environment(\.dismiss) private var dismiss
+    @State private var zoomScale: CGFloat = 1.0
     
     var body: some View {
         NavigationStack {
@@ -19,6 +20,13 @@ struct MarkupView: View {
                             PencilKitManager(canvasView: $canvasView)
                                 .background(.clear) // Ensure the canvas is tappable
                         )
+                        .scaleEffect(zoomScale)
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { gestureScale in
+                                    zoomScale = gestureScale.magnitude
+                                }
+                        )
                 }
             }
             .toolbar {
@@ -26,7 +34,7 @@ struct MarkupView: View {
                     Button("Clear") {
                         canvasView.drawing = PKDrawing()
                     }
-                    Button(action: {undoManager?.redo()}, label: {
+                    Button(action: {undoManager?.undo()}, label: {
                         Image(systemName: "arrow.uturn.backward.circle")
                     })
                     Button(action: {undoManager?.redo()}, label: {
