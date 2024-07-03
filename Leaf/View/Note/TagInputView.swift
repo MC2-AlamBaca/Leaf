@@ -53,7 +53,8 @@ struct TagView: View {
             Text(tag)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
-                .background(Color.blue.opacity(0.2))
+                .background(Color.color1.opacity(0.8))
+                .foregroundColor(.white)
                 .cornerRadius(15)
             
             Button(action: onRemove) {
