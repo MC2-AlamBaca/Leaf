@@ -15,9 +15,10 @@ struct NoteListView: View {
     @State private var noteToDelete: Note? //Track book yang akan di delete
     @State private var showDeleteConfirmation: Bool = false //confimasi untuk delete
     
+    
     var body: some View {
         List {
-            ForEach(viewModel.filteredNotes(book.notes ?? [])) { note in
+            ForEach(viewModel.filteredAndSortedNotes(book.notes ?? [])) { note in
                 NavigationLink(destination: NoteDetailView(note: note)) {
                     NoteRowView(note: note)
                 }
@@ -31,7 +32,6 @@ struct NoteListView: View {
                 }
                 .swipeActions(edge: .trailing) {
                     Button() {
-//                        deleteNote(note)
                         noteToDelete = note
                         showDeleteConfirmation = true
                     } label: {

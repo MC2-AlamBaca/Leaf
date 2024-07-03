@@ -21,9 +21,10 @@ class NoteViewModel: ObservableObject {
         case ascending, descending
     }
     
-    func filteredNotes(_ notes: [Note]) -> [Note] {
+    func filteredAndSortedNotes(_ notes: [Note]) -> [Note] {
         var result = notes
         
+        //search filter
         if searchText != "" {
             result = result.filter { note in
                 note.title.localizedCaseInsensitiveContains(searchText) ||
@@ -31,6 +32,7 @@ class NoteViewModel: ObservableObject {
             }
         }
         
+        //apply tag filter
         if let tag = selectedTag {
             //result = result.filter { $0.tag?.contains(tag) == true
             result = result.filter { note in
@@ -38,34 +40,20 @@ class NoteViewModel: ObservableObject {
             }
         }
         
-        result.sort {
-            switch sortOrder {
-            case .ascending:
-                return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
-            case .descending:
-                return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedDescending
+        //Sort notes: pinned first, then by title
+        result.sort { note1, note2 in
+            if note1.isPinned != note2.isPinned {
+                return note1.isPinned && !note2.isPinned
+            } else {
+                switch sortOrder {
+                case .ascending:
+                    return note1.title.localizedCaseInsensitiveCompare(note2.title) == .orderedAscending
+                case .descending:
+                    return note1.title.localizedCaseInsensitiveCompare(note2.title) == .orderedDescending
+                }
             }
         }
-        
         return result
     }
     
-    func togglePinNote(_ note: Note) {
-        note.isPinned.toggle()
-        note.lastModified = Date()
-        do {
-            try modelContext.save()
-        } catch {
-            print("Failed to save context after pinning note: \(error.localizedDescription)")
-        }
-    }
-    
-    func deleteNote(_ note: Note) {
-        modelContext.delete(note)
-        do {
-            try modelContext.save()
-        } catch {
-            print("Failed to save context after deleting note: \(error.localizedDescription)")
-        }
-    }
 }
