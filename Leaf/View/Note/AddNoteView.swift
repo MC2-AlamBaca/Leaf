@@ -14,8 +14,10 @@ struct AddNoteView: View {
     @State private var showMarkup = false
     @State private var inputImage: UIImage?
     
-    @State private var selectedGoal: String?
+    @State private var selectedGoal: String? = nil
     @State private var goalPrompts: [String] = []
+    
+    @State private var isTitleFocused: Bool = true
 
     @Environment(\.dismiss) private var dismiss
     
@@ -51,53 +53,72 @@ struct AddNoteView: View {
     var body: some View {
         NavigationStack{
             Form {
-                photoSection
-                Section(header: Text("Title")) {
-                    TextField("Enter title", text: $title)
+                Section(header: Text("title")) {
+                    FocusableTextField(text: $title, placeholder: "Enter title")
+                        .focused(isTitleFocused)
                 }
-                Section(header: Text("Page")) {
+                
+                photoSection
+                
+                Section(header: Text("page")) {
                     TextField("Enter page number", text: $page)
                         .keyboardType(.numberPad)
                 }
-                Section(header: Text("")) {
-                    Picker("Select Goal", selection: $selectedGoal) {
+
+                Section(header: Text("goal")) {
+                    Picker("Select Prompt", selection: $selectedGoal) {
+                        Text ("Select Goal")
                         ForEach(book.goals, id: \.self) { goal in
                             Text(goal).tag(goal as String?)
                         }
                     }
-                    .onChange(of: selectedGoal) { newValue in
-                        if let goal = newValue,
-                           let prompts = goalsWithPrompts.first(where: { $0.goal == goal })?.prompts {
-                            goalPrompts = prompts
-                        } else {
-                            goalPrompts = []
-                        }
-                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+
                     if !goalPrompts.isEmpty {
                         Picker("Select Prompt", selection: $prompt) {
+                            Text ("Select Prompt")
                             ForEach(goalPrompts, id: \.self) { prompt in
                                 Text(prompt).tag(prompt)
                             }
                         }
+                        .pickerStyle(MenuPickerStyle())
+                        .onChange(of: prompt) { newPrompt in
+                            if !newPrompt.isEmpty {
+                                content = newPrompt
+                            }
+                        }
                     } else {
-                        Text("No prompts available for the selected goal")
+                        Text("No prompts being selected")
                             .foregroundColor(.gray)
                     }
-                    
-                        TextEditor(text: $content)
                 }
-               
-                Section(header: Text("Tags")) {
+                .onChange(of: selectedGoal) { newValue in
+                    if let goal = newValue,
+                       let prompts = goalsWithPrompts.first(where: { $0.goal == goal })?.prompts {
+                        goalPrompts = prompts
+                    } else {
+                        goalPrompts = []
+                    }
+                }
+
+                Section(header: Text("reflection")) {
+                    TextEditor(text: $content)
+                        .frame(minHeight: 150)
+                }
+
+                Section(header: Text("tags")) {
                     TagInputView(tags: $tags)
                 }
             }
+            .fontDesign(.serif)
         }
         .navigationTitle(note == nil ? "Add Note" : "Edit Note")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(note == nil ? "Save" : "Update", action: addOrUpdateNote)
-                    }
-                }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(note == nil ? "Save" : "Update", action: addOrUpdateNote)
+            }
+        }
         .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
             ImagePicker(image: $inputImage)
                 .ignoresSafeArea()
@@ -109,7 +130,7 @@ struct AddNoteView: View {
     }
     
     private var photoSection: some View {
-        Section(header: Text("Photo")) {
+        Section(header: Text("Sentence Photo") ) {
             VStack {
                 if let photoData = photoData, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)

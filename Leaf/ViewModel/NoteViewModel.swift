@@ -55,5 +55,5 @@ class NoteViewModel: ObservableObject {
         }
         return result
     }
-    
+
 }
