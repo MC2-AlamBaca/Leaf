@@ -31,7 +31,10 @@ class NoteViewModel: ObservableObject {
         }
         
         if let tag = selectedTag {
-            result = result.filter { $0.tag?.contains(tag) == true }
+            //result = result.filter { $0.tag?.contains(tag) == true
+            result = result.filter { note in
+                note.tag?.contains(tag) ?? false
+            }
         }
         
         result.sort {
