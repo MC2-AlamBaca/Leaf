@@ -33,9 +33,6 @@ struct BookRowView: View {
                             .bold()
                             .fontDesign(.serif)
                         
-                        if book.isPinned {
-                            Image(systemName: "pin.fill")
-                        }
                     }
                     Text(book.author)
                         .font(.subheadline)
