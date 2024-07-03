@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftData
 
 class NoteViewModel: ObservableObject {
+    @Environment(\.modelContext) private var modelContext
     @Published var searchText = ""
     @Published var sortOrder: SortOrder = .ascending
     @Published var selectedTag: String?
@@ -44,5 +45,24 @@ class NoteViewModel: ObservableObject {
         }
         
         return result
+    }
+    
+    func togglePinNote(_ note: Note) {
+        note.isPinned.toggle()
+        note.lastModified = Date()
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context after pinning note: \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteNote(_ note: Note) {
+        modelContext.delete(note)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context after deleting note: \(error.localizedDescription)")
+        }
     }
 }
