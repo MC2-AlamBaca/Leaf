@@ -90,15 +90,12 @@ struct BookListView: View {
 
     private func pinBook(_ book: Book) {
         book.isPinned.toggle()
-        
         // Save the updated book back to the context
         do {
-            
             try modelContext.save()
         } catch {
             print("Failed to save context after pinning book: \(error.localizedDescription)")
         }
-    
         // Implement pinning logic
         print("Pinning book: \(book.title)")
     }
