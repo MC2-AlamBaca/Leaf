@@ -28,19 +28,15 @@ struct AllBookView: View {
                         viewModel.selectedGoal = nil
                     }
                 }
-                
                 if !books.isEmpty{
                     BookListView(books: viewModel.filteredBooks(books))
                 }
                 else {
                     Text("You have no books yet")
                 }
-                
-                
             }
             .navigationTitle("Books")
             .foregroundColor(.color2)
-            
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
@@ -50,7 +46,6 @@ struct AllBookView: View {
                             .foregroundColor(.color2)
                     }
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: AddBookView()) {
                         Image(systemName: "plus")

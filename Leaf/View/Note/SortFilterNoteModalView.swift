@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct SortFilterNoteModalView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: NoteViewModel
