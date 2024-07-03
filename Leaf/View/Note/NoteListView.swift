@@ -12,6 +12,8 @@ struct NoteListView: View {
     @Environment(\.modelContext) private var modelContext
     var book: Book
     @StateObject var viewModel : NoteViewModel
+    @State private var noteToDelete: Note? //Track book yang akan di delete
+    @State private var showDeleteConfirmation: Bool = false //confimasi untuk delete
     
     var body: some View {
         List {
@@ -28,14 +30,29 @@ struct NoteListView: View {
                     .tint(.yellow)
                 }
                 .swipeActions(edge: .trailing) {
-                    Button(role: .destructive) {
-                        deleteNote(note)
+                    Button() {
+//                        deleteNote(note)
+                        noteToDelete = note
+                        showDeleteConfirmation = true
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
+                    .tint(.red)
                 }
             }
         }
+        .alert (isPresented: $showDeleteConfirmation){
+            Alert(
+                title: Text("Delete Note"),
+                message: Text("Are you sure you want to delete this note? This action cannot be undone."),
+                primaryButton: .destructive(Text("Delete")){
+                    if let noteToDelete = noteToDelete {
+                        deleteNote(noteToDelete)
+                    }
+                },
+                secondaryButton: .cancel())
+        }
+        .listRowSpacing(10)
     }
     
     private func togglePinNote(_ note: Note) {
