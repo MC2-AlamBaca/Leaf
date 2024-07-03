@@ -68,4 +68,6 @@ class NoteViewModel: ObservableObject {
             print("Failed to save context after deleting note: \(error.localizedDescription)")
         }
     }
+    
+    
 }
