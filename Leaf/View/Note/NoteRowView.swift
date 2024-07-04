@@ -46,6 +46,9 @@ struct NoteRowView: View {
                     }
                 }
                 Spacer()
+                //                Text(dateFormatter.string(from: note.creationDate))
+                //                    .font(.caption)
+                //                    .foregroundColor(.secondary)
                 Text(dateFormatter.string(from: note.lastModified))
                     .font(.caption)
                     .foregroundColor(.secondary)

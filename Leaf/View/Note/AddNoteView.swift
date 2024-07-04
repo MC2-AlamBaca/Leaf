@@ -160,6 +160,8 @@ struct AddNoteView: View {
 
     private func addOrUpdateNote() {
         if let note = note {
+            let originalCreationDate = note.creationDate
+            
             note.title = title
             note.page = Int(page)
             note.content = content
@@ -167,6 +169,7 @@ struct AddNoteView: View {
             note.prompt = prompt
             note.tag = tags
             note.imageNote = photoData
+            note.creationDate = originalCreationDate
         } else {
             let newNote = Note(
                 title: title,
@@ -176,7 +179,8 @@ struct AddNoteView: View {
                 lastModified: Date(),
                 prompt: prompt,
                 tag: tags,
-                books: book
+                books: book,
+                creationDate: Date()
             )
             modelContext.insert(newNote)
             

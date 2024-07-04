@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Note {
+final class Note: Identifiable {
     @Attribute(.unique) let id: UUID
     var title: String
     @Attribute(.externalStorage) var imageNote: Data?
@@ -20,8 +20,9 @@ final class Note {
     var tag: [String?]?
     var isPinned: Bool
     @Relationship var books: Book?
+    var creationDate: Date
     
-    init(title: String, imageNote: Data? = nil, page: Int? = nil, content: String, lastModified: Date, prompt: String, tag: [String?]? = nil, isPinned: Bool = false, books: Book?) {
+    init(title: String, imageNote: Data? = nil, page: Int? = nil, content: String, lastModified: Date, prompt: String, tag: [String?]? = nil, isPinned: Bool = false, books: Book?, creationDate: Date) {
         self.id = UUID()
         self.title = title
         self.imageNote = imageNote
@@ -32,6 +33,7 @@ final class Note {
         self.tag = tag
         self.isPinned = isPinned
         self.books = books
+        self.creationDate = creationDate
     }
 }
 
