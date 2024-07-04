@@ -83,14 +83,14 @@ private let dateFormatter: DateFormatter = {
                      lastModified: Date(),
                      prompt: "Why?",
                      tag: ["tag1","tag2"],
-                     books: book)
+                     books: book, creationDate: Date())
     
     let note2 = Note(title: "Favorite Quote",
                      content: "Here's my favorite quote from page 42: 'Life is what happens when you're busy making other plans.'",
                      lastModified: Date(),
                      prompt: "Why?",
                      tag: ["tag1","tag2"],
-                     books: book)
+                     books: book, creationDate: Date())
     
     context.insert(note1)
     context.insert(note2)

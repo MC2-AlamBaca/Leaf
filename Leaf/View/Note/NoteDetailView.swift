@@ -81,6 +81,7 @@ struct NoteDetailView: View {
                     Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
                     Text("Prompt: \(note.prompt)")
                     Text("Content: \(note.content)")
+                Text("Creation Date: \(note.creationDate, formatter: dateFormatter)")
                 if let tags = note.tag, !tags.isEmpty {
                     Text("Tags:")
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -179,7 +180,7 @@ private let dateFormatter: DateFormatter = {
         lastModified: Date(),
         prompt: "Summarize the key points of Chapter 1",
         tag: ["Chapter1", "Summary", "Introduction"],
-        books: book
+        books: book, creationDate: Date()
     )
     
     context.insert(note)
