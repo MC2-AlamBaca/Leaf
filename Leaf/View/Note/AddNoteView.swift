@@ -18,7 +18,9 @@ struct AddNoteView: View {
     @State private var goalPrompts: [String] = []
     
     @State private var isTitleFocused: Bool = true
-    
+   
+    @State private var selectedPrompt: String = ""
+
     @Environment(\.dismiss) private var dismiss
     
     var book: Book
@@ -64,10 +66,9 @@ struct AddNoteView: View {
                     TextField("Enter page number", text: $page)
                         .keyboardType(.numberPad)
                 }
-                
                 //Picker Goal
                 Section(header: Text("goal").foregroundColor(.color2)) {
-                    Picker("Select Goal", selection: $selectedGoal) {
+                    Picker("Goal", selection: $selectedGoal) {
                         Text ("Select Goal")
                         ForEach(book.goals, id: \.self) { goal in
                             Text(goal).tag(goal as String?)
@@ -95,7 +96,7 @@ struct AddNoteView: View {
                         .pickerStyle(MenuPickerStyle())
                         .onChange(of: prompt) { newPrompt in
                             if !newPrompt.isEmpty {
-                                content = newPrompt
+                                selectedPrompt = newPrompt
                             }
                         }
                     } else {
@@ -111,8 +112,8 @@ struct AddNoteView: View {
                         goalPrompts = []
                     }
                 }
-                
                 Section(header: Text("reflection").foregroundColor(.color2)) {
+                    Text(selectedPrompt).font(.caption)
                     TextEditor(text: $content)
                         .frame(minHeight: 150)
                 }
@@ -176,6 +177,8 @@ struct AddNoteView: View {
     
     private func addOrUpdateNote() {
         if let note = note {
+            let originalCreationDate = note.creationDate
+            
             note.title = title
             note.page = Int(page)
             note.content = content
@@ -183,6 +186,7 @@ struct AddNoteView: View {
             note.prompt = prompt
             note.tag = tags
             note.imageNote = photoData
+            note.creationDate = originalCreationDate
         } else {
             let newNote = Note(
                 title: title,
@@ -192,7 +196,8 @@ struct AddNoteView: View {
                 lastModified: Date(),
                 prompt: prompt,
                 tag: tags,
-                books: book
+                books: book,
+                creationDate: Date()
             )
             modelContext.insert(newNote)
             

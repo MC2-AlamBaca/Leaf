@@ -1,5 +1,5 @@
 import SwiftUI
-import PhotosUI
+//import PhotosUI
 
 struct AddBookView: View {
     @State private var title = ""
@@ -125,9 +125,10 @@ struct AddBookView: View {
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book").foregroundColor(.color2)) {
-
+            
             TextField("Enter Title", text: $title).foregroundColor(.color1)
             TextField("Enter Author", text: $author).foregroundColor(.color1)
+            
 
         }
         

@@ -22,7 +22,7 @@ struct NoteRowView: View {
             HStack {
                 if note.isPinned {
                     Image(systemName: "pin.fill")
-                        .foregroundColor(.yellow)
+//                        .foregroundColor(.color2)
                 }
                 Text(note.title)
                     .font(.headline)
@@ -46,6 +46,9 @@ struct NoteRowView: View {
                     }
                 }
                 Spacer()
+                //                Text(dateFormatter.string(from: note.creationDate))
+                //                    .font(.caption)
+                //                    .foregroundColor(.secondary)
                 Text(dateFormatter.string(from: note.lastModified))
                     .font(.caption)
                     .foregroundColor(.secondary)

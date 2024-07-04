@@ -26,6 +26,25 @@ struct FilterBadgeView: View {
     }
 }
 
+struct FilterBadgeTagView: View {
+    let tag: String
+    let onClear: () -> Void
+    
+    var body: some View {
+        HStack {
+            Text("Filtered by tag: \(tag)")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            Spacer()
+            Button(action: onClear) {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(.horizontal)
+    }
+}
+
 //#Preview {
 //    FilterBadgeView()
 //}
