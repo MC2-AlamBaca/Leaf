@@ -17,10 +17,12 @@ struct SortFilterNoteModalView: View {
             Form {
                 Section(header: Text("Sort Order")) {
                     Picker("Sort Order", selection: $viewModel.sortOrder) {
-                        Text("Ascending").tag(NoteViewModel.SortOrder.ascending)
-                        Text("Descending").tag(NoteViewModel.SortOrder.descending)
+                        Text("Ascending").foregroundColor(.color2).tag(NoteViewModel.SortOrder.ascending)
+                        Text("Descending").foregroundColor(.color2).tag(NoteViewModel.SortOrder.descending)
                     }
                     .pickerStyle(.inline)
+                    .foregroundColor(.color2)
+                    .accentColor(Color.color2)
                 }
                 
                 Section(header: Text("Filter by Tag")) {
