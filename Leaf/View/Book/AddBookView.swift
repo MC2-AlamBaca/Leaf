@@ -227,7 +227,7 @@ struct GoalItemView: View {
             Image(goal.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 50, height: 50)
+                .frame(width: 120, height: 120)
             
                 .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
             
