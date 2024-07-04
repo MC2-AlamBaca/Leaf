@@ -14,6 +14,8 @@ struct AllNoteView: View {
     var book: Book
     @StateObject private var viewModel = NoteViewModel()
     
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack {
@@ -42,26 +44,46 @@ struct AllNoteView: View {
                 }
             }
             .navigationTitle(book.title)
+            .navigationBarBackButtonHidden(true) // Hide default back button
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         viewModel.isShowingSortFilterModal = true
                     }) {
                         Image(systemName: "line.3.horizontal.decrease.circle")
+                            .foregroundColor(.color2)
                     }
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: AddNoteView(book: book)) {
                         Image(systemName: "plus")
+                            .foregroundColor(.color2)
                     }
                 }
             }
+            
             .searchable(text: $viewModel.searchText, prompt: "Search for Note")
-            .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
+            .foregroundColor(.color2)
+            
+            .navigationBarItems(leading:
+                                Button(action: {
+                                    dismiss() // Dismiss action for custom "Back" button
+                                }) {
+                                    Image(systemName: "chevron.left")
+                                        .foregroundColor(.color2) // Customize back button color
+                                        .imageScale(.large)
+                                    Text("Books")
+                                        .foregroundColor(.color2)
+                                }
+                            )
+            
+            .sheet(isPresented: $viewModel.isShowingSortFilterModal){
                 //SortFilterNoteModalView(viewModel: viewModel, allTags: Array(Set(book.notes.flatMap { $0.tag })))
 //                SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
                 SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
+                    .foregroundColor(.color2)
             }
         }
     }

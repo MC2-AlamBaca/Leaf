@@ -18,6 +18,7 @@ struct AddNoteView: View {
     @State private var goalPrompts: [String] = []
     
     @State private var isTitleFocused: Bool = true
+   
     @State private var selectedPrompt: String = ""
 
     @Environment(\.dismiss) private var dismiss
@@ -54,14 +55,14 @@ struct AddNoteView: View {
     var body: some View {
         NavigationStack{
             Form {
-                Section(header: Text("title")) {
+                Section(header: Text("title").foregroundColor(.color2)) {
                     FocusableTextField(text: $title, placeholder: "Enter title")
                         .focused(isTitleFocused)
                 }
                 
                 photoSection
                 
-                Section(header: Text("page")) {
+                Section(header: Text("page").foregroundColor(.color2)) {
                     TextField("Enter page number", text: $page)
                         .keyboardType(.numberPad)
                 }
@@ -75,10 +76,14 @@ struct AddNoteView: View {
                     }
                     .pickerStyle(MenuPickerStyle())
 //                    .labelsHidden()
+                    // ZAHRA, INI YA DI LINE 77 DITAMBAH TINT COLORNYA SUPAYA BISA SELECTED PICKERNYA PAKAI WARNA YG DIINGINKAN
+                    .tint(.color2)
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-
+                    
+                    
+                    //Picker Prompt
                     if !goalPrompts.isEmpty {
-                        Picker("Prompt", selection: $prompt) {
+                        Picker(selection: $prompt, label: Text("Select Prompt").foregroundColor(.color2)) {
                             Text ("Select Prompt")
                             ForEach(goalPrompts, id: \.self) { prompt in
                                 Text(prompt).tag(prompt)
@@ -86,6 +91,9 @@ struct AddNoteView: View {
                         }
                         .pickerStyle(MenuPickerStyle())
 //                        .labelsHidden()
+                        // ZAHRA, INI YA DI LINE 77 DITAMBAH TINT COLORNYA SUPAYA BISA SELECTED PICKERNYA PAKAI WARNA YG DIINGINKAN
+                        .tint(.color2)
+                        
                         .onChange(of: prompt) { newPrompt in
                             if !newPrompt.isEmpty {
                                 selectedPrompt = newPrompt
@@ -93,7 +101,7 @@ struct AddNoteView: View {
                         }
                     } else {
                         Text("No prompts being selected")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.color4)
                     }
                 }
                 .onChange(of: selectedGoal) { newValue in
@@ -104,23 +112,25 @@ struct AddNoteView: View {
                         goalPrompts = []
                     }
                 }
-
-                Section(header: Text("reflection")) {
+                Section(header: Text("reflection").foregroundColor(.color2)) {
                     Text(selectedPrompt).font(.caption)
                     TextEditor(text: $content)
                         .frame(minHeight: 150)
                 }
-
-                Section(header: Text("tags")) {
+                
+                Section(header: Text("tags").foregroundColor(.color2)) {
                     TagInputView(tags: $tags)
                 }
             }
             .fontDesign(.serif)
+            .foregroundColor(.color2)
         }
+//        .tint(.red) Bingung caranya mengganti color dari navigation bar nya yang berasal dari yang lain. 
         .navigationTitle(note == nil ? "Add Note" : "Edit Note")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(note == nil ? "Save" : "Update", action: addOrUpdateNote)
+                    .foregroundColor(.color2)
             }
         }
         .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
@@ -130,11 +140,13 @@ struct AddNoteView: View {
         .fullScreenCover(isPresented: $showMarkup) {
             MarkupView(photoData: $photoData)
         }
-
+        
+        
     }
+        
     
     private var photoSection: some View {
-        Section(header: Text("Sentence Photo") ) {
+        Section(header: Text("Sentence Photo").foregroundColor(.color2) ) {
             VStack {
                 if let photoData = photoData, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
@@ -146,7 +158,7 @@ struct AddNoteView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.color4)
                         .padding(70)
                 }
                 
@@ -156,12 +168,13 @@ struct AddNoteView: View {
                     showCamera = true
                 }) {
                     Text("Take Photo")
+                        .foregroundColor(.color2)
                         .frame(maxWidth: .infinity)
                 }
             }
         }
     }
-
+    
     private func addOrUpdateNote() {
         if let note = note {
             let originalCreationDate = note.creationDate
@@ -202,7 +215,7 @@ struct AddNoteView: View {
             print("Error saving note: \(error.localizedDescription)")
         }
     }
-        
+    
     
     private func loadImage() {
         guard let inputImage = inputImage else { return }
@@ -210,6 +223,7 @@ struct AddNoteView: View {
         showMarkup = true
     }
 }
+
 
 struct GoalPrompt {
     let goal: String

@@ -87,6 +87,7 @@ struct SortFilterModalView: View {
     }
 }
 
+
 struct SortFilterModalView_Previews: PreviewProvider {
     static var previews: some View {
         SortFilterModalView(viewModel: BookViewModel(), allGoals: ["Goal 1", "Goal 2", "Goal 3"])
