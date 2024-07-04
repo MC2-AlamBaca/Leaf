@@ -18,11 +18,24 @@ struct AllNoteView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                if let selectedTag = viewModel.selectedTag {
+                    FilterBadgeTagView(tag: selectedTag) {
+                        viewModel.selectedTag = nil
+                    }
+                }
+                ///
                 if let notes = book.notes, !notes.isEmpty {
                     NoteListView(book: book, viewModel: viewModel)
                 }
                 else {
-                    NoteListView(book: book, viewModel: viewModel)
+//                    NoteListView(book: book, viewModel: viewModel)
+                    Group {
+                        Image(systemName: "note")
+                            .resizable()
+                            .frame(width: 50, height: 40)
+                        Text("Unleash your thoughts!\nAdd note to remember key points")
+                            .multilineTextAlignment(.center)
+                    }
                 }
             }
             .navigationTitle(book.title)

@@ -18,6 +18,7 @@ struct AddNoteView: View {
     @State private var goalPrompts: [String] = []
     
     @State private var isTitleFocused: Bool = true
+    @State private var selectedPrompt: String = ""
 
     @Environment(\.dismiss) private var dismiss
     
@@ -66,7 +67,7 @@ struct AddNoteView: View {
                 }
 
                 Section(header: Text("goal")) {
-                    Picker("Select Prompt", selection: $selectedGoal) {
+                    Picker("Goal", selection: $selectedGoal) {
                         Text ("Select Goal")
                         ForEach(book.goals, id: \.self) { goal in
                             Text(goal).tag(goal as String?)
@@ -76,7 +77,7 @@ struct AddNoteView: View {
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
 
                     if !goalPrompts.isEmpty {
-                        Picker("Select Prompt", selection: $prompt) {
+                        Picker("Prompt", selection: $prompt) {
                             Text ("Select Prompt")
                             ForEach(goalPrompts, id: \.self) { prompt in
                                 Text(prompt).tag(prompt)
@@ -85,7 +86,7 @@ struct AddNoteView: View {
                         .pickerStyle(MenuPickerStyle())
                         .onChange(of: prompt) { newPrompt in
                             if !newPrompt.isEmpty {
-                                content = newPrompt
+                                selectedPrompt = newPrompt
                             }
                         }
                     } else {
@@ -103,6 +104,7 @@ struct AddNoteView: View {
                 }
 
                 Section(header: Text("reflection")) {
+                    Text(selectedPrompt).font(.caption)
                     TextEditor(text: $content)
                         .frame(minHeight: 150)
                 }

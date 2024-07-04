@@ -32,7 +32,13 @@ struct AllBookView: View {
                     BookListView(books: viewModel.filteredBooks(books))
                 }
                 else {
-                    Text("You have no books yet")
+                    Group {
+                        Image(systemName: "book")
+                            .resizable()
+                            .frame(width: 50, height: 40)
+                        Text("No Books yet?\nTap “+” to add one")
+                            .multilineTextAlignment(.center)
+                    }
                 }
             }
             .navigationTitle("Books")

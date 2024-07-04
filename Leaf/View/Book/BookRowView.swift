@@ -18,6 +18,7 @@ struct BookRowView: View {
             HStack() {
                 if book.isPinned {
                   Image(systemName: "pin.fill")
+//                        .foregroundColor(.color2)
                 }
                 if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
