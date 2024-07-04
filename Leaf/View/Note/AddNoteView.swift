@@ -66,8 +66,8 @@ struct AddNoteView: View {
                     TextField("Enter page number", text: $page)
                         .keyboardType(.numberPad)
                 }
-                //Picker Goal
-                Section(header: Text("goal").foregroundColor(.color2)) {
+
+                Section(header: Text("goal & prompt")) {
                     Picker("Goal", selection: $selectedGoal) {
                         Text ("Select Goal")
                         ForEach(book.goals, id: \.self) { goal in
@@ -75,9 +75,9 @@ struct AddNoteView: View {
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
+//                    .labelsHidden()
                     // ZAHRA, INI YA DI LINE 77 DITAMBAH TINT COLORNYA SUPAYA BISA SELECTED PICKERNYA PAKAI WARNA YG DIINGINKAN
                     .tint(.color2)
-                    
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                     
                     
@@ -90,10 +90,10 @@ struct AddNoteView: View {
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
+//                        .labelsHidden()
                         // ZAHRA, INI YA DI LINE 77 DITAMBAH TINT COLORNYA SUPAYA BISA SELECTED PICKERNYA PAKAI WARNA YG DIINGINKAN
                         .tint(.color2)
                         
-                        .pickerStyle(MenuPickerStyle())
                         .onChange(of: prompt) { newPrompt in
                             if !newPrompt.isEmpty {
                                 selectedPrompt = newPrompt

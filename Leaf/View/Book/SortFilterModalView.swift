@@ -1,10 +1,3 @@
-//
-//  SortFilterModalView.swift
-//  Leaf
-//
-//  Created by Marizka Ms on 30/06/24.
-//
-
 import SwiftUI
 
 struct SortFilterModalView: View {
@@ -12,81 +5,91 @@ struct SortFilterModalView: View {
     @ObservedObject var viewModel: BookViewModel
     let allGoals: [String]
     
+    init(viewModel: BookViewModel, allGoals: [String]) {
+        self.viewModel = viewModel
+        self.allGoals = allGoals
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withDesign(.serif)!,
+                          size: 34), .foregroundColor: UIColor(named: "color1") ?? UIColor.color2
+                                
+        ]
+    }
+    
     var body: some View {
         NavigationView {
             Form {
-                
-                
-                Section(header: Text("Sort") .foregroundColor(.color2)) {
-                    Picker("Sort Order", selection: $viewModel.sortOrder) {
-                        Text("Ascending").foregroundColor(.color2).tag(BookViewModel.SortOrder.ascending)
-                        Text("Descending").foregroundColor(.color2).tag(BookViewModel.SortOrder.descending)
-                    }
-                    .pickerStyle(.inline)
-                    .accentColor(Color.color2)
-                    
+                sortOrderSection
+                filterByGoalSection
+            }
+            .navigationTitle("Sort and Filter")
+            .fontDesign(.serif)
+            .accentColor(.color1)
+            .navigationBarItems(trailing: doneButton)
+        }
+        .onAppear{
+            viewModel.setAllGoals(allGoals)
+        }
+    }
+    
+    private var sortOrderSection: some View {
+        Section(header: Text("Sort")) {
+            Picker("Sort Order", selection: $viewModel.sortOrder) {
+                ForEach(BookViewModel.SortOrder.allCases, id: \.self) { order in
+                    Text(order.rawValue).tag(order)
                 }
-                
-//                Section(header: Text("Sort").foregroundColor(.color2)) {
-//                                   CustomPicker(selection: $viewModel.sortOrder, options: [.ascending, .descending], label: "Sort Order")
-//                               }
-                
-                Section(header: Text("Filter by Goal") .foregroundColor(.color2)) {
-                    ForEach(["All Goals"] + allGoals, id: \.self) { goal in
-                        Button(action: {
-                            viewModel.selectedGoal = goal == "All Goals" ? nil : goal
-                            dismiss()
-                        }) {
-                            HStack {
-                                Text(goal)
-                                Spacer()
-                                if goal == "All Goals" ? (viewModel.selectedGoal == nil) : (viewModel.selectedGoal == goal) {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
+            }
+            .pickerStyle(.inline)
+            .labelsHidden()
+        }
+    }
+    
+    private var filterByGoalSection: some View {
+        Section(header: Text("Filter by Goals")) {
+            ForEach(viewModel.allGoals, id: \.self) { goal in
+                Button(action: {
+                    toggleGoalSelection(goal)
+                }) {
+                    HStack {
+                        Text(goal)
+                        Spacer()
+                        if viewModel.selectedGoals.contains(goal) {
+                            Image(systemName: "checkmark")
                         }
                     }
                 }
             }
-            .navigationTitle("Sort and Filter")
-            
-            .navigationBarItems(trailing: Button("Done") {
-                dismiss()
-            })
+            if !viewModel.selectedGoals.isEmpty {
+                Button("Clear All", action: clearAllGoals)
+                    .foregroundColor(.red)
+            }
         }
-        .foregroundColor(.color2)
+    }
+
+    private func toggleGoalSelection(_ goal: String) {
+        if viewModel.selectedGoals.contains(goal) {
+            viewModel.selectedGoals.remove(goal)
+        } else {
+            viewModel.selectedGoals.insert(goal)
+        }
+    }
+    
+    private func clearAllGoals() {
+        viewModel.selectedGoals.removeAll()
+    }
+    
+    private var doneButton: some View {
+        Button("Done") {
+            dismiss()
+        }
+        .foregroundColor(.color1)
+        .fontDesign(.serif)
+        
     }
 }
-//
-//// Define the CustomPicker view
-//struct CustomPicker: View {
-//    @Binding var selection: BookViewModel.SortOrder
-//    var options: [BookViewModel.SortOrder]
-//    var label: String
-//    
-//    var body: some View {
-//        VStack(alignment: .leading) {
-////            Text(label)
-////                .foregroundColor(.color2)
-//            ForEach(options, id: \.self) { option in
-//                HStack {
-//                    Text(option == .ascending ? "Ascending" : "Descending")
-//                        .foregroundColor(.color2) // Change text color here
-//                    Spacer()
-//                    if option == selection {
-//                        Image(systemName: "checkmark")
-//                            .foregroundColor(.color2) // Change checkmark color here
-//                    }
-//                }
-//                .contentShape(Rectangle())
-//                .onTapGesture {
-//                    selection = option
-//                }
-//            }
-//        }
-//    }
-//}
 
-//#Preview {
-//    SortFilterModalView(viewModel: <#BookViewModel#>, allGoals: <#[String]#>)
-//}
+
+struct SortFilterModalView_Previews: PreviewProvider {
+    static var previews: some View {
+        SortFilterModalView(viewModel: BookViewModel(), allGoals: ["Goal 1", "Goal 2", "Goal 3"])
+    }
+}
