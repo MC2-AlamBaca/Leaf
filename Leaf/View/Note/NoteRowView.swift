@@ -22,7 +22,7 @@ struct NoteRowView: View {
             HStack {
                 if note.isPinned {
                     Image(systemName: "pin.fill")
-                        .foregroundColor(.yellow)
+//                        .foregroundColor(.color2)
                 }
                 Text(note.title)
                     .font(.headline)
