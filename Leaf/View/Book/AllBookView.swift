@@ -23,13 +23,11 @@ struct AllBookView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let selectedGoal = viewModel.selectedGoal {
-                    FilterBadgeView(goal: selectedGoal) {
-                        viewModel.selectedGoal = nil
-                    }
-                }
                 if !books.isEmpty{
                     BookListView(books: viewModel.filteredBooks(books))
+                        .responsiveBadge(goals: Array(viewModel.selectedGoals)) {
+                            viewModel.selectedGoals.removeAll()
+                        }
                 }
                 else {
                     Group {

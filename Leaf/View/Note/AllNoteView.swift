@@ -18,14 +18,17 @@ struct AllNoteView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let selectedTag = viewModel.selectedTag {
-                    FilterBadgeTagView(tag: selectedTag) {
-                        viewModel.selectedTag = nil
-                    }
-                }
+//                if !viewModel.selectedTags.isEmpty {
+//                    FilterBadgeTagView(tags: Array(viewModel.selectedTags)) {
+//                        viewModel.selectedTags.removeAll()
+//                    }
+//                }
                 ///
                 if let notes = book.notes, !notes.isEmpty {
                     NoteListView(book: book, viewModel: viewModel)
+                        .responsiveBadge(goals: Array(viewModel.selectedTags)) {
+                            viewModel.selectedTags.removeAll()
+                        }
                 }
                 else {
 //                    NoteListView(book: book, viewModel: viewModel)
@@ -57,6 +60,7 @@ struct AllNoteView: View {
             .searchable(text: $viewModel.searchText, prompt: "Search for Note")
             .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
                 //SortFilterNoteModalView(viewModel: viewModel, allTags: Array(Set(book.notes.flatMap { $0.tag })))
+//                SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
                 SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
             }
         }

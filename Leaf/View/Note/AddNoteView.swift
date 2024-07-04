@@ -66,7 +66,7 @@ struct AddNoteView: View {
                         .keyboardType(.numberPad)
                 }
 
-                Section(header: Text("goal")) {
+                Section(header: Text("goal & prompt")) {
                     Picker("Goal", selection: $selectedGoal) {
                         Text ("Select Goal")
                         ForEach(book.goals, id: \.self) { goal in
@@ -74,6 +74,7 @@ struct AddNoteView: View {
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
+//                    .labelsHidden()
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
 
                     if !goalPrompts.isEmpty {
@@ -84,6 +85,7 @@ struct AddNoteView: View {
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
+//                        .labelsHidden()
                         .onChange(of: prompt) { newPrompt in
                             if !newPrompt.isEmpty {
                                 selectedPrompt = newPrompt
