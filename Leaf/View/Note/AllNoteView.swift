@@ -17,15 +17,31 @@ struct AllNoteView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
+    init(book: Book) {
+            self.book = book
+            
+            // Configure the navigation bar appearance
+            if let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+                .withDesign(.serif)?
+                .withSymbolicTraits(.traitBold) {
+                let largeFont = UIFont(descriptor: descriptor, size: 0) // size 0 keeps the original size
+                let smallFont = UIFont(descriptor: descriptor, size: 17) // Adjust size as needed for inline title
+                
+                UINavigationBar.appearance().largeTitleTextAttributes = [
+                    .font: largeFont,
+                    .foregroundColor: UIColor(named: "color1") ?? UIColor.black
+                ]
+                
+                UINavigationBar.appearance().titleTextAttributes = [
+                    .font: smallFont,
+                    .foregroundColor: UIColor(named: "color1") ?? UIColor.black
+                ]
+            }
+        }
+    
     var body: some View {
         NavigationStack {
             VStack {
-//                if !viewModel.selectedTags.isEmpty {
-//                    FilterBadgeTagView(tags: Array(viewModel.selectedTags)) {
-//                        viewModel.selectedTags.removeAll()
-//                    }
-//                }
-                ///
                 if let notes = book.notes, !notes.isEmpty {
                     NoteListView(book: book, viewModel: viewModel)
                         .responsiveBadge(goals: Array(viewModel.selectedTags)) {
@@ -33,7 +49,6 @@ struct AllNoteView: View {
                         }
                 }
                 else {
-//                    NoteListView(book: book, viewModel: viewModel)
                     Group {
                         Image("emptyStateNote")
                             .resizable()
@@ -45,6 +60,7 @@ struct AllNoteView: View {
                 }
             }
             .navigationTitle(book.title)
+            .navigationBarTitleDisplayMode(.large)
             .navigationBarBackButtonHidden(true) // Hide default back button
             
             .toolbar {
@@ -81,12 +97,15 @@ struct AllNoteView: View {
                             )
             
             .sheet(isPresented: $viewModel.isShowingSortFilterModal){
-                //SortFilterNoteModalView(viewModel: viewModel, allTags: Array(Set(book.notes.flatMap { $0.tag })))
-//                SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
                 SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
                     .foregroundColor(.color2)
             }
         }
+        .onDisappear {
+                    // Reset navigation bar appearance when view disappears
+                    UINavigationBar.appearance().largeTitleTextAttributes = nil
+                    UINavigationBar.appearance().titleTextAttributes = nil
+                }
     }
     
     private func getAllTags() -> [String] {
