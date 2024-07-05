@@ -189,6 +189,8 @@ struct AddNoteView: View {
             } else {
                 book.notes?.append(newNote)
             }
+            // Schedule notifications for the new note
+            NotificationScheduler.scheduleNotifications(for: newNote)
         }
         
         do {

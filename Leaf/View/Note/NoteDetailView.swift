@@ -26,56 +26,6 @@ struct NoteDetailView: View {
                         .resizable()
                         .scaledToFit()
                 }
-//                if isEditing {
-//                                   TextField("Title", text: Binding(
-//                                       get: { editedNote?.title ?? note.title },
-//                                       set: { editedNote?.title = $0 }
-//                                   ))
-//                                   .font(.largeTitle)
-//                                   .fontDesign(.serif)
-//                                   
-//                                   if let imageData = editedNote?.imageNote ?? note.imageNote, let image = UIImage(data: imageData) {
-//                                       Image(uiImage: image)
-//                                           .resizable()
-//                                           .scaledToFit()
-//                                   }
-//                                   
-//                                   TextField("Page", value: Binding(
-//                                       get: { editedNote?.page ?? note.page },
-//                                       set: { editedNote?.page = $0 }
-//                                   ), formatter: NumberFormatter())
-//                                   
-//                                   TextEditor(text: Binding(
-//                                       get: { editedNote?.content ?? note.content },
-//                                       set: { editedNote?.content = $0 }
-//                                   ))
-//                                   
-//                                   TextField("Prompt", text: Binding(
-//                                       get: { editedNote?.prompt ?? note.prompt },
-//                                       set: { editedNote?.prompt = $0 }
-//                                   ))
-//                                   
-//                                   Text("Tags:")
-//                                   ScrollView(.horizontal, showsIndicators: false) {
-//                                       HStack {
-//                                           ForEach(editedNote?.tag?.compactMap { $0 } ?? note.tag?.compactMap { $0 } ?? [], id: \.self) { tag in
-//                                                                           Text(tag)
-//                                                                               .padding(.horizontal, 10)
-//                                                                               .padding(.vertical, 5)
-//                                                                               .background(Color.blue.opacity(0.2))
-//                                                                               .cornerRadius(15)
-//                                                                       }
-//                                       }
-//                                   }
-//                } else {
-//                    Text(note.title)
-//                        .font(.largeTitle)
-//                        .fontDesign(.serif)
-//                    if let imageData = note.imageNote, let image = UIImage(data: imageData) {
-//                        Image(uiImage: image)
-//                            .resizable()
-//                            .scaledToFit()
-//                    }
                     Text("Page: \(note.page ?? 0)")
                     Text(note.content)
                     Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
@@ -108,7 +58,7 @@ struct NoteDetailView: View {
         }
         .foregroundColor(.color1)
         .padding()
-        }//ScrollView
+        }
         
     }
     
