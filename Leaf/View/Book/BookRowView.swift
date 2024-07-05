@@ -28,7 +28,8 @@ struct BookRowView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
                 VStack(alignment: .leading) {
-                    HStack {
+                    HStack (spacing : 5 ){
+//                        .padding (.horizontal, 2)
                         Text(book.title)
                             .font(.title3)
                             .bold()
@@ -43,23 +44,26 @@ struct BookRowView: View {
                     
                     Spacer()
                     // Display goals below the author as image
-                    HStack {
+                    HStack (spacing : -5) {
                         ForEach(book.goals, id: \.self) { goalTitle in
                             if let goal = availableGoals.first(where: { $0.title == goalTitle }) {
                                 Image(goal.imageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20, height: 20)
-                                    .background(goal.imgColor)
-                                    .clipShape(Circle())
+                                    .frame(width: 35, height: 35)
+//                                    .background(goal.imgColor)
+//                                    .clipShape(Circle())
                             } else {
                                 Text(goalTitle) // Fallback if goal is not found
                                     .font(.footnote)
                             }
                         }
+                        
                     }
+                    .padding (.horizontal, 2)
                 }
                 .padding(.vertical, 8)
+            
                 
                 Spacer()
                 

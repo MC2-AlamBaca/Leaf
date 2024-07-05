@@ -55,9 +55,18 @@ struct AddNoteView: View {
     var body: some View {
         NavigationStack{
             Form {
-                Section(header: Text("title").foregroundColor(.color2)) {
+                
+//                TextField("Enter title", text: $title)
+//                                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                                .focused($isTitleFocused)
+//                                .padding()
+                
+                Section(header: Text("title").foregroundColor(.color2).textFieldStyle(RoundedBorderTextFieldStyle())) {
                     FocusableTextField(text: $title, placeholder: "Enter title")
                         .focused(isTitleFocused)
+                    
+                    
+                    
                 }
                 
                 photoSection

@@ -175,7 +175,8 @@ struct AddBookView: View {
         }
         
         let defaultAuthor = "-"
-        let defaultPhotoData = UIImage(systemName: "book.fill")?.jpegData(compressionQuality: 0.8)
+//        let defaultPhotoData = UIImage(systemName: "bookCoverBaru")?.jpegData(compressionQuality: 0.8)
+        let defaultPhotoData = UIImage(named: "bookCoverBaru")?.jpegData(compressionQuality: 0.8)
         
         let book = Book(
             title: title,
