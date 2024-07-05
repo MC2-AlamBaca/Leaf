@@ -16,8 +16,15 @@ struct NotificationScheduler {
         content.title = "Review your note"
         content.body = note.title
         content.userInfo = ["noteID": note.id.uuidString]
-        content.sound = .default
 
+        // Specify the custom sound file
+                if let soundURL = Bundle.main.url(forResource: "mixkit", withExtension: "wav") {
+                    content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundURL.absoluteString))
+                    print("sound sukses")
+                } else {
+                    content.sound = .default
+                }
+        
         for interval in intervals {
             let triggerDate = note.creationDate.addingTimeInterval(interval)
             let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate), repeats: false)
