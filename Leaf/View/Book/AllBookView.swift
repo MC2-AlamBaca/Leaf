@@ -40,7 +40,15 @@ struct AllBookView: View {
                 }
             }
             .navigationTitle("Books")
-            .foregroundColor(.color2)
+
+//                    .font(.largeTitle)
+                    .bold()
+                    .foregroundColor(.color1)
+//                    .fontDesign(.serif)
+            
+
+
+
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
