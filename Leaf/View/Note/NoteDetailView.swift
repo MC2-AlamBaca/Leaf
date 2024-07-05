@@ -10,6 +10,7 @@ import SwiftData
 
 struct NoteDetailView: View {
     var note: Note
+    @State private var isFullScreenImagePresented = false
     //    @State private var isEditing = false
     //    @State private var editedNote: Note?
     
@@ -50,6 +51,10 @@ struct NoteDetailView: View {
                             .mask {
                                 RoundedRectangle(cornerRadius: 12)
                             }
+                            .onTapGesture {
+                                print("Image tapped, presenting full screen")
+                                isFullScreenImagePresented = true
+                            }
                     }
                     VStack {
                         Spacer()
@@ -74,45 +79,45 @@ struct NoteDetailView: View {
                 .padding(.horizontal)
                 
                 
-                                    VStack {
-                                        Text(note.prompt)
-                                            .fontDesign(.serif)
-                                            .font(.title3)
-                                            .bold()
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .foregroundColor(Color("Color 1"))
-                                            .padding(.bottom, 12)
-                                        
-                                        Text(note.content)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
+                VStack {
+                    Text(note.prompt)
+                        .fontDesign(.serif)
+                        .font(.title3)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(Color("Color 1"))
+                        .padding(.bottom, 12)
+                    
+                    Text(note.content)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(Color("Color 2"))
+                        .padding(.bottom, 16)
+                    
+                    if let tags = note.tag, !tags.isEmpty {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                Image(systemName: "tag.fill")
+                                    .foregroundColor(Color("Color 2"))
+                                    .padding(.trailing, 4)
+                                
+                                HStack {
+                                    ForEach(tags.compactMap { $0 }, id: \.self) { tag in
+                                        Text(tag)
+                                            .cornerRadius(15)
                                             .foregroundColor(Color("Color 2"))
-                                            .padding(.bottom, 16)
-                                        
-                                        if let tags = note.tag, !tags.isEmpty {
-                                            ScrollView(.horizontal, showsIndicators: false) {
-                                                HStack {
-                                                    Image(systemName: "tag.fill")
-                                                        .foregroundColor(Color("Color 2"))
-                                                        .padding(.trailing, 4)
-                                                        
-                                                    HStack {
-                                                        ForEach(tags.compactMap { $0 }, id: \.self) { tag in
-                                                            Text(tag)
-                                                                .cornerRadius(15)
-                                                                .foregroundColor(Color("Color 2"))
-                                                                .bold()
-                                                                .fontDesign(.serif)
-                                                                .font(.subheadline)
-                                                                .padding(.leading, -4)
-                                                            Text(",")
-                                                                .padding(.leading, -8)
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                                            .bold()
+                                            .fontDesign(.serif)
+                                            .font(.subheadline)
+                                            .padding(.leading, -4)
+                                        Text(",")
+                                            .padding(.leading, -8)
                                     }
-                                    .padding()
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding()
             }
             //            Spacer()
         }
@@ -126,8 +131,11 @@ struct NoteDetailView: View {
         }
         .foregroundColor(.color1)
         .padding()
+        .fullScreenCover(isPresented: $isFullScreenImagePresented) {
+            FullScreenImageView(imageData: note.imageNote!)
         }
     }
+}
 
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -135,6 +143,31 @@ private let dateFormatter: DateFormatter = {
     formatter.timeStyle = .short
     return formatter
 }()
+
+struct FullScreenImageView: View {
+    var imageData: Data
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View {
+        if let image = UIImage(data: imageData) {
+            VStack {
+                Spacer()
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .edgesIgnoringSafeArea(.all)
+                Spacer()
+            }
+            .background(Color.black)
+            .onTapGesture {
+                // Dismiss the full screen image view
+                presentationMode.wrappedValue.dismiss()
+            }
+        } else {
+            Text("Image not available")
+        }
+    }
+}
 
 
 #Preview {
