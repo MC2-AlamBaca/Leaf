@@ -7,15 +7,22 @@ struct AddNoteView: View {
     @State private var title: String = ""
     @State private var content: String = ""
     @State private var page: String = ""
-    @State private var prompt: String = ""
+    @State private var prompt: String = "Select Prompt"
     @State private var tags: [String] = []
     @State private var photoData: Data?
     @State private var showCamera = false
     @State private var showMarkup = false
     @State private var inputImage: UIImage?
+    @State private var placeholderText: Bool = false
     
-    @State private var selectedGoal: String?
+    @State private var selectedGoal: String? = nil
     @State private var goalPrompts: [String] = []
+    
+    @State private var isTitleFocused: Bool = true
+   
+    @State private var selectedPrompt: String = ""
+    @State private var selectedGoals: Set<String> = []
+    @State private var availablePrompts: [String] = []
 
     @Environment(\.dismiss) private var dismiss
     
@@ -23,12 +30,12 @@ struct AddNoteView: View {
     var note: Note?
     
     let goalsWithPrompts: [GoalPrompt] = [
-        GoalPrompt(goal: "Deepen your self-understanding", prompts: ["What did you learn about yourself?", "How did this change your perspective?"]),
-        GoalPrompt(goal: "Ignite your motivation", prompts: ["What inspired you?", "What action will you take?"]),
-        GoalPrompt(goal: "Expand your skills and knowledge", prompts: ["What new skill did you learn?", "How will you apply this knowledge?"]),
-        GoalPrompt(goal: "Overcome challenges", prompts: ["What challenges did you face?", "How did you overcome them?"]),
-        GoalPrompt(goal: "Enhance relationships and communication", prompts: ["How did this improve your relationships?", "What communication skills did you use?"]),
-        GoalPrompt(goal: "Discover inner peace and happiness", prompts: ["What brought you peace?", "What made you happy?"])
+        GoalPrompt(goal: "Deepen your self-understanding", prompts: ["I found an 'aha!' moment about myself when I realized...", "This reading really clicked about myself because..."]),
+        GoalPrompt(goal: "I've been fired up by stories or ideas like...", prompts: ["A goal that really fuels my passion is..."]),
+        GoalPrompt(goal: "Expand your skills and knowledge", prompts: ["Excited about new skills or knowledge I've gained, such as...", "I'm reflecting on a skill I'm eager to master, which is..."]),
+        GoalPrompt(goal: "Overcome challenges", prompts: ["I've picked up tips from my reading on handling tough spots, like...", "Reflecting on a lesson learned from overcoming adversity..."]),
+        GoalPrompt(goal: "Enhance relationships and communication", prompts: ["I've gained insights to strengthen my connections, such as...", "Applying insights from this books enhances my connections by..."]),
+        GoalPrompt(goal: "Discover inner peace and happiness", prompts: ["I find resonance with my quest for peace and joy when...", "Applying wisdom from self-improvement books helps me deepen my connection with myself by..."])
     ]
     
     init(book: Book, note: Note? = nil) {
@@ -37,67 +44,108 @@ struct AddNoteView: View {
         _title = State(initialValue: note?.title ?? "")
         _content = State(initialValue: note?.content ?? "")
         _page = State(initialValue: note?.page != nil ? String(note!.page!) : "")
-        _prompt = State(initialValue: note?.prompt ?? "")
+        _prompt = State(initialValue: note?.prompt ?? "Select Prompt")
         _tags = State(initialValue: note?.tag?.compactMap { $0 } ?? [])
         _photoData = State(initialValue: note?.imageNote)
-        _selectedGoal = State(initialValue: note?.books?.goals.first(where: { goal in
-            goalsWithPrompts.contains { $0.goal == goal }
-        }))
-        _goalPrompts = State(initialValue: note != nil ? (goalsWithPrompts.first(where: { $0.goal == note!.books?.goals.first(where: { goal in
-            goalsWithPrompts.contains { $0.goal == goal }
-        }) })?.prompts ?? []) : [])
+        
+        // Initialize selectedGoals
+        if let noteGoals = note?.books?.goals {
+            _selectedGoals = State(initialValue: Set(noteGoals.filter { goal in
+                goalsWithPrompts.contains { $0.goal == goal }
+            }))
+        } else {
+            _selectedGoals = State(initialValue: Set(book.goals))
+        }
+        
+        // Initialize prompt based on selected goals
+        if let notePrompt = note?.prompt, !notePrompt.isEmpty {
+            _prompt = State(initialValue: notePrompt)
+        } else if let firstSelectedGoal = _selectedGoals.wrappedValue.first,
+                  let firstPrompt = goalsWithPrompts.first(where: { $0.goal == firstSelectedGoal })?.prompts.first {
+            _prompt = State(initialValue: firstPrompt)
+        }
     }
     
     var body: some View {
         NavigationStack{
             Form {
-                photoSection
-                Section(header: Text("Title")) {
+                Section(header: Text("title").foregroundColor(.color2)) {
                     TextField("Enter title", text: $title)
+//                        .focused(isTitleFocused)
                 }
-                Section(header: Text("Page")) {
+                
+                photoSection
+                
+                Section(header: Text("page").foregroundColor(.color2)) {
                     TextField("Enter page number", text: $page)
                         .keyboardType(.numberPad)
                 }
-                Section(header: Text("")) {
-                    Picker("Select Goal", selection: $selectedGoal) {
-                        ForEach(book.goals, id: \.self) { goal in
-                            Text(goal).tag(goal as String?)
-                        }
-                    }
-                    .onChange(of: selectedGoal) { newValue in
-                        if let goal = newValue,
-                           let prompts = goalsWithPrompts.first(where: { $0.goal == goal })?.prompts {
-                            goalPrompts = prompts
-                        } else {
-                            goalPrompts = []
-                        }
-                    }
-                    if !goalPrompts.isEmpty {
-                        Picker("Select Prompt", selection: $prompt) {
-                            ForEach(goalPrompts, id: \.self) { prompt in
-                                Text(prompt).tag(prompt)
+                
+                Section(header: Text("reflection").foregroundColor(.color2)) {
+                    let availablePrompts = getAvailablePrompts()
+                    if !availablePrompts.isEmpty {
+                        Picker(selection: $prompt, label: Text("Select Prompt").foregroundColor(.color2)) {
+                            ForEach(availablePrompts, id: \.self) { prompt in
+                                Text(prompt)
+                                    .tag(prompt)
+                                    .font(.system(size: 16, weight: .regular, design: .serif))
                             }
                         }
+                        .frame(height:50)
+                        .pickerStyle(MenuPickerStyle())
+                        .labelsHidden()
+                        .tint(.color2)
+                        .onChange(of: prompt) { newPrompt in
+                            if newPrompt != "Select Prompt" {
+                                selectedPrompt = newPrompt
+                            }
+                        }
+                        .fontDesign(.rounded)
+                        .italic()
                     } else {
-                        Text("No prompts available for the selected goal")
-                            .foregroundColor(.gray)
+                        Text("No prompts available")
+                            .foregroundColor(.color4)
                     }
-                    
-                        TextEditor(text: $content)
+                    TextEditor(text: $content)
+                        .frame(minHeight: 150)
+                        .onTapGesture {
+                            placeholderText = false
+                        }
+                        .overlay(
+                            VStack {
+                                HStack {
+                                    if content.isEmpty {
+                                        Text("Write your reflection here...")
+                                            .foregroundColor(.gray)
+                                    }
+                                    Spacer()
+                                }//HStack
+                                Spacer()
+                            }//VStack
+        
+                        )
                 }
-               
-                Section(header: Text("Tags")) {
+                .fontDesign(.serif)
+                .onAppear {
+                    prompt = "Select Prompt"
+                    updateAvailablePrompts()
+                }
+                
+                Section(header: Text("tags").foregroundColor(.color2)) {
                     TagInputView(tags: $tags)
                 }
             }
+            .fontDesign(.serif)
+            .foregroundColor(.color2)
         }
+//        .tint(.red) Bingung caranya mengganti color dari navigation bar nya yang berasal dari yang lain. 
         .navigationTitle(note == nil ? "Add Note" : "Edit Note")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(note == nil ? "Save" : "Update", action: addOrUpdateNote)
-                    }
-                }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(note == nil ? "Save" : "Update", action: addOrUpdateNote)
+                    .foregroundColor(.color2)
+            }
+        }
         .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
             ImagePicker(image: $inputImage)
                 .ignoresSafeArea()
@@ -105,11 +153,13 @@ struct AddNoteView: View {
         .fullScreenCover(isPresented: $showMarkup) {
             MarkupView(photoData: $photoData)
         }
-
+        
+        
     }
+        
     
     private var photoSection: some View {
-        Section(header: Text("Photo")) {
+        Section(header: Text("Sentence Photo").foregroundColor(.color2) ) {
             VStack {
                 if let photoData = photoData, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
@@ -121,7 +171,7 @@ struct AddNoteView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.color4)
                         .padding(70)
                 }
                 
@@ -131,14 +181,30 @@ struct AddNoteView: View {
                     showCamera = true
                 }) {
                     Text("Take Photo")
+                        .foregroundColor(.color2)
                         .frame(maxWidth: .infinity)
                 }
             }
         }
     }
+    
+    func getAvailablePrompts() -> [String] {
+        return goalsWithPrompts
+            .filter { book.goals.contains($0.goal) }
+            .flatMap { $0.prompts }
+    }
 
+    func updateAvailablePrompts() {
+        availablePrompts = getAvailablePrompts()
+        if !availablePrompts.contains(prompt) {
+            prompt = availablePrompts.first ?? ""
+        }
+    }
+    
     private func addOrUpdateNote() {
         if let note = note {
+            let originalCreationDate = note.creationDate
+            
             note.title = title
             note.page = Int(page)
             note.content = content
@@ -146,6 +212,7 @@ struct AddNoteView: View {
             note.prompt = prompt
             note.tag = tags
             note.imageNote = photoData
+            note.creationDate = originalCreationDate
         } else {
             let newNote = Note(
                 title: title,
@@ -155,7 +222,8 @@ struct AddNoteView: View {
                 lastModified: Date(),
                 prompt: prompt,
                 tag: tags,
-                books: book
+                books: book,
+                creationDate: Date()
             )
             modelContext.insert(newNote)
             
@@ -164,6 +232,8 @@ struct AddNoteView: View {
             } else {
                 book.notes?.append(newNote)
             }
+            // Schedule notifications for the new note
+            NotificationScheduler.scheduleNotifications(for: newNote)
         }
         
         do {
@@ -173,7 +243,7 @@ struct AddNoteView: View {
             print("Error saving note: \(error.localizedDescription)")
         }
     }
-        
+    
     
     private func loadImage() {
         guard let inputImage = inputImage else { return }
@@ -182,16 +252,8 @@ struct AddNoteView: View {
     }
 }
 
+
 struct GoalPrompt {
     let goal: String
     let prompts: [String]
 }
-
-//struct AddNoteView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddNoteView(book: Book(backingData: <#any BackingData<Book>#>), goalsWithPrompts: [
-//            GoalPrompt(goal: "Sample Goal 1", prompts: ["Prompt 1", "Prompt 2"]),
-//            GoalPrompt(goal: "Sample Goal 2", prompts: ["Prompt A", "Prompt B"])
-//        ])
-//    }
-//}

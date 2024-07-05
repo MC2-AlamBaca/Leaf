@@ -18,6 +18,8 @@ struct BookListView: View {
     }
 
     @State private var selectedBook: Book? // Track selected book for editing
+    @State private var bookToDelete: Book? //Track book yang akan di delete
+    @State private var showDeleteConfirmation: Bool = false //confimasi untuk delete
     
     
     var body: some View {
@@ -27,11 +29,15 @@ struct BookListView: View {
                     BookRowView(book: book)
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                    Button(role: .destructive) {
-                        deleteBook(book)
+                    Button() {
+//                        deleteBook(book)
+                        bookToDelete = book
+                        showDeleteConfirmation = true
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
+                    .tint(.red)
+                    
                     Button() {
                         // Set selectedBookID and show edit view
                         editBook(book)
@@ -57,29 +63,39 @@ struct BookListView: View {
             AddBookView(existingBook: book)
                 
         }
-        .listRowSpacing(16)
+        .alert(isPresented: $showDeleteConfirmation) {
+            Alert(
+                title: Text("Delete Book"),
+                message: Text("Are you sure you want to delete this book? This action cannot be undone."),
+                primaryButton: .destructive(Text("Delete")){
+                    if let bookToDelete = bookToDelete {
+                        deleteBook(bookToDelete)
+                    }
+                },
+                secondaryButton: .cancel())
+        }
+        .listRowSpacing(10)
     }
     
     private func deleteBook(_ book: Book) {
-        modelContext.delete(book)
-        do {
-            try modelContext.save()
-        } catch {
-            print("Failed to save context after deleting book: \(error.localizedDescription)")
+        withAnimation {
+            modelContext.delete(book)
+            do {
+                try modelContext.save()
+            } catch {
+                print("Failed to save context after deleting book: \(error.localizedDescription)")
+            }
         }
     }
 
     private func pinBook(_ book: Book) {
         book.isPinned.toggle()
-        
         // Save the updated book back to the context
         do {
-            
             try modelContext.save()
         } catch {
             print("Failed to save context after pinning book: \(error.localizedDescription)")
         }
-    
         // Implement pinning logic
         print("Pinning book: \(book.title)")
     }

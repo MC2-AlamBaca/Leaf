@@ -15,6 +15,7 @@ struct NoteDetailView: View {
     
     
     var body: some View {
+
         ScrollView() {
             VStack(alignment: .leading) {
                 
@@ -161,7 +162,7 @@ private let dateFormatter: DateFormatter = {
         lastModified: Date(),
         prompt: "Summarize the key points of Chapter 1",
         tag: ["Chapter1", "Summary", "Introduction"],
-        books: book
+        books: book, creationDate: Date()
     )
     
     context.insert(note)

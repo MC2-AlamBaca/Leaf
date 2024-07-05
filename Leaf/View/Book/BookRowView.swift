@@ -18,6 +18,7 @@ struct BookRowView: View {
             HStack() {
                 if book.isPinned {
                   Image(systemName: "pin.fill")
+//                        .foregroundColor(.color2)
                 }
                 if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
@@ -31,7 +32,8 @@ struct BookRowView: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    HStack {
+                    HStack (spacing : 5 ){
+//                        .padding (.horizontal, 2)
                         Text(book.title)
                             .font(.title3)
                             .bold()
@@ -47,14 +49,17 @@ struct BookRowView: View {
                     
                     Spacer()
                     // Display goals below the author as image
-                    HStack {
+                    HStack (spacing : -5) {
                         ForEach(book.goals, id: \.self) { goalTitle in
                             if let goal = availableGoals.first(where: { $0.title == goalTitle }) {
                                 Image(goal.imageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20, height: 20)
+
+                                    .frame(width: 35, height: 35)
                                     .foregroundColor(Color("Color 1"))
+
+
 //                                    .background(goal.imgColor)
 //                                    .clipShape(Circle())
                             } else {
@@ -62,7 +67,9 @@ struct BookRowView: View {
                                     .font(.footnote)
                             }
                         }
+                        
                     }
+                    .padding (.horizontal, 2)
                 }
                 .padding(.top, 4)
                 .padding(.bottom, 6)

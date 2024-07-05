@@ -23,25 +23,38 @@ struct AllBookView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let selectedGoal = viewModel.selectedGoal {
-                    FilterBadgeView(goal: selectedGoal) {
-                        viewModel.selectedGoal = nil
-                    }
-                }
-                
                 if !books.isEmpty{
                     BookListView(books: viewModel.filteredBooks(books))
+                        .responsiveBadge(goals: Array(viewModel.selectedGoals)) {
+                            viewModel.selectedGoals.removeAll()
+                        }
                 }
                 else {
-                    Text("You have no books yet")
+                    Group {
+                        Image("emptyStateBook") // Replace "bookCoverBaru" with the name of your image in the assets
+                                .resizable()
+                                .frame(width: 250, height: 250)
+                            Text("No Books yet?\nTap “+” to add one")
+                                .font(.system(size: 16))
+                                .multilineTextAlignment(.center)
+//                        Image(systemName: "book")
+////                        Image(bookCoverBaru)
+//                            .resizable()
+//                            .frame(width: 50, height: 40)
+                       
+                    }
                 }
             }
             .navigationTitle("Books")
+
 //                    .font(.largeTitle)
                     .bold()
                     .foregroundColor(.color1)
 //                    .fontDesign(.serif)
             
+
+
+
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
@@ -51,7 +64,6 @@ struct AllBookView: View {
                             .foregroundColor(.color2)
                     }
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: AddBookView()) {
                         Image(systemName: "plus")
