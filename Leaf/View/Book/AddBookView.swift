@@ -31,6 +31,30 @@ struct AddBookView: View {
         Goal(title: "Discover inner peace and happiness", imageName: "discoverInnerPeaceAndHappiness_Goal", imgColor: Color("color1"))
     ]
     
+    
+    //navigation title fontstyle
+    init(existingBook: Book? = nil) {
+        self.existingBook = existingBook
+        
+        // Configure the navigation bar appearance
+        if let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+            .withDesign(.serif)?
+            .withSymbolicTraits(.traitBold) {
+            let largeFont = UIFont(descriptor: descriptor, size: 0) // size 0 keeps the original size
+            let smallFont = UIFont(descriptor: descriptor, size: 17) // Adjust size as needed for inline title
+            
+            UINavigationBar.appearance().largeTitleTextAttributes = [
+                .font: largeFont,
+                .foregroundColor: UIColor(named: "color1") ?? UIColor.black
+            ]
+            
+            UINavigationBar.appearance().titleTextAttributes = [
+                .font: smallFont,
+                .foregroundColor: UIColor(named: "color1") ?? UIColor.black
+            ]
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -88,7 +112,6 @@ struct AddBookView: View {
                 }
             }
         }
-        .fontDesign(.serif)
     }
     
     private var bookCoverSection: some View {
@@ -136,7 +159,7 @@ struct AddBookView: View {
         
     
     private var purposeSection: some View {
-        Section(header: Text("What's your purpose for this book?").foregroundColor(.color2)) {
+        Section() {
             ScrollView {
                 LazyVGrid(columns: [
                     GridItem(.fixed(150), spacing: 16),
@@ -158,7 +181,19 @@ struct AddBookView: View {
                 }
                 .padding(.all, 16)
             }
+            .fontDesign(.serif)
+        }header: {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("What's your purpose for this book?")
+                    .font(.system(size: 20, weight: .bold, design: .serif))
+                    .foregroundColor(.color2)
+                
+                Text("Feel free to list more than one goal")
+                    //.font(.system(size: 14, weight: .regular, design: .serif))
+                    .foregroundColor(.secondary)
+            }
         }
+        
     }
     
     private func saveBook() {
@@ -175,7 +210,6 @@ struct AddBookView: View {
         }
         
         let defaultAuthor = "-"
-//        let defaultPhotoData = UIImage(systemName: "bookCoverBaru")?.jpegData(compressionQuality: 0.8)
         let defaultPhotoData = UIImage(named: "bookCoverBaru")?.jpegData(compressionQuality: 0.8)
         
         let book = Book(
