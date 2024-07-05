@@ -1,43 +1,40 @@
-//
-//  BookViewModel.swift
-//  Leaf
-//
-//  Created by Marizka Ms on 30/06/24.
-//
-
 import SwiftUI
 import SwiftData
 
 class BookViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var sortOrder: SortOrder = .ascending
-    @Published var selectedGoal: String?
+//    @Published var selectedGoal: String?
     @Published var isShowingSortFilterModal = false
+    @Published var selectedGoals: Set<String> = []
+    @Published var allGoals: [String] = []
     
-    enum SortOrder {
-        case ascending, descending
+    enum SortOrder: String, CaseIterable {
+        case ascending = "A-Z"
+        case descending = "Z-A"
     }
     
+    func setAllGoals(_ goals: [String]) {
+            self.allGoals = goals
+        }
+    
     func filteredBooks(_ books: [Book]) -> [Book] {
-        var result = books
-        
-        if !searchText.isEmpty {
-            result = result.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+            books
+                .filter(searchFilter)
+                .filter(goalsFilter)
+                .sorted(by: sortBooks)
         }
-        
-        if let goal = selectedGoal {
-            result = result.filter { $0.goals.contains(goal) }
+    
+    private func searchFilter(_ book: Book) -> Bool {
+        searchText.isEmpty || book.title.localizedCaseInsensitiveContains(searchText)
+    }
+    
+    private func goalsFilter(_ book: Book) -> Bool {
+            selectedGoals.isEmpty || !selectedGoals.isDisjoint(with: book.goals)
         }
-        
-        result.sort {
-            switch sortOrder {
-            case .ascending:
-                return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
-            case .descending:
-                return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedDescending
-            }
-        }
-        
-        return result
+    
+    private func sortBooks(_ book1: Book, _ book2: Book) -> Bool {
+        let comparison = book1.title.localizedCaseInsensitiveCompare(book2.title)
+        return sortOrder == .ascending ? comparison == .orderedAscending : comparison == .orderedDescending
     }
 }

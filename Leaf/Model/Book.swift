@@ -2,7 +2,7 @@
 //  Book.swift
 //  Leaf
 //
-//  Created by Marizka Ms on 30/06/24.
+//  Created by Marizka Ms on 04/07/24.
 //
 
 import Foundation
@@ -31,4 +31,3 @@ final class Book {
     
 
 }
-

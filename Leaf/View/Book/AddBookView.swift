@@ -1,5 +1,5 @@
 import SwiftUI
-import PhotosUI
+//import PhotosUI
 
 struct AddBookView: View {
     @State private var title = ""
@@ -125,9 +125,10 @@ struct AddBookView: View {
     
     private var detailBookSection: some View {
         Section(header: Text("Detail Book").foregroundColor(.color2)) {
-
+            
             TextField("Enter Title", text: $title).foregroundColor(.color1)
             TextField("Enter Author", text: $author).foregroundColor(.color1)
+            
 
         }
         
@@ -226,7 +227,7 @@ struct GoalItemView: View {
             Image(goal.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 50, height: 50)
+                .frame(width: 120, height: 120)
             
                 .foregroundColor(isSelected ? .white : .black) // Adjust colors based on selection
             

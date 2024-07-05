@@ -15,6 +15,7 @@ struct NoteDetailView: View {
     
     
     var body: some View {
+
         ScrollView() {
                 VStack(alignment: .leading) {
                     
@@ -34,82 +35,12 @@ struct NoteDetailView: View {
                     Divider()
                     
                     ZStack {
-//                        if let imageData = note.imageNote, let image = UIImage(data: imageData) {
-//                            Image(uiImage: image)
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 200)
-//                                .cornerRadius(20)
-//                                .overlay {
-//                                    Rectangle()
-//                                        .foregroundStyle(LinearGradient(colors: [
-//                                            Color.gray.opacity(1), Color.black.opacity(0)
-//                                        ], startPoint: .bottom, endPoint: UnitPoint(x: 0.5, y: 0.8)))
-//                                }
-//                                .mask {
-//                                    RoundedRectangle(cornerRadius: 12)
-//                                }
-//                        }
-                        
-                        //                if isEditing {
-                        //                                   TextField("Title", text: Binding(
-                        //                                       get: { editedNote?.title ?? note.title },
-                        //                                       set: { editedNote?.title = $0 }
-                        //                                   ))
-                        //                                   .font(.largeTitle)
-                        //                                   .fontDesign(.serif)
-                        //
-                        //                                   if let imageData = editedNote?.imageNote ?? note.imageNote, let image = UIImage(data: imageData) {
-                        //                                       Image(uiImage: image)
-                        //                                           .resizable()
-                        //                                           .scaledToFit()
-                        //                                   }
-                        //
-                        //                                   TextField("Page", value: Binding(
-                        //                                       get: { editedNote?.page ?? note.page },
-                        //                                       set: { editedNote?.page = $0 }
-                        //                                   ), formatter: NumberFormatter())
-                        //
-                        //                                   TextEditor(text: Binding(
-                        //                                       get: { editedNote?.content ?? note.content },
-                        //                                       set: { editedNote?.content = $0 }
-                        //                                   ))
-                        //
-                        //                                   TextField("Prompt", text: Binding(
-                        //                                       get: { editedNote?.prompt ?? note.prompt },
-                        //                                       set: { editedNote?.prompt = $0 }
-                        //                                   ))
-                        //
-                        //                                   Text("Tags:")
-                        //                                   ScrollView(.horizontal, showsIndicators: false) {
-                        //                                       HStack {
-                        //                                           ForEach(editedNote?.tag?.compactMap { $0 } ?? note.tag?.compactMap { $0 } ?? [], id: \.self) { tag in
-                        //                                                                           Text(tag)
-                        //                                                                               .padding(.horizontal, 10)
-                        //                                                                               .padding(.vertical, 5)
-                        //                                                                               .background(Color.blue.opacity(0.2))
-                        //                                                                               .cornerRadius(15)
-                        //                                                                       }
-                        //                                       }
-                        //                                   }
-                        //                } else {
-                        //                    Text(note.title)
-                        //                        .font(.largeTitle)
-                        //                        .fontDesign(.serif)
-                        //                    if let imageData = note.imageNote, let image = UIImage(data: imageData) {
-                        //                        Image(uiImage: image)
-                        //                            .resizable()
-                        //                            .scaledToFit()
-                        //                    }
-                        
-                
                         Text("Page \(note.page ?? 0)")
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .foregroundColor(.white)
                             .padding(.horizontal, 8)
                             .padding(.top, 2)
                             .padding(.bottom, 20)
-//                            .font(.callout)
                             .font(.subheadline)
                             .bold()
                             .fontDesign(.serif)
@@ -148,6 +79,7 @@ struct NoteDetailView: View {
                                             .font(.subheadline)
                                     }
                                 }
+
                             }
                         }
                     }
@@ -246,7 +178,7 @@ private let dateFormatter: DateFormatter = {
         lastModified: Date(),
         prompt: "Summarize the key points of Chapter 1",
         tag: ["Chapter1", "Summary", "Introduction"],
-        books: book
+        books: book, creationDate: Date()
     )
     
     context.insert(note)

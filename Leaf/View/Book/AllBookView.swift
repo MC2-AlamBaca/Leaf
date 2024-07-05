@@ -23,25 +23,32 @@ struct AllBookView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let selectedGoal = viewModel.selectedGoal {
-                    FilterBadgeView(goal: selectedGoal) {
-                        viewModel.selectedGoal = nil
-                    }
-                }
-                
                 if !books.isEmpty{
                     BookListView(books: viewModel.filteredBooks(books))
+                        .responsiveBadge(goals: Array(viewModel.selectedGoals)) {
+                            viewModel.selectedGoals.removeAll()
+                        }
                 }
                 else {
-                    Text("You have no books yet")
+                    Group {
+                        Image(systemName: "book")
+                            .resizable()
+                            .frame(width: 50, height: 40)
+                        Text("No Books yet?\nTap “+” to add one")
+                            .multilineTextAlignment(.center)
+                    }
                 }
             }
             .navigationTitle("Books")
+
 //                    .font(.largeTitle)
                     .bold()
                     .foregroundColor(.color1)
 //                    .fontDesign(.serif)
             
+
+
+
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
@@ -51,7 +58,6 @@ struct AllBookView: View {
                             .foregroundColor(.color2)
                     }
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: AddBookView()) {
                         Image(systemName: "plus")

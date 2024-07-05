@@ -1,12 +1,3 @@
-//
-//  SortFilterNoteModal.swift
-//  Leaf
-//
-//  Created by Marizka Ms on 01/07/24.
-//
-
-import SwiftUI
-
 import SwiftUI
 
 struct SortFilterNoteModalView: View {
@@ -14,47 +5,93 @@ struct SortFilterNoteModalView: View {
     @ObservedObject var viewModel: NoteViewModel
     let allTags: [String]
     
+    init(viewModel: NoteViewModel, allTags: [String]) {
+        self.viewModel = viewModel
+        self.allTags = allTags
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withDesign(.serif)!,
+                          size: 34), .foregroundColor: UIColor(named: "color1") ?? UIColor.color2
+                                
+        ]
+    }
+    
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Sort")) {
-                    Picker("Sort Order", selection: $viewModel.sortOrder) {
-                        Text("Ascending").tag(BookViewModel.SortOrder.ascending)
-                        Text("Descending").tag(BookViewModel.SortOrder.descending)
-                    }
-                    .pickerStyle(.inline)
+                sortOrderSection
+                filterByTagSection
+            }
+            .navigationTitle("Sort and Filter")
+            .fontDesign(.serif)
+            .accentColor(.color1)
+            .navigationBarItems(trailing: doneButton)
+        }
+        .onAppear {
+                   viewModel.setAllTags(allTags)
+               }
+    }
+    
+    private var sortOrderSection: some View {
+        Section(header: Text("Sort Order")) {
+            Picker("Sort Order", selection: $viewModel.sortOrder) {
+                ForEach(NoteViewModel.SortOrder.allCases, id: \.self) { order in
+                    Text(order.rawValue.capitalized)
+                        .tag(order)
                 }
-                
-                Section(header: Text("Filter by Tag")) {
-                    ForEach(["All Tags"] + allTags, id: \.self) { tag in
-                        Button(action: {
-                            viewModel.selectedTag = tag == "All Goals" ? nil : tag
-                            dismiss()
-                        }) {
-                            HStack {
-                                Text(tag)
-                                Spacer()
-                                if tag == "All Tags" ? (viewModel.selectedTag == nil) : (viewModel.selectedTag == tag) {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
+            }
+            .pickerStyle(.inline)
+            .labelsHidden()
+        }
+
+    }
+    
+    private var filterByTagSection: some View {
+        Section(header: Text("Filter by Tags")) {
+            ForEach(viewModel.allTags, id: \.self) { tag in
+                Button(action: {
+                    toggleTagSelection(tag)
+                }) {
+                    HStack {
+                        Text(tag)
+                        Spacer()
+                        if viewModel.selectedTags.contains(tag) {
+                            Image(systemName: "checkmark")
                         }
                     }
                 }
             }
-            .navigationTitle("Sort and Filter")
-            .navigationBarItems(trailing: Button("Done") {
-                dismiss()
-            })
+            
+            if !viewModel.selectedTags.isEmpty {
+                Button("Clear All", action: clearAllTags)
+                    .foregroundColor(.red)
+            }
         }
+    }
+    
+    private func toggleTagSelection(_ tag: String) {
+        if viewModel.selectedTags.contains(tag) {
+            viewModel.selectedTags.remove(tag)
+        } else {
+            viewModel.selectedTags.insert(tag)
+        }
+    }
+    
+    private func clearAllTags() {
+        viewModel.selectedTags.removeAll()
+    }
+    
+    private var doneButton: some View {
+        Button("Done") {
+            dismiss()
+        }
+        .foregroundColor(.color1)
+        .fontDesign(.serif)
     }
 }
 
-//#Preview {
-//    SortFilterModalView(viewModel: <#BookViewModel#>, allGoals: <#[String]#>)
-//}
-
-
-//#Preview {
-//    SortFilterNoteModalView(viewModel: <#NoteViewModel#>, allTags: <#[String]#>)
-//}
+// Preview
+struct SortFilterNoteModalView_Previews: PreviewProvider {
+    static var previews: some View {
+        SortFilterNoteModalView(viewModel: NoteViewModel(), allTags: ["Tag 1", "Tag 2", "Tag 3"])
+    }
+}
