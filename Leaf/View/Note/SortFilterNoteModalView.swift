@@ -19,6 +19,7 @@ struct SortFilterNoteModalView: View {
         NavigationView {
             Form {
                 sortOrderSection
+                sortOrderTimeSection
                 filterByTagSection
             }
             .navigationTitle("Sort and Filter")
@@ -42,6 +43,20 @@ struct SortFilterNoteModalView: View {
             .pickerStyle(.inline)
             .labelsHidden()
         }
+
+    }
+    
+    private var sortOrderTimeSection: some View {
+        Section(header: Text("Sort Time Order")) {
+                Picker(selection: $viewModel.sortOrderTime, label: Text("Sort Time Order")) {
+                    ForEach(NoteViewModel.SortOrderTime.allCases, id: \.self) { order in
+                        Text(order.rawValue.capitalized)
+                            .tag(order)
+                    }
+                }
+                .pickerStyle(.inline)
+                .labelsHidden()
+            }
 
     }
     

@@ -35,10 +35,11 @@ struct AllNoteView: View {
                 else {
 //                    NoteListView(book: book, viewModel: viewModel)
                     Group {
-                        Image(systemName: "note")
+                        Image("emptyStateNote")
                             .resizable()
-                            .frame(width: 50, height: 40)
+                            .frame(width: 250, height: 250)
                         Text("Unleash your thoughts!\nAdd note to remember key points")
+                            .font(.system(size: 16))
                             .multilineTextAlignment(.center)
                     }
                 }

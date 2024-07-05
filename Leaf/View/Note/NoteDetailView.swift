@@ -10,95 +10,113 @@ import SwiftData
 
 struct NoteDetailView: View {
     var note: Note
-//    @State private var isEditing = false
-//    @State private var editedNote: Note?
+    //    @State private var isEditing = false
+    //    @State private var editedNote: Note?
     
     
     var body: some View {
-        ScrollView {
+
+        ScrollView() {
             VStack(alignment: .leading) {
                 
                 Text(note.title)
-                    .font(.largeTitle)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.title)
                     .fontDesign(.serif)
-                if let imageData = note.imageNote, let image = UIImage(data: imageData) {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                }
-//                if isEditing {
-//                                   TextField("Title", text: Binding(
-//                                       get: { editedNote?.title ?? note.title },
-//                                       set: { editedNote?.title = $0 }
-//                                   ))
-//                                   .font(.largeTitle)
-//                                   .fontDesign(.serif)
-//                                   
-//                                   if let imageData = editedNote?.imageNote ?? note.imageNote, let image = UIImage(data: imageData) {
-//                                       Image(uiImage: image)
-//                                           .resizable()
-//                                           .scaledToFit()
-//                                   }
-//                                   
-//                                   TextField("Page", value: Binding(
-//                                       get: { editedNote?.page ?? note.page },
-//                                       set: { editedNote?.page = $0 }
-//                                   ), formatter: NumberFormatter())
-//                                   
-//                                   TextEditor(text: Binding(
-//                                       get: { editedNote?.content ?? note.content },
-//                                       set: { editedNote?.content = $0 }
-//                                   ))
-//                                   
-//                                   TextField("Prompt", text: Binding(
-//                                       get: { editedNote?.prompt ?? note.prompt },
-//                                       set: { editedNote?.prompt = $0 }
-//                                   ))
-//                                   
-//                                   Text("Tags:")
-//                                   ScrollView(.horizontal, showsIndicators: false) {
-//                                       HStack {
-//                                           ForEach(editedNote?.tag?.compactMap { $0 } ?? note.tag?.compactMap { $0 } ?? [], id: \.self) { tag in
-//                                                                           Text(tag)
-//                                                                               .padding(.horizontal, 10)
-//                                                                               .padding(.vertical, 5)
-//                                                                               .background(Color.blue.opacity(0.2))
-//                                                                               .cornerRadius(15)
-//                                                                       }
-//                                       }
-//                                   }
-//                } else {
-//                    Text(note.title)
-//                        .font(.largeTitle)
-//                        .fontDesign(.serif)
-//                    if let imageData = note.imageNote, let image = UIImage(data: imageData) {
-//                        Image(uiImage: image)
-//                            .resizable()
-//                            .scaledToFit()
-//                    }
-                    Text("Page: \(note.page ?? 0)")
-                    Text(note.content)
-                    Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
-                    Text("Prompt: \(note.prompt)")
-                    Text("Content: \(note.content)")
-                Text("Creation Date: \(note.creationDate, formatter: dateFormatter)")
-                if let tags = note.tag, !tags.isEmpty {
-                    Text("Tags:")
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(tags.compactMap { $0 }, id: \.self) { tag in
-                                Text(tag)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 5)
-                                    .background(Color.blue.opacity(0.2))
-                                    .cornerRadius(15)
+                    .bold()
+                    .padding(.bottom, 4)
+                
+                Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.footnote)
+                    .padding(.horizontal, 4)
+                    .padding(.bottom, 12)
+                
+                Divider()
+                
+                ZStack {
+                    if let imageData = note.imageNote, let image = UIImage(data: imageData) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 200)
+                            .cornerRadius(20)
+                            .overlay {
+                                Rectangle()
+                                    .foregroundStyle(LinearGradient(colors: [
+                                        Color.gray.opacity(1), Color.black.opacity(0)
+                                    ], startPoint: .bottom, endPoint: UnitPoint(x: 0.5, y: 0.8)))
                             }
+                            .mask {
+                                RoundedRectangle(cornerRadius: 12)
+                            }
+                    }
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Text("Page \(note.page ?? 0)")
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .foregroundColor(note.imageNote == nil ? Color("Color 2") : .white)
+                                .padding(.horizontal, 8)
+                                .padding(.top, 2)
+                                .padding(.bottom, 20)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .italic()
+                                .fontDesign(.serif)
                         }
                     }
+                    
+                    
                 }
+                .padding(.top, 12)
+                .padding(.horizontal)
+                
+                
+                                    VStack {
+                                        Text(note.prompt)
+                                            .fontDesign(.serif)
+                                            .font(.title3)
+                                            .bold()
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .foregroundColor(Color("Color 1"))
+                                            .padding(.bottom, 12)
+                                        
+                                        Text(note.content)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .foregroundColor(Color("Color 2"))
+                                            .padding(.bottom, 16)
+                                        
+                                        if let tags = note.tag, !tags.isEmpty {
+                                            ScrollView(.horizontal, showsIndicators: false) {
+                                                HStack {
+                                                    Image(systemName: "tag.fill")
+                                                        .foregroundColor(Color("Color 2"))
+                                                        .padding(.trailing, 4)
+                                                        
+                                                    HStack {
+                                                        ForEach(tags.compactMap { $0 }, id: \.self) { tag in
+                                                            Text(tag)
+                                                                .cornerRadius(15)
+                                                                .foregroundColor(Color("Color 2"))
+                                                                .bold()
+                                                                .fontDesign(.serif)
+                                                                .font(.subheadline)
+                                                                .padding(.leading, -4)
+                                                            Text(",")
+                                                                .padding(.leading, -8)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .padding()
             }
-            Spacer()
+            //            Spacer()
         }
+        .navigationBarTitleDisplayMode(.inline)// tipe navbartype
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: AddNoteView(book: note.books!, note: note)) {
@@ -108,44 +126,8 @@ struct NoteDetailView: View {
         }
         .foregroundColor(.color1)
         .padding()
-        }//ScrollView
-        
+        }
     }
-    
-//private func startEditing() {
-//    editedNote = Note(
-//        title: note.title,
-//        imageNote: note.imageNote,
-//        page: note.page,
-//        content: note.content,
-//        lastModified: note.lastModified,
-//        prompt: note.prompt,
-//        tag: note.tag,
-//        books: note.books
-//    )
-//    isEditing = true
-//}
-//
-//private func saveNote() {
-//    guard let editedNote = editedNote else { return }
-//
-//    note.title = editedNote.title
-//    note.imageNote = editedNote.imageNote
-//    note.page = editedNote.page
-//    note.content = editedNote.content
-//    note.lastModified = Date() // Update the last modified date
-//    note.prompt = editedNote.prompt
-//    note.tag = editedNote.tag
-//
-//    // Save changes to the model context
-//    do {
-//        try note.books?.modelContext?.save()
-//        isEditing = false
-//    } catch {
-//        print("Failed to save note: \(error.localizedDescription)")
-//    }
-//}
-//}
 
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -159,7 +141,7 @@ private let dateFormatter: DateFormatter = {
     // Create a mock ModelContainer
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Book.self, Note.self, configurations: config)
-
+    
     // Create a sample book
     let book = Book(title: "Sample Book", author: "John Doe", goals: ["Goal1"], isPinned: true)
     
@@ -168,7 +150,7 @@ private let dateFormatter: DateFormatter = {
     context.insert(book)
     
     // Create a sample image (optional)
-    let sampleImage = UIImage(systemName: "book.fill")
+    let sampleImage = UIImage(systemName: "")
     let imageData = sampleImage?.pngData()
     
     // Create a sample note
@@ -187,7 +169,7 @@ private let dateFormatter: DateFormatter = {
     
     // Save the context to ensure all data is committed
     try! context.save()
-
+    
     // Return the preview
     return NoteDetailView(note: note)
         .modelContainer(container)
