@@ -22,6 +22,18 @@ class NoteViewModel: ObservableObject {
         case ascending = "A-Z"
         case descending = "Z-A"
     }
+    
+//    func fetchNoteByID(_ id: UUID) -> Note? {
+//            let request = NSFetchRequest<Note>(entityName: "Note")
+//            request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+//            do {
+//                let notes = try modelContext.fetch(request)
+//                return notes.first
+//            } catch {
+//                print("Failed to fetch note: \(error.localizedDescription)")
+//                return nil
+//            }
+//        }
 
     func setAllTags(_ tags: [String]) {
         self.allTags = tags
