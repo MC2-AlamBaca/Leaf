@@ -31,11 +31,17 @@ struct AllBookView: View {
                 }
                 else {
                     Group {
-                        Image(systemName: "book")
-                            .resizable()
-                            .frame(width: 50, height: 40)
-                        Text("No Books yet?\nTap “+” to add one")
-                            .multilineTextAlignment(.center)
+                        Image("emptyStateBook") // Replace "bookCoverBaru" with the name of your image in the assets
+                                .resizable()
+                                .frame(width: 250, height: 250)
+                            Text("No Books yet?\nTap “+” to add one")
+                                .font(.system(size: 16))
+                                .multilineTextAlignment(.center)
+//                        Image(systemName: "book")
+////                        Image(bookCoverBaru)
+//                            .resizable()
+//                            .frame(width: 50, height: 40)
+                       
                     }
                 }
             }
