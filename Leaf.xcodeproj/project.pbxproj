@@ -10,6 +10,7 @@
 		363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A212C2BD37500E6AF91 /* AllBookView.swift */; };
 		363C1A242C2BD37F00E6AF91 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */; };
 		75691EC52C3668AD006969AA /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75691EC42C3668AD006969AA /* NotificationScheduler.swift */; };
+		75691EC72C37A03A006969AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75691EC62C37A03A006969AA /* AppDelegate.swift */; };
 		BB1F53422C2D8E6400A509B8 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */; };
 		BB1F534A2C2D984000A509B8 /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F53492C2D984000A509B8 /* NoteListView.swift */; };
 		BB1F53502C2E5A1900A509B8 /* TagInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F534F2C2E5A1900A509B8 /* TagInputView.swift */; };
@@ -43,6 +44,7 @@
 		363C1A212C2BD37500E6AF91 /* AllBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBookView.swift; sourceTree = "<group>"; };
 		363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 		75691EC42C3668AD006969AA /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		75691EC62C37A03A006969AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
 		BB1F53492C2D984000A509B8 /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
 		BB1F534F2C2E5A1900A509B8 /* TagInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagInputView.swift; sourceTree = "<group>"; };
@@ -119,10 +121,11 @@
 			isa = PBXGroup;
 			children = (
 				75691EC42C3668AD006969AA /* NotificationScheduler.swift */,
+				75691EC62C37A03A006969AA /* AppDelegate.swift */,
 			);
 			path = Notifications;
-      sourceTree = "<group>";
-      };
+			sourceTree = "<group>";
+		};
 		BB5C30552C3667E9003EDB83 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,37 +276,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-    BBA4670B2C32B429004DF66A /* NoteViewModel.swift in Sources */,
-    BBA41C842C31549F00B741ED /* BookListView.swift in Sources */,
-    363C1A242C2BD37F00E6AF91 /* PhotoViewModel.swift in Sources */,
-    75691EC52C3668AD006969AA /* NotificationScheduler.swift in Sources */,
-    BBF043CD2C356636002E78CC /* FocuseableTextField.swift in Sources */,
-    BBA41C7E2C3153DF00B741ED /* BookViewModel.swift in Sources */,
-    BB5C30502C3663E1003EDB83 /* Note.swift in Sources */,
-    BBF71AD62C2BFCF8004AF08F /* BookRowView.swift in Sources */,
-    BB5C30522C3667A1003EDB83 /* PencilKitManager.swift in Sources */,
-    BBA41C822C31547500B741ED /* FilterBadgeBookView in Sources */,
-    BB5C30572C36BBDB003EDB83 /* FilterBadgeNoteView in Sources */,
-    BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */,
-    BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */,
-    BBA41C802C31540A00B741ED /* FilterMenuView.swift in Sources */,
-    BBA467092C32B16F004DF66A /* NoteDetailView.swift in Sources */,
-    BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
-    BBA4670F2C32BF49004DF66A /* NoteRowView.swift in Sources */,
-    BBD64C1D2C338A4600156467 /* MarkupView in Sources */,
-    BBD64C172C32EAF400156467 /* AddBookView.swift in Sources */,
-    BB5C30542C3667D2003EDB83 /* FocuseableTextField in Sources */,
-    BBA467162C32CB34004DF66A /* SortFilterNoteModalView in Sources */,
-    BBA41C872C3183C500B741ED /* SortFilterModalView in Sources */,
-    BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */,
-    BB1F53502C2E5A1900A509B8 /* TagInputView in Sources */,
-    BB1F534A2C2D984000A509B8 /* NoteListView in Sources */,
-    BBD64C152C32E66700156467 /* Goal.swift in Sources */,
-    363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */,
-    BB5C304E2C3663C5003EDB83 /* Book.swift in Sources */,
-    BB1F53422C2D8E6400A509B8 /* AddNoteView.swift in Sources */,
-);
-
+				BBA4670B2C32B429004DF66A /* NoteViewModel.swift in Sources */,
+				BBA41C842C31549F00B741ED /* BookListView.swift in Sources */,
+				363C1A242C2BD37F00E6AF91 /* PhotoViewModel.swift in Sources */,
+				75691EC52C3668AD006969AA /* NotificationScheduler.swift in Sources */,
+				75691EC72C37A03A006969AA /* AppDelegate.swift in Sources */,
+				BBA41C7E2C3153DF00B741ED /* BookViewModel.swift in Sources */,
+				BB5C30502C3663E1003EDB83 /* Note.swift in Sources */,
+				BBF71AD62C2BFCF8004AF08F /* BookRowView.swift in Sources */,
+				BB5C30522C3667A1003EDB83 /* PencilKitManager.swift in Sources */,
+				BBA41C822C31547500B741ED /* FilterBadgeBookView.swift in Sources */,
+				BB5C30572C36BBDB003EDB83 /* FilterBadgeNoteView.swift in Sources */,
+				BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */,
+				BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */,
+				BBA41C802C31540A00B741ED /* FilterMenuView.swift in Sources */,
+				BBA467092C32B16F004DF66A /* NoteDetailView.swift in Sources */,
+				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
+				BBA4670F2C32BF49004DF66A /* NoteRowView.swift in Sources */,
+				BBD64C1D2C338A4600156467 /* MarkupView.swift in Sources */,
+				BBD64C172C32EAF400156467 /* AddBookView.swift in Sources */,
+				BB5C30542C3667D2003EDB83 /* FocuseableTextField.swift in Sources */,
+				BBA467162C32CB34004DF66A /* SortFilterNoteModalView.swift in Sources */,
+				BBA41C872C3183C500B741ED /* SortFilterModalView.swift in Sources */,
+				BB5E65B02C29066300C855A2 /* LeafApp.swift in Sources */,
+				BB1F53502C2E5A1900A509B8 /* TagInputView.swift in Sources */,
+				BB1F534A2C2D984000A509B8 /* NoteListView.swift in Sources */,
+				BBD64C152C32E66700156467 /* Goal.swift in Sources */,
+				363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */,
+				BB5C304E2C3663C5003EDB83 /* Book.swift in Sources */,
+				BB1F53422C2D8E6400A509B8 /* AddNoteView.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
@@ -436,7 +438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Leaf/Preview Content\"";
-				DEVELOPMENT_TEAM = PBDYVYYKCK;
+				DEVELOPMENT_TEAM = 5GD9KAX99U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
@@ -453,7 +455,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.Leaf;
+				PRODUCT_BUNDLE_IDENTIFIER = faiz.Leaf.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -469,7 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Leaf/Preview Content\"";
-				DEVELOPMENT_TEAM = PBDYVYYKCK;
+				DEVELOPMENT_TEAM = 5GD9KAX99U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
@@ -486,7 +488,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.Leaf;
+				PRODUCT_BUNDLE_IDENTIFIER = faiz.Leaf.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

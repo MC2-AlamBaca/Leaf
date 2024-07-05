@@ -13,6 +13,7 @@ class NoteViewModel: ObservableObject {
     @Environment(\.modelContext) private var modelContext
     @Published var searchText = ""
     @Published var sortOrder: SortOrder = .ascending
+    @Published var sortOrderTime: SortOrderTime = .modifiedDateAscending
     @Published var isShowingSortFilterModal = false
     @Published var book: Book?
     @Published var selectedTags: Set<String> = []
@@ -21,6 +22,11 @@ class NoteViewModel: ObservableObject {
     enum SortOrder: String, CaseIterable {
         case ascending = "A-Z"
         case descending = "Z-A"
+    }
+    
+    enum SortOrderTime: String, CaseIterable {
+        case modifiedDateAscending = "Modified Date A-Z"
+        case modifiedDateDescending = "Modified Date Z-A"
     }
     
 //    func fetchNoteByID(_ id: UUID) -> Note? {
@@ -73,4 +79,18 @@ class NoteViewModel: ObservableObject {
             return sortOrder == .ascending ? comparison == .orderedAscending : comparison == .orderedDescending
         }
     }
+    
+    
+    private func sortNotesTime(_ note1: Note, _ note2: Note) -> Bool {
+           if note1.isPinned != note2.isPinned {
+               return note1.isPinned && !note2.isPinned
+           } else {
+               switch sortOrderTime {
+               case .modifiedDateAscending:
+                   return note1.lastModified < note2.lastModified
+               case .modifiedDateDescending:
+                   return note1.lastModified > note2.lastModified
+               }
+           }
+       }
 }
