@@ -23,10 +23,14 @@ struct BookRowView: View {
                 if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 100, height: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+//                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .cornerRadius(10)
+                        .padding(.trailing, 6)
+                        .padding(.leading, 2)
                 }
+                
                 VStack(alignment: .leading) {
                     HStack (spacing : 5 ){
 //                        .padding (.horizontal, 2)
@@ -34,12 +38,13 @@ struct BookRowView: View {
                             .font(.title3)
                             .bold()
                             .fontDesign(.serif)
+                            .foregroundColor(Color("Color 1"))
                         
                     }
                     Text(book.author)
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .fontDesign(.serif)
+                        .foregroundColor(Color("Color 2"))
+//                        .fontDesign(.serif)
                     
                     
                     Spacer()
@@ -50,7 +55,11 @@ struct BookRowView: View {
                                 Image(goal.imageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
+
                                     .frame(width: 35, height: 35)
+                                    .foregroundColor(Color("Color 1"))
+
+
 //                                    .background(goal.imgColor)
 //                                    .clipShape(Circle())
                             } else {
@@ -62,17 +71,19 @@ struct BookRowView: View {
                     }
                     .padding (.horizontal, 2)
                 }
-                .padding(.vertical, 8)
-            
+                .padding(.top, 4)
+                .padding(.bottom, 6)
                 
                 Spacer()
                 
                 Text("\(book.notes?.count ?? 0)")
                     .foregroundColor(.secondary)
             }
+        
+            .padding(.vertical, 8)
     }
 }
 
-//#Preview {
-//    BookRowView(book: Book(title: "hamo", author: "hamo", goals: ["Hamooo"], isPinned: false))
-//}
+#Preview {
+    BookRowView(book: Book(title: "hamo", author: "hamo", goals: ["Hamooo"], isPinned: false))
+}
