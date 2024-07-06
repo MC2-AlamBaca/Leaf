@@ -15,7 +15,10 @@ struct AllBookView: View {
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
-            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle).withDesign(.serif)!, size: 48),
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+                .withDesign(.serif)!
+                .withSymbolicTraits(.traitBold)!,
+                size: 33),
             .foregroundColor: UIColor.color1 // Change this to your desired color
         ]
     }
@@ -41,8 +44,6 @@ struct AllBookView: View {
                 }
             }
             .navigationTitle("Books")
-                    .bold()
-                    .foregroundColor(.color1)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
@@ -63,8 +64,11 @@ struct AllBookView: View {
             .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
                 SortFilterModalView(viewModel: viewModel, allGoals: Array(Set(books.flatMap { $0.goals })))
             }
+    
         }
+        
     }
+    
 }
 
 // Mock Data and ViewModel for Preview

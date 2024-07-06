@@ -28,7 +28,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        if let noteID = userInfo["noteID"] as? String {
+        if let noteIDString = userInfo["noteID"] as? String,
+           let noteID = UUID(uuidString: noteIDString) {
             // Handle navigation to the specific note
             NotificationCenter.default.post(name: .navigateToNote, object: nil, userInfo: ["noteID": noteID])
         }

@@ -9,9 +9,11 @@ struct SortFilterModalView: View {
         self.viewModel = viewModel
         self.allGoals = allGoals
         UINavigationBar.appearance().largeTitleTextAttributes = [
-            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withDesign(.serif)!,
-                          size: 34), .foregroundColor: UIColor(named: "color1") ?? UIColor.color2
-                                
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+                .withDesign(.serif)!
+                .withSymbolicTraits(.traitBold)!,
+                size: 33),
+            .foregroundColor: UIColor.color1 // Change this to your desired color
         ]
     }
     
@@ -22,7 +24,6 @@ struct SortFilterModalView: View {
                 filterByGoalSection
             }
             .navigationTitle("Sort and Filter")
-            .fontDesign(.serif)
             .accentColor(.color1)
             .navigationBarItems(trailing: doneButton)
         }
@@ -82,7 +83,6 @@ struct SortFilterModalView: View {
             dismiss()
         }
         .foregroundColor(.color1)
-        .fontDesign(.serif)
         
     }
 }
