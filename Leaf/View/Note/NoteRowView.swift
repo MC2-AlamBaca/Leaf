@@ -27,12 +27,12 @@ struct NoteRowView: View {
                 Text(note.title)
                     .font(.headline)
                     .fontDesign(.serif)
+                    .foregroundColor(.color1)
                     .lineLimit(2)
             }
             Text(note.content)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
-                .fontDesign(.serif)
+                .foregroundColor(.color2)
                 .lineLimit(3)
             HStack {
                 if let tags = note.tag, !tags.isEmpty {
@@ -42,7 +42,7 @@ struct NoteRowView: View {
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
                             .background(Color.color1.opacity(0.1))
-                            .cornerRadius(4)
+                            .cornerRadius(8)
                     }
                 }
                 Spacer()
