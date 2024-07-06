@@ -77,6 +77,7 @@ struct AddBookView: View {
                             }
                             // Change the color here
                         }
+                        .bold()
                     }
                 }
                 .foregroundColor(.color2)
@@ -183,14 +184,17 @@ struct AddBookView: View {
             }
             .fontDesign(.serif)
         }header: {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("What's your purpose for this book?")
-                    .font(.system(size: 20, weight: .bold, design: .serif))
-                    .foregroundColor(.color2)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("What's your purpose for reading this book?")
+                    .font(.system(size: 17, weight: .bold, design: .serif))
+                    .foregroundColor(.color1)
                 
                 Text("Feel free to list more than one goal")
-                    //.font(.system(size: 14, weight: .regular, design: .serif))
-                    .foregroundColor(.secondary)
+                //.font(.system(size: 14, weight: .regular, design: .serif))
+                    .font(.subheadline)
+                    .foregroundColor(.color2)
+                    .textCase(.lowercase)
+                    
             }
         }
         

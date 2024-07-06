@@ -20,23 +20,13 @@ struct AllNoteView: View {
     init(book: Book) {
             self.book = book
             
-            // Configure the navigation bar appearance
-            if let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
-                .withDesign(.serif)?
-                .withSymbolicTraits(.traitBold) {
-                let largeFont = UIFont(descriptor: descriptor, size: 0) // size 0 keeps the original size
-                let smallFont = UIFont(descriptor: descriptor, size: 17) // Adjust size as needed for inline title
-                
-                UINavigationBar.appearance().largeTitleTextAttributes = [
-                    .font: largeFont,
-                    .foregroundColor: UIColor(named: "color1") ?? UIColor.black
-                ]
-                
-                UINavigationBar.appearance().titleTextAttributes = [
-                    .font: smallFont,
-                    .foregroundColor: UIColor(named: "color1") ?? UIColor.black
-                ]
-            }
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+                .withDesign(.serif)!
+                .withSymbolicTraits(.traitBold)!,
+                size: 33),
+            .foregroundColor: UIColor.color1 // Change this to your desired color
+        ]
         }
     
     var body: some View {
@@ -60,9 +50,6 @@ struct AllNoteView: View {
                 }
             }
             .navigationTitle(book.title)
-            .navigationBarTitleDisplayMode(.large)
-            .navigationBarBackButtonHidden(true) // Hide default back button
-            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -83,29 +70,11 @@ struct AllNoteView: View {
             
             .searchable(text: $viewModel.searchText, prompt: "Search for Note")
             .foregroundColor(.color2)
-            
-            .navigationBarItems(leading:
-                                Button(action: {
-                                    dismiss() // Dismiss action for custom "Back" button
-                                }) {
-                                    Image(systemName: "chevron.left")
-                                        .foregroundColor(.color2) // Customize back button color
-                                        .imageScale(.large)
-                                    Text("Books")
-                                        .foregroundColor(.color2)
-                                }
-                            )
-            
             .sheet(isPresented: $viewModel.isShowingSortFilterModal){
                 SortFilterNoteModalView(viewModel: viewModel, allTags: getAllTags())
                     .foregroundColor(.color2)
             }
         }
-        .onDisappear {
-                    // Reset navigation bar appearance when view disappears
-                    UINavigationBar.appearance().largeTitleTextAttributes = nil
-                    UINavigationBar.appearance().titleTextAttributes = nil
-                }
     }
     
     private func getAllTags() -> [String] {

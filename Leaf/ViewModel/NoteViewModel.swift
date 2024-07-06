@@ -18,6 +18,7 @@ class NoteViewModel: ObservableObject {
     @Published var book: Book?
     @Published var selectedTags: Set<String> = []
     @Published var allTags: [String] = []
+    @Published var selectedNote: Note?
 
     enum SortOrder: String, CaseIterable {
         case ascending = "A-Z"
@@ -29,17 +30,8 @@ class NoteViewModel: ObservableObject {
         case modifiedDateDescending = "Modified Date Z-A"
     }
     
-//    func fetchNoteByID(_ id: UUID) -> Note? {
-//            let request = NSFetchRequest<Note>(entityName: "Note")
-//            request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-//            do {
-//                let notes = try modelContext.fetch(request)
-//                return notes.first
-//            } catch {
-//                print("Failed to fetch note: \(error.localizedDescription)")
-//                return nil
-//            }
-//        }
+
+    
 
     func setAllTags(_ tags: [String]) {
         self.allTags = tags
@@ -82,15 +74,16 @@ class NoteViewModel: ObservableObject {
     
     
     private func sortNotesTime(_ note1: Note, _ note2: Note) -> Bool {
-           if note1.isPinned != note2.isPinned {
-               return note1.isPinned && !note2.isPinned
-           } else {
-               switch sortOrderTime {
-               case .modifiedDateAscending:
-                   return note1.lastModified < note2.lastModified
-               case .modifiedDateDescending:
-                   return note1.lastModified > note2.lastModified
-               }
-           }
-       }
+        if note1.isPinned != note2.isPinned {
+            return note1.isPinned && !note2.isPinned
+        } else {
+            switch sortOrderTime {
+            case .modifiedDateAscending:
+                return note1.lastModified < note2.lastModified
+            case .modifiedDateDescending:
+                return note1.lastModified > note2.lastModified
+            }
+        }
+    }
+    
 }
