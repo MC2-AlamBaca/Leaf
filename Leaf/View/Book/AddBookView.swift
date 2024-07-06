@@ -75,25 +75,25 @@ struct AddBookView: View {
                             } else {
                                 saveBook()
                             }
-                                 // Change the color here
+                            // Change the color here
                         }
                     }
                 }
                 .foregroundColor(.color2)
                 
                 .navigationBarItems(leading:
-                                    Button(action: {
-                                        dismiss() // Dismiss action for custom "Back" button
-                                    }) {
-                                        Image(systemName: "chevron.left")
-                                            .foregroundColor(.color2) // Customize back button color
-                                            .imageScale(.large)
-                                        Text("Books")
-                                            .foregroundColor(.color2)
-                                    }
-                                )
+                                        Button(action: {
+                    dismiss() // Dismiss action for custom "Back" button
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.color2) // Customize back button color
+                        .imageScale(.large)
+                    Text("Books")
+                        .foregroundColor(.color2)
+                }
+                )
                 
-
+                
                 .fullScreenCover(isPresented: $showCamera, onDismiss: loadImage) {
                     ImagePicker(image: $inputImage)
                         .ignoresSafeArea()
@@ -128,7 +128,7 @@ struct AddBookView: View {
                         .scaledToFit()
                         .frame(width: 25, height: 25)
                         .foregroundColor(.color4) // Change color as needed
-
+                    
                         .padding(70)
                 }
                 
@@ -152,11 +152,11 @@ struct AddBookView: View {
             TextField("Enter Title", text: $title).foregroundColor(.color1)
             TextField("Enter Author", text: $author).foregroundColor(.color1)
             
-
+            
         }
         
     }
-        
+    
     
     private var purposeSection: some View {
         Section() {
@@ -274,7 +274,7 @@ struct GoalItemView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
         .background(isSelected ? Color.color1 : Color.color3) // Adjust background color based on selection
-
+        
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onTapGesture {
             toggleAction()
