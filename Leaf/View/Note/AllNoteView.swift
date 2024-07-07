@@ -25,7 +25,16 @@ struct AllNoteView: View {
                 .withDesign(.serif)!
                 .withSymbolicTraits(.traitBold)!,
                 size: 33),
-            .foregroundColor: UIColor.color1 // Change this to your desired color
+            .foregroundColor: UIColor { traitCollection in
+                        switch traitCollection.userInterfaceStyle {
+                        case .dark:
+                            return UIColor.color2 // Warna untuk dark mode
+                        case .light, .unspecified:
+                            return UIColor.color1 // Warna untuk light mode
+                        @unknown default:
+                            return UIColor.color1 // Default fallback
+                        }
+                    }
         ]
         }
     

@@ -31,7 +31,7 @@ struct AddNoteView: View {
     
     let goalsWithPrompts: [GoalPrompt] = [
         GoalPrompt(goal: "Deepen your self-understanding", prompts: ["I found an 'aha!' moment about myself when I realized...", "This reading really clicked about myself because..."]),
-        GoalPrompt(goal: "I've been fired up by stories or ideas like...", prompts: ["A goal that really fuels my passion is..."]),
+        GoalPrompt(goal: "Ignite your motivation", prompts: ["A goal that really fuels my passion is...", "I've been fired up by stories or ideas like..."]),
         GoalPrompt(goal: "Expand your skills and knowledge", prompts: ["Excited about new skills or knowledge I've gained, such as...", "I'm reflecting on a skill I'm eager to master, which is..."]),
         GoalPrompt(goal: "Overcome challenges", prompts: ["I've picked up tips from my reading on handling tough spots, like...", "Reflecting on a lesson learned from overcoming adversity..."]),
         GoalPrompt(goal: "Enhance relationships and communication", prompts: ["I've gained insights to strengthen my connections, such as...", "Applying insights from this books enhances my connections by..."]),

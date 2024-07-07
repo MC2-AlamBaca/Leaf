@@ -64,7 +64,7 @@ struct NoteListView: View {
                     } label: {
                         Label(note.isPinned ? "Unpin" : "Pin", systemImage: note.isPinned ? "pin.slash" : "pin")
                     }
-                    .tint(.yellow)
+                    .tint(note.isPinned ? .red : .yellow)
                 }
                 .swipeActions(edge: .trailing) {
                     Button() {
@@ -115,40 +115,4 @@ struct NoteListView: View {
     }
     
 }
-//#Preview {
-//    // Create a mock ModelContainer
-//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-//    let container = try! ModelContainer(for: Book.self, Note.self, configurations: config)
-//
-//    // Create a sample book
-//    let book = Book(title: "Sample Book", author: "John Doe", goals: ["Goal1"], isPinned: true)
-//    
-//    // Save the book first
-//    let context = container.mainContext
-//    context.insert(book)
-//    
-//    // Create a sample image (optional)
-//    let sampleImage = UIImage(systemName: "book.fill")
-//    let imageData = sampleImage?.pngData()
-//    
-//    // Create a sample note
-//    let note = Note(
-//        title: "Chapter 1 Summary",
-//        imageNote: imageData,
-//        page: 20,
-//        content: "This is a summary of chapter 1. It contains important points about the introduction of the main character. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//        lastModified: Date(),
-//        prompt: "Summarize the key points of Chapter 1",
-//        tag: ["Chapter1", "Summary", "Introduction"],
-//        books: book
-//    )
-//    
-//    context.insert(note)
-//    
-//    // Save the context to ensure all data is committed
-//    try! context.save()
-//
-//    // Return the preview
-//    return NoteDetailView(note: note)
-//        .modelContainer(container)
-//}
+
