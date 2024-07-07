@@ -101,16 +101,30 @@ struct BookListView: View {
     }
     
     private func editBook(_ book: Book) {
-//        selectedBookID = book.id
-//        DispatchQueue.main.async {
-//            isShowingEditView = true
-//        }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                   isShowingEditView = true
-//               }
         selectedBook = book
     }
 }
-//#Preview {
-//    BookListView()
-//}
+
+#Preview {
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: Book.self, configurations: config)
+        
+        // Membuat beberapa buku sampel
+        let sampleBooks = [
+            Book(title: "The Great Gatsby", author: "F. Scott Fitzgerald", goals: ["Deepen your self-understanding"], isPinned: true),
+            Book(title: "To Kill a Mockingbird", author: "Harper Lee", goals: ["Expand your skills and knowledge"], isPinned: false),
+            Book(title: "1984", author: "George Orwell", goals: ["Overcome challenges"], isPinned: false)
+        ]
+        
+        // Menambahkan buku sampel ke container
+        for book in sampleBooks {
+            container.mainContext.insert(book)
+        }
+        
+        return BookListView(books: sampleBooks)
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
+}
