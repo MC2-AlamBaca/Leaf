@@ -10,6 +10,7 @@
 		2BF2E9E72C37C20B00036D5E /* PreviewNoteDariNotif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF2E9E62C37C20B00036D5E /* PreviewNoteDariNotif.swift */; };
 		363C1A222C2BD37500E6AF91 /* AllBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A212C2BD37500E6AF91 /* AllBookView.swift */; };
 		363C1A242C2BD37F00E6AF91 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */; };
+		36B060542C3AF5380021C046 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B060532C3AF5380021C046 /* SplashScreenView.swift */; };
 		75691EC52C3668AD006969AA /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75691EC42C3668AD006969AA /* NotificationScheduler.swift */; };
 		75691EC72C37A03A006969AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75691EC62C37A03A006969AA /* AppDelegate.swift */; };
 		BB1F53422C2D8E6400A509B8 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */; };
@@ -45,6 +46,7 @@
 		2BF2E9E62C37C20B00036D5E /* PreviewNoteDariNotif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewNoteDariNotif.swift; sourceTree = "<group>"; };
 		363C1A212C2BD37500E6AF91 /* AllBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBookView.swift; sourceTree = "<group>"; };
 		363C1A232C2BD37F00E6AF91 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
+		36B060532C3AF5380021C046 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		75691EC42C3668AD006969AA /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		75691EC62C37A03A006969AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB1F53412C2D8E6400A509B8 /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				BBA41C7F2C31540A00B741ED /* FilterMenuView.swift */,
 				BBF71AD52C2BFCF8004AF08F /* BookRowView.swift */,
 				BBD64C162C32EAF400156467 /* AddBookView.swift */,
+				36B060532C3AF5380021C046 /* SplashScreenView.swift */,
 			);
 			path = Book;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */,
 				2BF2E9E72C37C20B00036D5E /* PreviewNoteDariNotif.swift in Sources */,
 				BBA41C802C31540A00B741ED /* FilterMenuView.swift in Sources */,
+				36B060542C3AF5380021C046 /* SplashScreenView.swift in Sources */,
 				BBA467092C32B16F004DF66A /* NoteDetailView.swift in Sources */,
 				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
 				BBA4670F2C32BF49004DF66A /* NoteRowView.swift in Sources */,
