@@ -1,5 +1,4 @@
 import SwiftUI
-//import PhotosUI
 
 struct AddBookView: View {
     @State private var title = ""
@@ -75,9 +74,9 @@ struct AddBookView: View {
                             } else {
                                 saveBook()
                             }
-                            // Change the color here
                         }
-                        .bold()
+                        .font(.system(size: 17, weight: .regular, design: .default))
+                        .foregroundColor(.color2)
                     }
                 }
                 .foregroundColor(.color2)
@@ -152,7 +151,6 @@ struct AddBookView: View {
             
             TextField("Enter Title", text: $title).foregroundColor(.color1)
             TextField("Enter Author", text: $author).foregroundColor(.color1)
-            
             
         }
         
