@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SplashScreen: View {
+struct SplashScreenView: View {
     @State private var opacity = 0.0
     
     var body: some View {
@@ -32,5 +32,5 @@ struct SplashScreen: View {
 }
 
 #Preview {
-    SplashScreen()
+    SplashScreenView()
 }

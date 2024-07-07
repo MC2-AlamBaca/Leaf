@@ -21,7 +21,7 @@ struct LeafApp: App {
     var body: some Scene {
         WindowGroup {
             if showSplashScreen {
-                SplashScreen()
+                SplashScreenView()
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation {
