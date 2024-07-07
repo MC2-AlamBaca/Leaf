@@ -18,14 +18,12 @@ struct BookRowView: View {
             HStack() {
                 if book.isPinned {
                   Image(systemName: "pin.fill")
-//                        .foregroundColor(.color2)
                 }
                 if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 100, height: 100)
-//                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .cornerRadius(10)
                         .padding(.trailing, 6)
                         .padding(.leading, 2)
@@ -33,7 +31,6 @@ struct BookRowView: View {
                 
                 VStack(alignment: .leading) {
                     HStack (spacing : 5 ){
-//                        .padding (.horizontal, 2)
                         Text(book.title)
                             .font(.title3)
                             .bold()
@@ -45,9 +42,6 @@ struct BookRowView: View {
                     Text(book.author)
                         .font(.subheadline)
                         .foregroundColor(Color("Color 2"))
-//                        .fontDesign(.serif)
-                    
-                    
                     Spacer()
                     // Display goals below the author as image
                     HStack (spacing : -5) {
@@ -59,10 +53,6 @@ struct BookRowView: View {
 
                                     .frame(width: 35, height: 35)
                                     .foregroundColor(Color("Color 1"))
-
-
-//                                    .background(goal.imgColor)
-//                                    .clipShape(Circle())
                             } else {
                                 Text(goalTitle) // Fallback if goal is not found
                                     .font(.footnote)

@@ -15,22 +15,23 @@ struct LeafApp: App {
     
     @Environment(\.modelContext) var modelContext
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @State private var showSplashScreen = true
 
     
     var body: some Scene {
         WindowGroup {
-            AllBookView()
-//                .background(
-//                                    NavigationLink(
-//                                        destination: NoteDetailView(note: noteToNavigate),
-//                                        isActive: Binding(
-//                                            get: { noteToNavigate != nil },
-//                                            set: { if !$0 { noteToNavigate = nil } }
-//                                        )
-//                                    ) {
-//                                        EmptyView()
-//                                    }
-//                                )
+            if showSplashScreen {
+                SplashScreen()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation {
+                                showSplashScreen = false
+                            }
+                        }
+                    }
+            } else {
+                AllBookView()
+            }
         }
         .modelContainer(for: [Book.self, Note.self])
         

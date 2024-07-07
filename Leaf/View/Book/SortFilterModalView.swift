@@ -13,8 +13,13 @@ struct SortFilterModalView: View {
                 .withDesign(.serif)!
                 .withSymbolicTraits(.traitBold)!,
                 size: 33),
-            .foregroundColor: UIColor.color1 // Change this to your desired color
+            .foregroundColor: UIColor.color2 // Change this to your desired color
         ]
+        
+        // Regular title text attributes
+            UINavigationBar.appearance().titleTextAttributes = [
+                .foregroundColor: UIColor.color2
+            ]
     }
     
     var body: some View {
@@ -24,7 +29,7 @@ struct SortFilterModalView: View {
                 filterByGoalSection
             }
             .navigationTitle("Sort and Filter")
-            .accentColor(.color1)
+            .foregroundColor(.color2)
             .navigationBarItems(trailing: doneButton)
         }
         .onAppear{
@@ -52,6 +57,8 @@ struct SortFilterModalView: View {
                 }) {
                     HStack {
                         Text(goal)
+                            .font(.system(size: 17, weight: .regular, design: .default))
+                            .foregroundColor(.color1)
                         Spacer()
                         if viewModel.selectedGoals.contains(goal) {
                             Image(systemName: "checkmark")
@@ -82,6 +89,7 @@ struct SortFilterModalView: View {
         Button("Done") {
             dismiss()
         }
+        .font(.system(size: 17, weight: .bold, design: .default))
         .foregroundColor(.color1)
         
     }
