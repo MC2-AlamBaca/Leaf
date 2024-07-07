@@ -33,15 +33,7 @@ struct LeafApp: App {
 //                                )
         }
         .modelContainer(for: [Book.self, Note.self])
-//        .onAppear {
-//                    NotificationCenter.default.addObserver(forName: .navigateToNote, object: nil, queue: .main) { notification in
-//                        if let noteID = notification.userInfo?["noteID"] as? String,
-//                           let noteUUID = UUID(uuidString: noteID),
-//                           let note = modelContext.fetch(Note.self, id: noteUUID) {
-//                            noteToNavigate = note
-//                        }
-//                    }
-//                }
+        
     }
 }
 

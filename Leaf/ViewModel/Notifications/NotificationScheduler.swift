@@ -13,8 +13,8 @@ struct NotificationScheduler {
         let intervals: [TimeInterval] = [70, 86400, 604800, 1209600, 2592000, 31536000] // 70 seconds, 1 day, 7 days, 14 days, 30 days, 365 days
 
         let content = UNMutableNotificationContent()
-        content.title = "Review your note"
-        content.body = note.title
+        content.title = "Time to Review Your Note! "
+        content.body = "🌿 Let's revisit your note and give your memory a boost. Keep growing and thriving! 🌱"
         content.userInfo = ["noteID": note.id.uuidString]
 
         // Specify the custom sound file

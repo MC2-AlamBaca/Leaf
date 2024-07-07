@@ -15,9 +15,45 @@ struct NoteListView: View {
     @State private var noteToDelete: Note? //Track book yang akan di delete
     @State private var showDeleteConfirmation: Bool = false //confimasi untuk delete
     
+    let availableGoals: [Goal] = [
+        Goal(title: "Deepen your self-understanding", imageName: "deepenYourSelfUnderstanding_Goal", imgColor: Color("Color 1")),
+        Goal(title: "Ignite your motivation", imageName: "igniteYourMotivation_Goal", imgColor: Color("color1")),
+        Goal(title: "Expand your skills and knowledge", imageName: "expandYourSkillsAndKnowledge_Goal", imgColor: Color("color1")),
+        Goal(title: "Overcome challenges", imageName: "overcomeChallenges_Goal", imgColor: Color("color1")),
+        Goal(title: "Enhance relationships and communication", imageName: "enhanceRelationshipAndCommunication_Goal", imgColor: Color("color1")),
+        Goal(title: "Discover inner peace and happiness", imageName: "discoverInnerPeaceAndHappiness_Goal", imgColor: Color("color1"))
+    ]
+
+    
     
     var body: some View {
         List {
+            Section("Your Goal"){
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(book.goals, id: \.self) { goal in
+                            if let imageName = getGoalImageName(for: goal) {
+                                Image(imageName)
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(.color1)
+                            }
+                            Text(goal)
+                                .font(.callout)
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 3)
+                                .italic()
+                                .fontWeight(.semibold)
+                                .fontDesign(.serif)
+                        
+                        }
+
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            
+            
             ForEach(viewModel.filteredAndSortedNotes(book.notes ?? [])) { note in
                 NavigationLink(destination: NoteDetailView(note: note)) {
                     NoteRowView(note: note)
@@ -73,6 +109,11 @@ struct NoteListView: View {
             print("Failed to save context after deleting note: \(error.localizedDescription)")
         }
     }
+    
+    func getGoalImageName(for title: String) -> String? {
+        return availableGoals.first { $0.title == title }?.imageName
+    }
+    
 }
 //#Preview {
 //    // Create a mock ModelContainer

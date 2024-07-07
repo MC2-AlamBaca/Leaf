@@ -69,7 +69,7 @@ struct AddNoteView: View {
     var body: some View {
         NavigationStack{
             Form {
-                Section(header: Text("title").foregroundColor(.color2)) {
+                Section(header: Text("title").foregroundColor(.color1)) {
                     TextField("Enter title", text: $title)
 //                        .focused(isTitleFocused)
                 }
@@ -81,22 +81,24 @@ struct AddNoteView: View {
                         .keyboardType(.numberPad)
                 }
                 
-                Section(header: Text("reflection").foregroundColor(.color2)) {
+                Section() {
                     let availablePrompts = getAvailablePrompts()
                     if !availablePrompts.isEmpty {
-                        Picker(selection: $prompt, label: Text("Select Prompt").foregroundColor(.color2)) {
+                        Picker(selection: $prompt, label: Text("Select Prompt")) {
+//                            Text("Select Prompt").tag(availablePrompts)
                             ForEach(availablePrompts, id: \.self) { prompt in
                                 Text(prompt)
                                     .tag(prompt)
-                                    .font(.system(size: 16, weight: .regular, design: .serif))
+                                    .font(.system(size: 16, weight:.semibold, design: .serif))
                             }
                         }
+                        .multilineTextAlignment(.leading)
                         .frame(height:50)
                         .pickerStyle(MenuPickerStyle())
                         .labelsHidden()
                         .tint(.color2)
                         .onChange(of: prompt) { newPrompt in
-                            if newPrompt != "Select Prompt" {
+                            if !newPrompt.isEmpty {
                                 selectedPrompt = newPrompt
                             }
                         }
@@ -117,6 +119,7 @@ struct AddNoteView: View {
                                     if content.isEmpty {
                                         Text("Write your reflection here...")
                                             .foregroundColor(.gray)
+                                            .font(.caption)
                                     }
                                     Spacer()
                                 }//HStack
@@ -124,10 +127,21 @@ struct AddNoteView: View {
                             }//VStack
         
                         )
+                        
+                } header: {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("Reflection")
+                            .font(.system(size: 17, weight: .bold, design: .serif))
+                            .foregroundColor(.color1)
+                        
+                        Text("Prompts can help you reflect on your reading and stay aligned with your goals")
+                        //.font(.system(size: 14, weight: .regular, design: .serif))
+                            .font(.footnote)
+                            .foregroundColor(.color2)
+                            .textCase(.lowercase)
+                    }
                 }
-                .fontDesign(.serif)
                 .onAppear {
-                    prompt = "Select Prompt"
                     updateAvailablePrompts()
                 }
                 
@@ -135,7 +149,6 @@ struct AddNoteView: View {
                     TagInputView(tags: $tags)
                 }
             }
-            .fontDesign(.serif)
             .foregroundColor(.color2)
         }
 //        .tint(.red) Bingung caranya mengganti color dari navigation bar nya yang berasal dari yang lain. 
@@ -143,6 +156,7 @@ struct AddNoteView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(note == nil ? "Save" : "Update", action: addOrUpdateNote)
+                    .bold()
                     .foregroundColor(.color2)
             }
         }
@@ -159,7 +173,7 @@ struct AddNoteView: View {
         
     
     private var photoSection: some View {
-        Section(header: Text("Sentence Photo").foregroundColor(.color2) ) {
+        Section() {
             VStack {
                 if let photoData = photoData, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
@@ -184,6 +198,18 @@ struct AddNoteView: View {
                         .foregroundColor(.color2)
                         .frame(maxWidth: .infinity)
                 }
+            }
+        } header: {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Sentence Photo")
+                    .font(.system(size: 17, weight: .bold, design: .serif))
+                    .foregroundColor(.color1)
+                
+                Text("Snap a photo of what grabs your attention in the books!")
+                //.font(.system(size: 14, weight: .regular, design: .serif))
+                    .font(.footnote)
+                    .foregroundColor(.color2)
+                    .textCase(.lowercase)
             }
         }
     }

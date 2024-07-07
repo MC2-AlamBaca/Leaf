@@ -9,9 +9,11 @@ struct SortFilterNoteModalView: View {
         self.viewModel = viewModel
         self.allTags = allTags
         UINavigationBar.appearance().largeTitleTextAttributes = [
-            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1).withDesign(.serif)!,
-                          size: 34), .foregroundColor: UIColor(named: "color1") ?? UIColor.color2
-                                
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+                .withDesign(.serif)!
+                .withSymbolicTraits(.traitBold)!,
+                size: 33),
+            .foregroundColor: UIColor.color1 // Change this to your desired color
         ]
     }
     
@@ -19,11 +21,9 @@ struct SortFilterNoteModalView: View {
         NavigationView {
             Form {
                 sortOrderSection
-                sortOrderTimeSection
                 filterByTagSection
             }
             .navigationTitle("Sort and Filter")
-            .fontDesign(.serif)
             .accentColor(.color1)
             .navigationBarItems(trailing: doneButton)
         }
@@ -46,19 +46,6 @@ struct SortFilterNoteModalView: View {
 
     }
     
-    private var sortOrderTimeSection: some View {
-        Section(header: Text("Sort Time Order")) {
-                Picker(selection: $viewModel.sortOrderTime, label: Text("Sort Time Order")) {
-                    ForEach(NoteViewModel.SortOrderTime.allCases, id: \.self) { order in
-                        Text(order.rawValue.capitalized)
-                            .tag(order)
-                    }
-                }
-                .pickerStyle(.inline)
-                .labelsHidden()
-            }
-
-    }
     
     private var filterByTagSection: some View {
         Section(header: Text("Filter by Tags")) {
@@ -100,7 +87,6 @@ struct SortFilterNoteModalView: View {
             dismiss()
         }
         .foregroundColor(.color1)
-        .fontDesign(.serif)
     }
 }
 

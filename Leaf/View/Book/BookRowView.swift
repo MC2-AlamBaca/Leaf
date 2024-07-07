@@ -39,6 +39,7 @@ struct BookRowView: View {
                             .bold()
                             .fontDesign(.serif)
                             .foregroundColor(Color("Color 1"))
+                            .lineLimit(3)
                         
                     }
                     Text(book.author)
