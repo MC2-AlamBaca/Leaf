@@ -17,7 +17,7 @@ struct SplashScreenView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100, height: 100)
             
-            Text("Turning Pages Into Permanent Memories")
+            Text("Turning Pages Into\nPermanent Memories")
                 .font(.title2)
                 .fontWeight(.medium)
                 .multilineTextAlignment(.center)

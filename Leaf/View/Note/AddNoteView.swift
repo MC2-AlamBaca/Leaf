@@ -64,6 +64,8 @@ struct AddNoteView: View {
                   let firstPrompt = goalsWithPrompts.first(where: { $0.goal == firstSelectedGoal })?.prompts.first {
             _prompt = State(initialValue: firstPrompt)
         }
+        
+        
     }
     
     var body: some View {
