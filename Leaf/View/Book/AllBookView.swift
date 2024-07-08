@@ -69,7 +69,7 @@ struct AllBookView: View {
                     }
                 }
             }
-            .searchable(text: $viewModel.searchText, prompt: "Search for Books")
+            .searchable(text: $viewModel.searchText, prompt: "Search for Book/Author")
             .sheet(isPresented: $viewModel.isShowingSortFilterModal) {
                 SortFilterModalView(viewModel: viewModel, allGoals: Array(Set(books.flatMap { $0.goals })))
             }

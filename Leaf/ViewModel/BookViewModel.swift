@@ -26,7 +26,7 @@ class BookViewModel: ObservableObject {
         }
     
     private func searchFilter(_ book: Book) -> Bool {
-        searchText.isEmpty || book.title.localizedCaseInsensitiveContains(searchText)
+        searchText.isEmpty || book.title.localizedCaseInsensitiveContains(searchText) || book.author.localizedCaseInsensitiveContains(searchText)
     }
     
     private func goalsFilter(_ book: Book) -> Bool {

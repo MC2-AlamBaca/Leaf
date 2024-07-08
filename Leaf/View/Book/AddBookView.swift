@@ -75,6 +75,7 @@ struct AddBookView: View {
                                 saveBook()
                             }
                         }
+                        .bold()
                         .font(.system(size: 17, weight: .regular, design: .default))
                         .foregroundColor(.color2)
                     }
