@@ -18,13 +18,15 @@ struct SplashScreenView: View {
                     .frame(width: 100, height: 100)
                 
                 Text("Turning Pages Into\nPermanent Memories")
-                    .font(.title2)
+                    .font(.title3)
+                    .fontDesign(.serif)
                     .fontWeight(.medium)
+                    .foregroundColor(.color2)
                     .multilineTextAlignment(.center)
             }
             .opacity(opacity)
             .onAppear {
-                withAnimation(.easeIn(duration: 1.0)) {
+                withAnimation(.easeIn(duration: 0.5)) {
                     opacity = 1.0
                 }
             }

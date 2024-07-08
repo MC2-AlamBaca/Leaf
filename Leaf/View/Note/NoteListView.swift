@@ -29,34 +29,34 @@ struct NoteListView: View {
     var body: some View {
         VStack {
                 
-            
             List {
-                Section("Your Goal"){
+            
+                Section("Your Choosen Goal"){
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(book.goals, id: \.self) { goal in
-                                if let imageName = getGoalImageName(for: goal) {
-                                    Image(imageName)
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
+                                HStack{
+                                    if let imageName = getGoalImageName(for: goal) {
+                                        Image(imageName)
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .padding(.leading, 8)
+                                    }
+                                    Text(goal + "   ")
+                                        .font(.callout)
+                                        .padding(.vertical, 3)
+                                        .italic()
+                                        .fontWeight(.semibold)
+                                        .padding(.leading, -4)
                                 }
-                                Text(goal)
-                                    .font(.callout)
-                                //                                .padding(.horizontal, 5)
-                                    .padding(.vertical, 3)
-                                    .italic()
-                                    .fontWeight(.semibold)
-                                    .fontDesign(.serif)
+                                .background(Color.secondary.opacity(0.1))
+                                .cornerRadius(20)
                             }
                         }
-//                        .background(.red)
-                        .cornerRadius(20)
-                        .padding(.horizontal)
                     }
-                    
-                }.listRowBackground(EmptyView())
+                }
+                .listRowBackground(EmptyView())
                 
-            
                 ForEach(viewModel.filteredAndSortedNotes(book.notes ?? [])) { note in
                     NavigationLink(destination: NoteDetailView(note: note)) {
                         NoteRowView(note: note)

@@ -85,7 +85,6 @@ struct AddNoteView: View {
                     let availablePrompts = getAvailablePrompts()
                     if !availablePrompts.isEmpty {
                         Picker(selection: $prompt, label: Text("Select Prompt")) {
-//                            Text("Select Prompt").tag(availablePrompts)
                             ForEach(availablePrompts, id: \.self) { prompt in
                                 Text(prompt)
                                     .tag(prompt)

@@ -446,7 +446,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Leaf/Preview Content\"";
-				DEVELOPMENT_TEAM = 9VZ5KDLR62;
+				DEVELOPMENT_TEAM = PBDYVYYKCK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
@@ -463,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hamo.Leaf.co;
+				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.LeafNote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -479,7 +479,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Leaf/Preview Content\"";
-				DEVELOPMENT_TEAM = 9VZ5KDLR62;
+				DEVELOPMENT_TEAM = PBDYVYYKCK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
@@ -496,7 +496,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hamo.Leaf.co;
+				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.LeafNote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

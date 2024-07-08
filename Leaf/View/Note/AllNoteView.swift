@@ -21,7 +21,7 @@ struct AllNoteView: View {
             self.book = book
             
         UINavigationBar.appearance().largeTitleTextAttributes = [
-            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+            .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
                 .withDesign(.serif)!
                 .withSymbolicTraits(.traitBold)!,
                 size: 33),
@@ -76,7 +76,6 @@ struct AllNoteView: View {
                     }
                 }
             }
-            
             .searchable(text: $viewModel.searchText, prompt: "Search for Note")
             .foregroundColor(.color2)
             .sheet(isPresented: $viewModel.isShowingSortFilterModal){
