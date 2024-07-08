@@ -13,13 +13,9 @@ struct SortFilterModalView: View {
                 .withDesign(.serif)!
                 .withSymbolicTraits(.traitBold)!,
                 size: 33),
-            .foregroundColor: UIColor.color2 // Change this to your desired color
+            .foregroundColor: UIColor.color1 // Change this to your desired color
         ]
         
-        // Regular title text attributes
-            UINavigationBar.appearance().titleTextAttributes = [
-                .foregroundColor: UIColor.color2
-            ]
     }
     
     var body: some View {
@@ -29,7 +25,7 @@ struct SortFilterModalView: View {
                 filterByGoalSection
             }
             .navigationTitle("Sort and Filter")
-            .foregroundColor(.color2)
+            .foregroundColor(.color1)
             .navigationBarItems(trailing: doneButton)
         }
         .onAppear{
@@ -90,7 +86,7 @@ struct SortFilterModalView: View {
             dismiss()
         }
         .font(.system(size: 17, weight: .bold, design: .default))
-        .foregroundColor(.color1)
+        .foregroundColor(.color2)
         
     }
 }

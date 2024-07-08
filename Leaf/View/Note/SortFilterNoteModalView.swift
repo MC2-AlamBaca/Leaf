@@ -86,7 +86,8 @@ struct SortFilterNoteModalView: View {
         Button("Done") {
             dismiss()
         }
-        .foregroundColor(.color1)
+        .foregroundColor(.color2)
+        .bold()
     }
 }
 
