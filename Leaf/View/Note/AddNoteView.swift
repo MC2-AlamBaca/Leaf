@@ -117,8 +117,8 @@ struct AddNoteView: View {
                                 HStack {
                                     if content.isEmpty {
                                         Text("Write your reflection here...")
-                                            .foregroundColor(.gray)
-                                            .font(.caption)
+                                            .foregroundColor(.gray.opacity(0.5))
+                                            .font(.body)
                                     }
                                     Spacer()
                                 }//HStack

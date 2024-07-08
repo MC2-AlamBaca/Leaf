@@ -43,10 +43,10 @@ struct NoteListView: View {
                                             .padding(.leading, 8)
                                     }
                                     Text(goal + "   ")
-                                        .font(.callout)
+                                        .font(.subheadline)
                                         .padding(.vertical, 3)
                                         .italic()
-                                        .fontWeight(.semibold)
+                                        .fontWeight(.regular)
                                         .padding(.leading, -4)
                                 }
                                 .background(Color.secondary.opacity(0.1))
