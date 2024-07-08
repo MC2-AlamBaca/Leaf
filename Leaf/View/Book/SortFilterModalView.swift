@@ -12,7 +12,7 @@ struct SortFilterModalView: View {
             .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
                 .withDesign(.serif)!
                 .withSymbolicTraits(.traitBold)!,
-                size: 33),
+                size: 28),
             .foregroundColor: UIColor.color1 // Change this to your desired color
         ]
         

@@ -24,7 +24,7 @@ struct AllNoteView: View {
             .font: UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1)
                 .withDesign(.serif)!
                 .withSymbolicTraits(.traitBold)!,
-                size: 33),
+                size: 28),
             .foregroundColor: UIColor { traitCollection in
                         switch traitCollection.userInterfaceStyle {
                         case .dark:
@@ -107,7 +107,7 @@ private let dateFormatter: DateFormatter = {
     let container = try! ModelContainer(for: Book.self, Note.self, configurations: config)
     
     // Create a sample book with notes
-    let book = Book(title: "Sample Book", author: "John Doe", goals: ["Goal1"], isPinned: true)
+    let book = Book(title: "I Can't Talk So Smoothly", author: "John Doe", goals: ["Goal1"], isPinned: true)
     
     // Save the book first
     let context = container.mainContext
