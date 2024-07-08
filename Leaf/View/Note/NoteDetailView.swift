@@ -16,13 +16,13 @@ struct NoteDetailView: View {
     
     
     var body: some View {
-
+        
         ScrollView() {
             VStack(alignment: .leading) {
                 
                 Text(note.title)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.title)
+                    .font(.title2)
                     .fontDesign(.serif)
                     .bold()
                     .padding(.bottom, 4)
@@ -37,20 +37,25 @@ struct NoteDetailView: View {
                 
                 ZStack {
                     if let imageData = note.imageNote, let image = UIImage(data: imageData) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 200)
-                            .cornerRadius(20)
+                        Color.clear
+                            .frame(width: 330, height: 440)
+                            .overlay(
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFill()
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
                             .overlay {
                                 Rectangle()
                                     .foregroundStyle(LinearGradient(colors: [
-                                        Color.gray.opacity(1), Color.black.opacity(0)
+                                        Color("Color 1").opacity(1), Color.black.opacity(0)
                                     ], startPoint: .bottom, endPoint: UnitPoint(x: 0.5, y: 0.8)))
                             }
+                        
                             .mask {
-                                RoundedRectangle(cornerRadius: 12)
+                                RoundedRectangle(cornerRadius: 20)
                             }
+                        
                             .onTapGesture {
                                 print("Image tapped, presenting full screen")
                                 isFullScreenImagePresented = true
@@ -63,10 +68,10 @@ struct NoteDetailView: View {
                             Text("Page \(note.page ?? 0)")
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 .foregroundColor(note.imageNote == nil ? Color("Color 2") : .white)
-                                .padding(.horizontal, 8)
-                                .padding(.top, 2)
-                                .padding(.bottom, 20)
-                                .font(.subheadline)
+                                .padding(.horizontal, 32)
+                                .padding(.top, 8)
+                                .padding(.bottom, 12)
+                                .font(.footnote)
                                 .fontWeight(.medium)
                                 .italic()
                                 .fontDesign(.serif)
@@ -76,50 +81,40 @@ struct NoteDetailView: View {
                     
                 }
                 .padding(.top, 12)
-                .padding(.horizontal)
-                
                 
                 VStack {
                     Text(note.prompt)
                         .fontDesign(.serif)
-                        .font(.title3)
+                        .font(.headline)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color("Color 1"))
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 8)
                     
                     Text(note.content)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color("Color 2"))
-                        .padding(.bottom, 16)
+                        .padding(.bottom, 8)
                     
                     if let tags = note.tag, !tags.isEmpty {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                Image(systemName: "tag.fill")
+                        HStack {
+                            ForEach(tags.prefix(3), id: \.self) { tag in
+                                Text(tag ?? "")
+                                    .font(.footnote)
+                                    .fontDesign(.serif)
                                     .foregroundColor(Color("Color 2"))
-                                    .padding(.trailing, 4)
-                                
-                                HStack {
-                                    ForEach(tags.compactMap { $0 }, id: \.self) { tag in
-                                        Text(tag)
-                                            .cornerRadius(15)
-                                            .foregroundColor(Color("Color 2"))
-                                            .bold()
-                                            .fontDesign(.serif)
-                                            .font(.subheadline)
-                                            .padding(.leading, -4)
-                                        Text(",")
-                                            .padding(.leading, -8)
-                                    }
-                                }
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 4)
+                                    .background(Color.color2.opacity(0.1))
+                                    .cornerRadius(20)
+                                    .padding(.top, 8)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }
                 }
                 .padding()
             }
-            //            Spacer()
         }
         .navigationBarTitleDisplayMode(.inline)// tipe navbartype
         .toolbar {

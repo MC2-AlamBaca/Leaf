@@ -24,25 +24,47 @@ struct NoteRowView: View {
                     Image(systemName: "pin.fill")
                         .foregroundColor(.color2)
                 }
+//                    .tint(note.isPinned ? .red : .yellow)
+//                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                    Button() {
+//                        pinNote(Note)
+//                    } label: {
+//                        if note.isPinned {
+//                            Label("Unpin", systemImage: "pin.slash")
+//                        } else {
+//                            Label("Pin", systemImage: "pin")
+//                        }
+//                    }
+//                    .tint(note.isPinned ? .red : .yellow)
+//                }
+                
                 Text(note.title)
                     .font(.headline)
+                    .foregroundStyle(Color("Color 1"))
                     .fontDesign(.serif)
-                    .foregroundColor(.color1)
                     .lineLimit(2)
             }
+            
             Text(note.content)
                 .font(.subheadline)
-                .foregroundColor(.color2)
+                .foregroundColor(Color("Color 2"))
                 .lineLimit(3)
+                .padding(.top, 2)
+            
             HStack {
                 if let tags = note.tag, !tags.isEmpty {
                     ForEach(tags.prefix(3), id: \.self) { tag in
                         Text(tag ?? "")
-                            .font(.caption)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 2)
-                            .background(Color.color1.opacity(0.1))
-                            .cornerRadius(8)
+                            .font(.subheadline)
+                            .fontDesign(.serif)
+//                            .fontWeight(.medium)
+                            .foregroundColor(Color("Color 2"))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 4)
+                            .background(Color.secondary.opacity(0.1))
+//                            .background(Color.color2.opacity(0.1))
+                            .cornerRadius(20)
+                            .padding(.top, 8)
                     }
                 }
                 Spacer()
@@ -51,10 +73,24 @@ struct NoteRowView: View {
                 //                    .foregroundColor(.secondary)
                 Text(dateFormatter.string(from: note.lastModified))
                     .font(.caption)
+                    .fontDesign(.serif)
                     .foregroundColor(.secondary)
+                    .padding(.top, 8)
                 
             }
         }
         .padding(.vertical, 4)
+        
+//        func pinNote(_ note: Note) {
+//            note.isPinned.toggle()
+//            do {
+//                try modelContext.save()
+//            } catch {
+//                print("Failed to save context after pinning book:
+//                      \(error.localizedDescription)")
+//                      }
+//                      print("Pinning book: \(note.title)")
+//            }
+//
     }
 }
