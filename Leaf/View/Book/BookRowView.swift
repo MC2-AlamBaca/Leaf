@@ -18,41 +18,52 @@ struct BookRowView: View {
             HStack() {
                 if book.isPinned {
                   Image(systemName: "pin.fill")
+                        .foregroundColor(Color("Color 2"))
                 }
                 if let photoData = book.bookCover, let uiImage = UIImage(data: photoData) {
                     Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 90, height: 120)
+//                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .cornerRadius(10)
                         .padding(.trailing, 6)
                         .padding(.leading, 2)
                 }
                 
                 VStack(alignment: .leading) {
-                    HStack (spacing : 5 ){
+                    HStack (spacing: 5 ){
+//                        .padding (.horizontal, 2)
                         Text(book.title)
-                            .font(.title3)
+                            .font(.body)
                             .bold()
                             .fontDesign(.serif)
                             .foregroundColor(Color("Color 1"))
-                            .lineLimit(3)
+                            .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
+//                            .lineSpacing(-20)
                         
                     }
                     Text(book.author)
                         .font(.subheadline)
                         .foregroundColor(Color("Color 2"))
+                        .padding(.top, -8)
+                    
+                    
                     Spacer()
                     // Display goals below the author as image
-                    HStack (spacing : -5) {
+                    HStack (spacing : -2) {
                         ForEach(book.goals, id: \.self) { goalTitle in
                             if let goal = availableGoals.first(where: { $0.title == goalTitle }) {
                                 Image(goal.imageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
 
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: 30, height: 30)
                                     .foregroundColor(Color("Color 1"))
+
+
+//                                    .background(goal.imgColor)
+//                                    .clipShape(Circle())
                             } else {
                                 Text(goalTitle) // Fallback if goal is not found
                                     .font(.footnote)
@@ -60,7 +71,7 @@ struct BookRowView: View {
                         }
                         
                     }
-                    .padding (.horizontal, 2)
+                    .padding (.horizontal, -2)
                 }
                 .padding(.top, 4)
                 .padding(.bottom, 6)
@@ -70,7 +81,7 @@ struct BookRowView: View {
                 Text("\(book.notes?.count ?? 0)")
                     .foregroundColor(.secondary)
             }
-        
+            .padding(.horizontal, -6)
             .padding(.vertical, 8)
     }
 }

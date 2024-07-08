@@ -23,72 +23,76 @@ struct NoteListView: View {
         Goal(title: "Enhance relationships and communication", imageName: "enhanceRelationshipAndCommunication_Goal", imgColor: Color("color1")),
         Goal(title: "Discover inner peace and happiness", imageName: "discoverInnerPeaceAndHappiness_Goal", imgColor: Color("color1"))
     ]
-
+    
     
     
     var body: some View {
-        List {
-            Section("Your Goal"){
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(book.goals, id: \.self) { goal in
-                            if let imageName = getGoalImageName(for: goal) {
-                                Image(imageName)
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.color1)
+        VStack {
+                
+            
+            List {
+                Section("Your Goal"){
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(book.goals, id: \.self) { goal in
+                                if let imageName = getGoalImageName(for: goal) {
+                                    Image(imageName)
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                }
+                                Text(goal)
+                                    .font(.callout)
+                                //                                .padding(.horizontal, 5)
+                                    .padding(.vertical, 3)
+                                    .italic()
+                                    .fontWeight(.semibold)
+                                    .fontDesign(.serif)
                             }
-                            Text(goal)
-                                .font(.callout)
-                                .padding(.horizontal, 5)
-                                .padding(.vertical, 3)
-                                .italic()
-                                .fontWeight(.semibold)
-                                .fontDesign(.serif)
-                        
                         }
-
+//                        .background(.red)
+                        .cornerRadius(20)
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
+                    
+                }.listRowBackground(EmptyView())
+                
+            
+                ForEach(viewModel.filteredAndSortedNotes(book.notes ?? [])) { note in
+                    NavigationLink(destination: NoteDetailView(note: note)) {
+                        NoteRowView(note: note)
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            togglePinNote(note)
+                        } label: {
+                            Label(note.isPinned ? "Unpin" : "Pin", systemImage: note.isPinned ? "pin.slash" : "pin")
+                        }
+                        .tint(note.isPinned ? .red : .yellow)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button() {
+                            noteToDelete = note
+                            showDeleteConfirmation = true
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        .tint(.red)
+                    }
                 }
             }
-            
-            
-            ForEach(viewModel.filteredAndSortedNotes(book.notes ?? [])) { note in
-                NavigationLink(destination: NoteDetailView(note: note)) {
-                    NoteRowView(note: note)
-                }
-                .swipeActions(edge: .leading) {
-                    Button {
-                        togglePinNote(note)
-                    } label: {
-                        Label(note.isPinned ? "Unpin" : "Pin", systemImage: note.isPinned ? "pin.slash" : "pin")
-                    }
-                    .tint(note.isPinned ? .red : .yellow)
-                }
-                .swipeActions(edge: .trailing) {
-                    Button() {
-                        noteToDelete = note
-                        showDeleteConfirmation = true
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                    }
-                    .tint(.red)
-                }
+            .alert (isPresented: $showDeleteConfirmation){
+                Alert(
+                    title: Text("Delete Note"),
+                    message: Text("Are you sure you want to delete this note? This action cannot be undone."),
+                    primaryButton: .destructive(Text("Delete")){
+                        if let noteToDelete = noteToDelete {
+                            deleteNote(noteToDelete)
+                        }
+                    },
+                    secondaryButton: .cancel())
             }
+            .listRowSpacing(10)
         }
-        .alert (isPresented: $showDeleteConfirmation){
-            Alert(
-                title: Text("Delete Note"),
-                message: Text("Are you sure you want to delete this note? This action cannot be undone."),
-                primaryButton: .destructive(Text("Delete")){
-                    if let noteToDelete = noteToDelete {
-                        deleteNote(noteToDelete)
-                    }
-                },
-                secondaryButton: .cancel())
-        }
-        .listRowSpacing(10)
     }
     
     private func togglePinNote(_ note: Note) {
@@ -115,4 +119,5 @@ struct NoteListView: View {
     }
     
 }
+
 
