@@ -11,16 +11,16 @@ struct SplashScreenView: View {
     @State private var opacity = 0.0
         
         var body: some View {
-            VStack(spacing: 20) {
+            VStack(spacing: 5) {
                 Image(.logoLeaf)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
                 
-                Text("Turning Pages Into\nPermanent Memories")
-                    .font(.title3)
+                Text("Leaf")
+                    .font(.largeTitle)
                     .fontDesign(.serif)
-                    .fontWeight(.medium)
+                    .fontWeight(.bold)
                     .foregroundColor(.color2)
                     .multilineTextAlignment(.center)
             }
