@@ -26,7 +26,7 @@ struct AllBookView: View {
                         case .light, .unspecified:
                             return UIColor.color1 // Warna untuk light mode
                         @unknown default:
-                            return UIColor.color1 // Default fallback
+                            return UIColor.color2 // Default fallback
                         }
                     }
         ]
