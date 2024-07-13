@@ -97,19 +97,22 @@ struct NoteDetailView: View {
                         .padding(.bottom, 8)
                     
                     if let tags = note.tag, !tags.isEmpty {
-                        HStack {
-                            ForEach(tags.prefix(3), id: \.self) { tag in
-                                Text(tag ?? "")
-                                    .font(.footnote)
-                                    .fontDesign(.serif)
-                                    .foregroundColor(Color("Color 2"))
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 4)
-                                    .background(Color.color2.opacity(0.1))
-                                    .cornerRadius(20)
-                                    .padding(.top, 8)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                        ScrollView(.horizontal, showsIndicators: true){
+                            HStack {
+                                ForEach(tags, id: \.self) { tag in
+                                    Text(tag ?? "")
+                                        .font(.footnote)
+                                        .fontDesign(.serif)
+                                        .foregroundColor(Color("Color 2"))
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 4)
+                                        .background(Color.secondary.opacity(0.1))
+                                        .cornerRadius(20)
+                                        .padding(.top, 8)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
                             }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                 }

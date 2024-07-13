@@ -55,14 +55,12 @@ struct NoteRowView: View {
                 if let tags = note.tag, !tags.isEmpty {
                     ForEach(tags.prefix(3), id: \.self) { tag in
                         Text(tag ?? "")
-                            .font(.subheadline)
+                            .font(.footnote)
                             .fontDesign(.serif)
-//                            .fontWeight(.medium)
                             .foregroundColor(Color("Color 2"))
                             .padding(.horizontal, 12)
                             .padding(.vertical, 4)
                             .background(Color.secondary.opacity(0.1))
-//                            .background(Color.color2.opacity(0.1))
                             .cornerRadius(20)
                             .padding(.top, 8)
                     }

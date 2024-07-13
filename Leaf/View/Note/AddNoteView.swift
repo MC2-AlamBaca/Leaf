@@ -85,7 +85,6 @@ struct AddNoteView: View {
                     let availablePrompts = getAvailablePrompts()
                     if !availablePrompts.isEmpty {
                         Picker(selection: $prompt, label: Text("Select Prompt")) {
-//                            Text("Select Prompt").tag(availablePrompts)
                             ForEach(availablePrompts, id: \.self) { prompt in
                                 Text(prompt)
                                     .tag(prompt)
@@ -118,8 +117,8 @@ struct AddNoteView: View {
                                 HStack {
                                     if content.isEmpty {
                                         Text("Write your reflection here...")
-                                            .foregroundColor(.gray)
-                                            .font(.caption)
+                                            .foregroundColor(.gray.opacity(0.5))
+                                            .font(.body)
                                     }
                                     Spacer()
                                 }//HStack
