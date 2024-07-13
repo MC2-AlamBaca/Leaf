@@ -23,6 +23,8 @@ struct AddNoteView: View {
     @State private var selectedPrompt: String = ""
     @State private var selectedGoals: Set<String> = []
     @State private var availablePrompts: [String] = []
+    @State private var showAlert = false
+    @State private var alertMessage = ""
 
     @Environment(\.dismiss) private var dismiss
     
@@ -166,6 +168,9 @@ struct AddNoteView: View {
         .fullScreenCover(isPresented: $showMarkup) {
             MarkupView(photoData: $photoData)
         }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Incomplete Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
         
         
     }
@@ -227,47 +232,61 @@ struct AddNoteView: View {
     }
     
     private func addOrUpdateNote() {
-        if let note = note {
-            let originalCreationDate = note.creationDate
-            
-            note.title = title
-            note.page = Int(page)
-            note.content = content
-            note.lastModified = Date()
-            note.prompt = prompt
-            note.tag = tags
-            note.imageNote = photoData
-            note.creationDate = originalCreationDate
-        } else {
-            let newNote = Note(
-                title: title,
-                imageNote: photoData,
-                page: Int(page),
-                content: content,
-                lastModified: Date(),
-                prompt: prompt,
-                tag: tags,
-                books: book,
-                creationDate: Date()
-            )
-            modelContext.insert(newNote)
-            
-            if book.notes == nil {
-                book.notes = [newNote]
-            } else {
-                book.notes?.append(newNote)
-            }
-            // Schedule notifications for the new note
-            NotificationScheduler.scheduleNotifications(for: newNote)
+//        guard !title.isEmpty else {
+//            alertMessage = "Please enter the note title."
+//            showAlert = true
+//            return
+//        }
+        
+        guard !content.isEmpty else {
+            alertMessage = "Please write your reflection."
+            showAlert = true
+            return
         }
         
         do {
+            if let existingNote = note {
+                // Update existing note
+                existingNote.title = title
+                existingNote.page = Int(page)
+                existingNote.content = content
+                existingNote.lastModified = Date()
+                existingNote.prompt = prompt
+                existingNote.tag = tags
+                existingNote.imageNote = photoData
+            } else {
+                // Create new note
+                let newNote = Note(
+                    title: title,
+                    imageNote: photoData,
+                    page: Int(page),
+                    content: content,
+                    lastModified: Date(),
+                    prompt: prompt,
+                    tag: tags,
+                    books: book,
+                    creationDate: Date()
+                )
+                modelContext.insert(newNote)
+                
+                if book.notes == nil {
+                    book.notes = [newNote]
+                } else {
+                    book.notes?.append(newNote)
+                }
+                
+                // Schedule notifications for the new note
+                NotificationScheduler.scheduleNotifications(for: newNote)
+            }
+            
             try modelContext.save()
             dismiss()
         } catch {
             print("Error saving note: \(error.localizedDescription)")
+            // Handle error as needed, e.g., show alert
         }
     }
+
     
     
     private func loadImage() {
