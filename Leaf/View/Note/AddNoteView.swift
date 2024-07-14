@@ -25,6 +25,7 @@ struct AddNoteView: View {
     @State private var availablePrompts: [String] = []
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var detectedText: String = ""
 
     @Environment(\.dismiss) private var dismiss
     
@@ -86,7 +87,7 @@ struct AddNoteView: View {
                 Section() {
                     let availablePrompts = getAvailablePrompts()
                     if !availablePrompts.isEmpty {
-                        Picker(selection: $prompt, label: Text("Select Prompt")) {
+                        Picker(selection: $prompt, label: Text("Prompt")) {
                             ForEach(availablePrompts, id: \.self) { prompt in
                                 Text(prompt)
                                     .tag(prompt)
@@ -95,7 +96,7 @@ struct AddNoteView: View {
                         }
                         .multilineTextAlignment(.leading)
                         .frame(height:50)
-                        .pickerStyle(MenuPickerStyle())
+                        .pickerStyle(NavigationLinkPickerStyle())
                         .labelsHidden()
                         .tint(.color2)
                         .onChange(of: prompt) { newPrompt in
@@ -109,6 +110,8 @@ struct AddNoteView: View {
                         Text("No prompts available")
                             .foregroundColor(.color4)
                     }
+//                    TextEditor(text: $detectedText)
+//                                    .frame(minHeight: 150)
                     TextEditor(text: $content)
                         .frame(minHeight: 150)
                         .onTapGesture {
@@ -166,7 +169,7 @@ struct AddNoteView: View {
                 .ignoresSafeArea()
         }
         .fullScreenCover(isPresented: $showMarkup) {
-            MarkupView(photoData: $photoData)
+            MarkupView(photoData: $photoData, detectedText: $detectedText)
         }
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Incomplete Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))

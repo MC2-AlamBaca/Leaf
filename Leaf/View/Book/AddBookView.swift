@@ -1,4 +1,6 @@
 import SwiftUI
+import Vision
+import VisionKit
 
 struct AddBookView: View {
     @State private var title = ""
@@ -10,6 +12,8 @@ struct AddBookView: View {
     @State private var inputImage: UIImage?
     @State private var showAlert = false
     @State private var alertMessage = ""
+    
+    @StateObject private var ocrManager = OCRManager()
     
     // Optional: Add binding for existing book if editing
     var existingBook: Book?
@@ -113,6 +117,13 @@ struct AddBookView: View {
                 }
             }
         }
+        .onChange(of: ocrManager.recognizedTitle) { newValue in
+            title = newValue
+        }
+        .onChange(of: ocrManager.recognizedAuthor) { newValue in
+            author = newValue
+        }
+        
     }
     
     private var bookCoverSection: some View {
@@ -193,7 +204,7 @@ struct AddBookView: View {
                     .font(.subheadline)
                     .foregroundColor(.color2)
                     .textCase(.lowercase)
-                    
+                
             }
         }
         
@@ -248,9 +259,14 @@ struct AddBookView: View {
         }
     }
     
-    private func loadImage() {
+    
+    func loadImage() {
         guard let inputImage = inputImage else { return }
-        photoData = inputImage.jpegData(compressionQuality: 0.8)
+        
+        if let jpegData = inputImage.jpegData(compressionQuality: 0.8) {
+            photoData = jpegData
+            ocrManager.performOCR(on: inputImage)
+        }
     }
 }
 

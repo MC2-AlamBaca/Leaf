@@ -14,36 +14,42 @@ struct PencilKitManager: UIViewRepresentable {
     @Binding var canvasView: PKCanvasView
     let picker = PKToolPicker.init()
     var backgroundImage: UIImage?
+    var onDrawingChanged: () -> Void
     
     func makeUIView(context: Context) -> PKCanvasView {
-      canvasView.drawingPolicy = .default
-      self.canvasView.tool = PKInkingTool(.pen, color: .red, width: 15)
+        canvasView.drawingPolicy = .default
+        self.canvasView.tool = PKInkingTool(.marker, color: .yellow, width: 20)
         
-//        if let backgroundImage = backgroundImage {
-//            let imageView = UIImageView(image: backgroundImage)
-//            canvasView.insertSubview(imageView, at: 0)
-//        }
+        self.canvasView.backgroundColor = .clear
+        self.canvasView.becomeFirstResponder()
         
+        canvasView.delegate = context.coordinator
         
-      self.canvasView.backgroundColor = .clear
-      self.canvasView.becomeFirstResponder()
-      return canvasView
+        return canvasView
     }
     
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
-      picker.addObserver(canvasView)
-      picker.setVisible(true, forFirstResponder: uiView)
-      DispatchQueue.main.async {
-        uiView.becomeFirstResponder()
-      }
+        picker.addObserver(canvasView)
+        picker.setVisible(true, forFirstResponder: uiView)
+        DispatchQueue.main.async {
+            uiView.becomeFirstResponder()
+        }
     }
-}
-
-struct MarkupView_Previews: PreviewProvider {
-    @State static var photoData: Data? = nil
     
-    static var previews: some View {
-        MarkupView(photoData: $photoData)
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, PKCanvasViewDelegate {
+        var parent: PencilKitManager
+        
+        init(_ parent: PencilKitManager) {
+            self.parent = parent
+        }
+        
+        func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+            parent.onDrawingChanged()
+        }
     }
 }
 

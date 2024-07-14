@@ -26,6 +26,7 @@
 		BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E65B12C29066300C855A2 /* ContentView.swift */; };
 		BB5E65B42C29066400C855A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B32C29066400C855A2 /* Assets.xcassets */; };
 		BB5E65B72C29066400C855A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B62C29066400C855A2 /* Preview Assets.xcassets */; };
+		BB907F202C43A1B600DFCA54 /* OCRManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB907F1F2C43A1B600DFCA54 /* OCRManager.swift */; };
 		BBA41C7E2C3153DF00B741ED /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C7D2C3153DF00B741ED /* BookViewModel.swift */; };
 		BBA41C802C31540A00B741ED /* FilterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C7F2C31540A00B741ED /* FilterMenuView.swift */; };
 		BBA41C822C31547500B741ED /* FilterBadgeBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C812C31547500B741ED /* FilterBadgeBookView.swift */; };
@@ -63,6 +64,7 @@
 		BB5E65B12C29066300C855A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BB5E65B32C29066400C855A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB5E65B62C29066400C855A2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BB907F1F2C43A1B600DFCA54 /* OCRManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRManager.swift; sourceTree = "<group>"; };
 		BBA41C7D2C3153DF00B741ED /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
 		BBA41C7F2C31540A00B741ED /* FilterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenuView.swift; sourceTree = "<group>"; };
 		BBA41C812C31547500B741ED /* FilterBadgeBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBadgeBookView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				BBF71AD82C2C102A004AF08F /* ImagePicker.swift */,
 				BB5C30512C3667A1003EDB83 /* PencilKitManager.swift */,
 				BB5C30532C3667D2003EDB83 /* FocuseableTextField.swift */,
+				BB907F1F2C43A1B600DFCA54 /* OCRManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				BBF71AD62C2BFCF8004AF08F /* BookRowView.swift in Sources */,
 				BB5C30522C3667A1003EDB83 /* PencilKitManager.swift in Sources */,
 				BBA41C822C31547500B741ED /* FilterBadgeBookView.swift in Sources */,
+				BB907F202C43A1B600DFCA54 /* OCRManager.swift in Sources */,
 				BB5C30572C36BBDB003EDB83 /* FilterBadgeNoteView.swift in Sources */,
 				BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */,
 				BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */,
