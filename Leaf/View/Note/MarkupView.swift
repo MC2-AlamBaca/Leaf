@@ -1,10 +1,12 @@
 import SwiftUI
 import PencilKit
+import Vision
 
 struct MarkupView: View {
     @Environment(\.undoManager) private var undoManager
     @State private var canvasView = PKCanvasView()
     @Binding var photoData: Data?
+    @Binding var detectedText: String
     @Environment(\.dismiss) private var dismiss
     @State private var zoomScale: CGFloat = 1.0
     
@@ -17,8 +19,8 @@ struct MarkupView: View {
                         .aspectRatio(contentMode: .fit)
                         .edgesIgnoringSafeArea(.all)
                         .overlay(
-                            PencilKitManager(canvasView: $canvasView)
-                                .background(.clear) // Ensure the canvas is tappable
+                            PencilKitManager(canvasView: $canvasView, backgroundImage: uiImage, onDrawingChanged: handleDrawingChanged)
+                                .background(.clear)
                         )
                         .scaleEffect(zoomScale)
                         .gesture(
@@ -52,12 +54,66 @@ struct MarkupView: View {
                 }
             }
         }
-        .onAppear {
-            if let photoData = photoData, let backgroundImage = UIImage(data: photoData) {
-                let imageView = UIImageView(image: backgroundImage)
-                imageView.frame = canvasView.bounds
-                canvasView.insertSubview(imageView, at: 0)
+    }
+    
+    private func handleDrawingChanged() {
+        if let image = UIImage(data: photoData ?? Data()) {
+            let highlightedImage = drawHighlightsOnImage(image)
+            performOCR(on: highlightedImage)
+        }
+    }
+    
+    private func drawHighlightsOnImage(_ image: UIImage) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: image.size)
+        
+        return renderer.image { context in
+            image.draw(in: CGRect(origin: .zero, size: image.size))
+            
+            context.cgContext.setAlpha(0.3)
+            context.cgContext.setBlendMode(.normal)
+            
+            canvasView.drawing.strokes.forEach { stroke in
+                if stroke.ink.color == .yellow {  // Assuming yellow is used for highlighting
+                    context.cgContext.setStrokeColor(UIColor.yellow.cgColor)
+                    context.cgContext.setLineWidth(20)  // Fixed width for highlight
+                    context.cgContext.setLineCap(.round)
+                    context.cgContext.setLineJoin(.round)
+                    
+                    let path = UIBezierPath()
+                    if let firstPoint = stroke.path.first {
+                        path.move(to: firstPoint.location)
+                        for point in stroke.path.dropFirst() {
+                            path.addLine(to: point.location)
+                        }
+                    }
+                    
+                    context.cgContext.addPath(path.cgPath)
+                    context.cgContext.strokePath()
+                }
             }
+        }
+    }
+    
+    private func performOCR(on image: UIImage) {
+        guard let cgImage = image.cgImage else { return }
+        
+        let request = VNRecognizeTextRequest { request, error in
+            guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
+            
+            let recognizedStrings = observations.compactMap { observation in
+                observation.topCandidates(1).first?.string
+            }
+            
+            DispatchQueue.main.async {
+                self.detectedText = recognizedStrings.joined(separator: " ")
+            }
+        }
+        
+        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        do {
+            try handler.perform([request])
+        } catch {
+            print("Failed to perform OCR: \(error)")
         }
     }
     
@@ -77,6 +133,11 @@ struct MarkupView: View {
     }
 }
 
-//#Preview {
-//    MarkupView(undoManager: <#T##arg#>, canvasView: <#T##arg#>, photoData: <#T##Data?#>, dismiss: <#T##arg#>)
-//}
+struct MarkupView_Previews: PreviewProvider {
+    @State static var photoData: Data? = nil
+    @State static var detectedText: String = ""
+    
+    static var previews: some View {
+        MarkupView(photoData: $photoData, detectedText: $detectedText)
+    }
+}
