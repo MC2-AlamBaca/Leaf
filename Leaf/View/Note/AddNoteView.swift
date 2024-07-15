@@ -19,10 +19,11 @@ struct AddNoteView: View {
     @State private var goalPrompts: [String] = []
     
     @State private var isTitleFocused: Bool = true
-   
+    
     @State private var selectedPrompt: String = ""
     @State private var selectedGoals: Set<String> = []
     @State private var availablePrompts: [String] = []
+
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var detectedText: String = ""
@@ -72,15 +73,14 @@ struct AddNoteView: View {
     var body: some View {
         NavigationStack{
             Form {
-                Section(header: Text("title").foregroundColor(.color1)) {
-                    TextField("Enter title", text: $title)
-//                        .focused(isTitleFocused)
+                Section(header: Text("Note Title").foregroundColor(.color1)) {
+                    TextField("Enter Note Title", text: $title)
                 }
                 
                 photoSection
                 
-                Section(header: Text("page").foregroundColor(.color2)) {
-                    TextField("Enter page number", text: $page)
+                Section(header: Text("Page Number").foregroundColor(.color2)) {
+                    TextField("Enter Book page number", text: $page)
                         .keyboardType(.numberPad)
                 }
                 
@@ -110,8 +110,6 @@ struct AddNoteView: View {
                         Text("No prompts available")
                             .foregroundColor(.color4)
                     }
-//                    TextEditor(text: $detectedText)
-//                                    .frame(minHeight: 150)
                     TextEditor(text: $content)
                         .frame(minHeight: 150)
                         .onTapGesture {
@@ -129,9 +127,9 @@ struct AddNoteView: View {
                                 }//HStack
                                 Spacer()
                             }//VStack
-        
+                            
                         )
-                        
+                    
                 } header: {
                     VStack(alignment: .leading, spacing: 3) {
                         Text("Reflection")
@@ -139,7 +137,6 @@ struct AddNoteView: View {
                             .foregroundColor(.color1)
                         
                         Text("Prompts can help you reflect on your reading and stay aligned with your goals")
-                        //.font(.system(size: 14, weight: .regular, design: .serif))
                             .font(.footnote)
                             .foregroundColor(.color2)
                             .textCase(.lowercase)
@@ -149,13 +146,22 @@ struct AddNoteView: View {
                     updateAvailablePrompts()
                 }
                 
-                Section(header: Text("tags").foregroundColor(.color2)) {
+                Section(header: VStack(alignment: .leading, spacing: 3) {
+                    Text("Tags")
+                        .font(.system(size: 17, weight: .bold, design: .serif))
+                        .foregroundColor(.color2)
+                    
+                    Text("Tags can help you filter and find your note quickly")
+                        .font(.footnote)
+                        .foregroundColor(.color2)
+                        .textCase(.lowercase)
+                    
+                }) {
                     TagInputView(tags: $tags)
                 }
+                .foregroundColor(.color2)
             }
-            .foregroundColor(.color2)
         }
-//        .tint(.red) Bingung caranya mengganti color dari navigation bar nya yang berasal dari yang lain. 
         .navigationTitle(note == nil ? "Add Note" : "Edit Note")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -177,7 +183,7 @@ struct AddNoteView: View {
         
         
     }
-        
+    
     
     private var photoSection: some View {
         Section() {
@@ -213,7 +219,6 @@ struct AddNoteView: View {
                     .foregroundColor(.color1)
                 
                 Text("Snap a photo of what grabs your attention in the books!")
-                //.font(.system(size: 14, weight: .regular, design: .serif))
                     .font(.footnote)
                     .foregroundColor(.color2)
                     .textCase(.lowercase)
@@ -226,7 +231,7 @@ struct AddNoteView: View {
             .filter { book.goals.contains($0.goal) }
             .flatMap { $0.prompts }
     }
-
+    
     func updateAvailablePrompts() {
         availablePrompts = getAvailablePrompts()
         if !availablePrompts.contains(prompt) {
@@ -235,11 +240,6 @@ struct AddNoteView: View {
     }
     
     private func addOrUpdateNote() {
-//        guard !title.isEmpty else {
-//            alertMessage = "Please enter the note title."
-//            showAlert = true
-//            return
-//        }
         
         guard !content.isEmpty else {
             alertMessage = "Please write your reflection."

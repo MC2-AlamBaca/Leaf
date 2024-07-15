@@ -24,7 +24,7 @@ struct SortFilterModalView: View {
                 sortOrderSection
                 filterByGoalSection
             }
-            .navigationTitle("Sort and Filter")
+            .navigationTitle("Sort and Filter Book")
             .foregroundColor(.color1)
             .navigationBarItems(trailing: doneButton)
         }
@@ -34,7 +34,7 @@ struct SortFilterModalView: View {
     }
     
     private var sortOrderSection: some View {
-        Section(header: Text("Sort")) {
+        Section(header: Text("Sort Order")) {
             Picker("Sort Order", selection: $viewModel.sortOrder) {
                 ForEach(BookViewModel.SortOrder.allCases, id: \.self) { order in
                     Text(order.rawValue).tag(order)

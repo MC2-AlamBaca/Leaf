@@ -23,7 +23,7 @@ struct SortFilterNoteModalView: View {
                 sortOrderSection
                 filterByTagSection
             }
-            .navigationTitle("Sort and Filter")
+            .navigationTitle("Sort and Filter Note")
             .accentColor(.color1)
             .navigationBarItems(trailing: doneButton)
         }

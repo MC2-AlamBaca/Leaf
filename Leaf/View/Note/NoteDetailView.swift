@@ -11,9 +11,6 @@ import SwiftData
 struct NoteDetailView: View {
     var note: Note
     @State private var isFullScreenImagePresented = false
-   
-    //    @State private var isEditing = false
-    //    @State private var editedNote: Note?
     
     
     var body: some View {

@@ -20,10 +20,12 @@ struct PencilKitManager: UIViewRepresentable {
         canvasView.drawingPolicy = .default
         self.canvasView.tool = PKInkingTool(.marker, color: .yellow, width: 20)
         
+
         self.canvasView.backgroundColor = .clear
         self.canvasView.becomeFirstResponder()
         
         canvasView.delegate = context.coordinator
+
         
         return canvasView
     }

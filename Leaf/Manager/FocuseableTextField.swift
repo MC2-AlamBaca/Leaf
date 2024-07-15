@@ -15,7 +15,6 @@ struct FocusableTextField: UIViewRepresentable {
         let textField = UITextField()
         textField.placeholder = placeholder
         textField.text = text
-//        textField.borderStyle = .roundedRect
         textField.delegate = context.coordinator
         return textField
     }
