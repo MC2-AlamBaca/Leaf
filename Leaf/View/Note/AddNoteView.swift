@@ -23,7 +23,11 @@ struct AddNoteView: View {
     @State private var selectedPrompt: String = ""
     @State private var selectedGoals: Set<String> = []
     @State private var availablePrompts: [String] = []
-    
+
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var detectedText: String = ""
+
     @Environment(\.dismiss) private var dismiss
     
     var book: Book
@@ -83,7 +87,7 @@ struct AddNoteView: View {
                 Section() {
                     let availablePrompts = getAvailablePrompts()
                     if !availablePrompts.isEmpty {
-                        Picker(selection: $prompt, label: Text("Select Prompt")) {
+                        Picker(selection: $prompt, label: Text("Prompt")) {
                             ForEach(availablePrompts, id: \.self) { prompt in
                                 Text(prompt)
                                     .tag(prompt)
@@ -92,7 +96,7 @@ struct AddNoteView: View {
                         }
                         .multilineTextAlignment(.leading)
                         .frame(height:50)
-                        .pickerStyle(.navigationLink)
+                        .pickerStyle(NavigationLinkPickerStyle())
                         .labelsHidden()
                         .tint(.color2)
                         .onChange(of: prompt) { newPrompt in
@@ -171,7 +175,10 @@ struct AddNoteView: View {
                 .ignoresSafeArea()
         }
         .fullScreenCover(isPresented: $showMarkup) {
-            MarkupView(photoData: $photoData)
+            MarkupView(photoData: $photoData, detectedText: $detectedText)
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Incomplete Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
         
         
@@ -233,47 +240,56 @@ struct AddNoteView: View {
     }
     
     private func addOrUpdateNote() {
-        if let note = note {
-            let originalCreationDate = note.creationDate
-            
-            note.title = title
-            note.page = Int(page)
-            note.content = content
-            note.lastModified = Date()
-            note.prompt = prompt
-            note.tag = tags
-            note.imageNote = photoData
-            note.creationDate = originalCreationDate
-        } else {
-            let newNote = Note(
-                title: title,
-                imageNote: photoData,
-                page: Int(page),
-                content: content,
-                lastModified: Date(),
-                prompt: prompt,
-                tag: tags,
-                books: book,
-                creationDate: Date()
-            )
-            modelContext.insert(newNote)
-            
-            if book.notes == nil {
-                book.notes = [newNote]
-            } else {
-                book.notes?.append(newNote)
-            }
-            // Schedule notifications for the new note
-            NotificationScheduler.scheduleNotifications(for: newNote)
+        
+        guard !content.isEmpty else {
+            alertMessage = "Please write your reflection."
+            showAlert = true
+            return
         }
         
         do {
+            if let existingNote = note {
+                // Update existing note
+                existingNote.title = title
+                existingNote.page = Int(page)
+                existingNote.content = content
+                existingNote.lastModified = Date()
+                existingNote.prompt = prompt
+                existingNote.tag = tags
+                existingNote.imageNote = photoData
+            } else {
+                // Create new note
+                let newNote = Note(
+                    title: title,
+                    imageNote: photoData,
+                    page: Int(page),
+                    content: content,
+                    lastModified: Date(),
+                    prompt: prompt,
+                    tag: tags,
+                    books: book,
+                    creationDate: Date()
+                )
+                modelContext.insert(newNote)
+                
+                if book.notes == nil {
+                    book.notes = [newNote]
+                } else {
+                    book.notes?.append(newNote)
+                }
+                
+                // Schedule notifications for the new note
+                NotificationScheduler.scheduleNotifications(for: newNote)
+            }
+            
             try modelContext.save()
             dismiss()
         } catch {
             print("Error saving note: \(error.localizedDescription)")
+            // Handle error as needed, e.g., show alert
         }
     }
+
     
     
     private func loadImage() {

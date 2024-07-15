@@ -143,25 +143,41 @@ private let dateFormatter: DateFormatter = {
 struct FullScreenImageView: View {
     var imageData: Data
     @Environment(\.presentationMode) var presentationMode
+    @State private var zoomScale: CGFloat = 1.0
     
     var body: some View {
-        if let image = UIImage(data: imageData) {
-            VStack {
-                Spacer()
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .edgesIgnoringSafeArea(.all)
-                Spacer()
+        NavigationStack {
+            if let image = UIImage(data: imageData) {
+                VStack {
+                    Spacer()
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .edgesIgnoringSafeArea(.all)
+                        .scaleEffect(zoomScale)
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { gestureScale in
+                                    zoomScale = gestureScale.magnitude
+                                }
+                        )
+                    Spacer()
+                }
+                .background(Color.black)
+                .toolbar {
+                    ToolbarItem(placement: .automatic) {
+                        Button("Back") {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .tint(.color2)
+                        .bold()
+                    }
+                }
+            } else {
+                Text("Image not available")
             }
-            .background(Color.black)
-            .onTapGesture {
-                // Dismiss the full screen image view
-                presentationMode.wrappedValue.dismiss()
-            }
-        } else {
-            Text("Image not available")
-        }
+        }//navstack
+        
     }
 }
 
