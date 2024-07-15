@@ -30,7 +30,6 @@ struct BookListView: View {
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button() {
-//                        deleteBook(book)
                         bookToDelete = book
                         showDeleteConfirmation = true
                     } label: {

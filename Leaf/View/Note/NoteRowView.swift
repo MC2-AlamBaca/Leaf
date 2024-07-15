@@ -13,7 +13,6 @@ struct NoteRowView: View {
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
-//        formatter.timeStyle = .short
         return formatter
     }()
     
@@ -24,19 +23,6 @@ struct NoteRowView: View {
                     Image(systemName: "pin.fill")
                         .foregroundColor(.color2)
                 }
-//                    .tint(note.isPinned ? .red : .yellow)
-//                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-//                    Button() {
-//                        pinNote(Note)
-//                    } label: {
-//                        if note.isPinned {
-//                            Label("Unpin", systemImage: "pin.slash")
-//                        } else {
-//                            Label("Pin", systemImage: "pin")
-//                        }
-//                    }
-//                    .tint(note.isPinned ? .red : .yellow)
-//                }
                 
                 Text(note.title)
                     .font(.headline)
@@ -78,17 +64,6 @@ struct NoteRowView: View {
             }
         }
         .padding(.vertical, 4)
-        
-//        func pinNote(_ note: Note) {
-//            note.isPinned.toggle()
-//            do {
-//                try modelContext.save()
-//            } catch {
-//                print("Failed to save context after pinning book:
-//                      \(error.localizedDescription)")
-//                      }
-//                      print("Pinning book: \(note.title)")
-//            }
-//
+    
     }
 }

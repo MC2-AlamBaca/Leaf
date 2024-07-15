@@ -5,27 +5,11 @@
 //  Created by Zahratul Wardah on 05/07/24.
 //
 
-//import SwiftUI
-//
-//struct PreviewNoteDariNotif: View {
-//    var body: some View {
-//        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-//    }
-//}
-//
-//#Preview {
-//    PreviewNoteDariNotif()
-//}
-
-
 import SwiftUI
 import SwiftData
 
 struct PreviewNoteDariNotif: View {
     var note: Note
-    //    @State private var isEditing = false
-    //    @State private var editedNote: Note?
-    
     
     var body: some View {
         
@@ -44,7 +28,6 @@ struct PreviewNoteDariNotif: View {
                             Text("Pg \(note.page ?? 0)")
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 .foregroundColor(note.imageNote == nil ? Color("Color 2") : .white)
-//                                    .padding(.horizontal, 8)
                                 .padding(.bottom, 1)
                                 .font(.caption)
                                 .italic()
@@ -55,21 +38,6 @@ struct PreviewNoteDariNotif: View {
                         
                     }
                     
-//                    Text(note.title)
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .font(.title)
-//                        .fontDesign(.serif)
-//                        .bold()
-//                        .padding(.bottom, 4)
-//                    
-//                    Text("Last Modified: \(note.lastModified, formatter: dateFormatter)")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .font(.footnote)
-//                        .padding(.horizontal, 4)
-//                        .padding(.bottom, 12)
-//                    
-//                    Divider()
-//                    
                     ZStack {
                         if let imageData = note.imageNote, let image = UIImage(data: imageData) {
                             Image(uiImage: image)
@@ -88,28 +56,13 @@ struct PreviewNoteDariNotif: View {
                                 }
                         }
                         VStack {
-                            
-//                            Text("\(title?? 0)")
-//                            Spacer()
                             HStack {
-//                                Text("Pg \(note.page ?? 0)")
-//                                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                                    .foregroundColor(note.imageNote == nil ? Color("Color 2") : .white)
-////                                    .padding(.horizontal, 8)
-//                                    .padding(.bottom, 1)
-//                                    .font(.subheadline)
-//                                    .fontWeight(.medium)
-//                                    .italic()
-//                                    .fontDesign(.serif)
                             }
                         }
                         
                         
                     }
-//                    .padding(.top, 12)
                     .padding(.horizontal)
-                    
-                    
                     VStack {
                         Text(note.prompt)
                             .fontDesign(.serif)
@@ -150,18 +103,8 @@ struct PreviewNoteDariNotif: View {
                     }
                     .padding()
                 }
-                
-                //            Spacer()
             }
             .navigationBarTitleDisplayMode(.inline)// tipe navbartype
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    NavigationLink(destination: AddNoteView(book: note.books!, note: note)) {
-//                        Text("Edit")
-//                    }
-//                }
-//            }
-//            RoundedRectangle(cornerRadius: 25)
             .padding()
             .background(.gray)
             .clipShape(RoundedRectangle(cornerRadius: 25))
@@ -171,11 +114,6 @@ struct PreviewNoteDariNotif: View {
         .foregroundColor(.color1)
         .padding()
     }
-    ////        .frame(maxWidth: 450, maxHeight: 700)
-    ////        .padding()
-    //        .background(isSelected ? Color.color1 : Color.color3) // Adjust background color based on selection
-    //
-    //        .clipShape(RoundedRectangle(cornerRadius: 10))
 }
 
 private let dateFormatter: DateFormatter = {

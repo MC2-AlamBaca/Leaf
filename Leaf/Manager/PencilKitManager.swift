@@ -19,11 +19,6 @@ struct PencilKitManager: UIViewRepresentable {
       canvasView.drawingPolicy = .default
       self.canvasView.tool = PKInkingTool(.pen, color: .red, width: 15)
         
-//        if let backgroundImage = backgroundImage {
-//            let imageView = UIImageView(image: backgroundImage)
-//            canvasView.insertSubview(imageView, at: 0)
-//        }
-        
         
       self.canvasView.backgroundColor = .clear
       self.canvasView.becomeFirstResponder()

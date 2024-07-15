@@ -27,7 +27,6 @@
 		BB5E65B42C29066400C855A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B32C29066400C855A2 /* Assets.xcassets */; };
 		BB5E65B72C29066400C855A2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB5E65B62C29066400C855A2 /* Preview Assets.xcassets */; };
 		BBA41C7E2C3153DF00B741ED /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C7D2C3153DF00B741ED /* BookViewModel.swift */; };
-		BBA41C802C31540A00B741ED /* FilterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C7F2C31540A00B741ED /* FilterMenuView.swift */; };
 		BBA41C822C31547500B741ED /* FilterBadgeBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C812C31547500B741ED /* FilterBadgeBookView.swift */; };
 		BBA41C842C31549F00B741ED /* BookListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C832C31549F00B741ED /* BookListView.swift */; };
 		BBA41C872C3183C500B741ED /* SortFilterModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA41C862C3183C500B741ED /* SortFilterModalView.swift */; };
@@ -64,7 +63,6 @@
 		BB5E65B32C29066400C855A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB5E65B62C29066400C855A2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BBA41C7D2C3153DF00B741ED /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
-		BBA41C7F2C31540A00B741ED /* FilterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenuView.swift; sourceTree = "<group>"; };
 		BBA41C812C31547500B741ED /* FilterBadgeBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBadgeBookView.swift; sourceTree = "<group>"; };
 		BBA41C832C31549F00B741ED /* BookListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListView.swift; sourceTree = "<group>"; };
 		BBA41C862C3183C500B741ED /* SortFilterModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortFilterModalView.swift; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 				363C1A212C2BD37500E6AF91 /* AllBookView.swift */,
 				BBA41C832C31549F00B741ED /* BookListView.swift */,
 				BBA41C812C31547500B741ED /* FilterBadgeBookView.swift */,
-				BBA41C7F2C31540A00B741ED /* FilterMenuView.swift */,
 				BBF71AD52C2BFCF8004AF08F /* BookRowView.swift */,
 				BBD64C162C32EAF400156467 /* AddBookView.swift */,
 				36B060532C3AF5380021C046 /* SplashScreenView.swift */,
@@ -296,7 +293,6 @@
 				BBF71AD92C2C102A004AF08F /* ImagePicker.swift in Sources */,
 				BB47CAA32C2C62D600C70E6C /* AllNoteView.swift in Sources */,
 				2BF2E9E72C37C20B00036D5E /* PreviewNoteDariNotif.swift in Sources */,
-				BBA41C802C31540A00B741ED /* FilterMenuView.swift in Sources */,
 				36B060542C3AF5380021C046 /* SplashScreenView.swift in Sources */,
 				BBA467092C32B16F004DF66A /* NoteDetailView.swift in Sources */,
 				BB5E65B22C29066300C855A2 /* ContentView.swift in Sources */,
@@ -446,7 +442,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Leaf/Preview Content\"";
-				DEVELOPMENT_TEAM = PBDYVYYKCK;
+				DEVELOPMENT_TEAM = 54D85XU7R2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
@@ -463,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.LeafNote;
+				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.Leaf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -479,7 +475,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Leaf/Preview Content\"";
-				DEVELOPMENT_TEAM = PBDYVYYKCK;
+				DEVELOPMENT_TEAM = 54D85XU7R2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Leaf/Info.plist;
@@ -496,7 +492,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.LeafNote;
+				PRODUCT_BUNDLE_IDENTIFIER = co.marizka.Leaf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

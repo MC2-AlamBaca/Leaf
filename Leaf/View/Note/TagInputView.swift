@@ -22,7 +22,6 @@ struct TagInputView: View {
                     }
                 }
             }
-            
             HStack {
                 TextField("Add a tag", text: $newTag, onCommit: addTag)
                     .textFieldStyle(RoundedBorderTextFieldStyle())

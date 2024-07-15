@@ -25,7 +25,6 @@ struct BookRowView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 90, height: 120)
-//                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .cornerRadius(10)
                         .padding(.trailing, 6)
                         .padding(.leading, 2)
@@ -33,14 +32,12 @@ struct BookRowView: View {
                 
                 VStack(alignment: .leading) {
                     HStack (spacing: 5 ){
-//                        .padding (.horizontal, 2)
                         Text(book.title)
                             .font(.body)
                             .bold()
                             .fontDesign(.serif)
                             .foregroundColor(Color("Color 1"))
                             .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
-//                            .lineSpacing(-20)
                         
                     }
                     Text(book.author)
@@ -60,10 +57,6 @@ struct BookRowView: View {
 
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(Color("Color 1"))
-
-
-//                                    .background(goal.imgColor)
-//                                    .clipShape(Circle())
                             } else {
                                 Text(goalTitle) // Fallback if goal is not found
                                     .font(.footnote)

@@ -4,7 +4,6 @@ import SwiftData
 class BookViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var sortOrder: SortOrder = .ascending
-//    @Published var selectedGoal: String?
     @Published var isShowingSortFilterModal = false
     @Published var selectedGoals: Set<String> = []
     @Published var allGoals: [String] = []
