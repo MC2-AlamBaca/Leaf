@@ -1,56 +1,40 @@
-MC#2 
-An App for taking note after reading self-improvement book.
-Using SwiftUI for interface, SwiftData for data persistence, UserNotification, AVFoundation, PencilKit, and PhotosKit
+Project Title: Leaf - note while reading
 
-# MC2 Alam Baca
+Description:
 
-## Git Flow Rule
+Leaf is a powerful and intuitive app designed to enhance your reading experience. By seamlessly integrating note-taking, organization, and review features, Leaf empowers you to:
 
-### Important Branch
+Capture Insights: Take notes directly from your books, whether it's highlighting key passages or jotting down personal reflections.
+Organize Your Thoughts: Categorize, tag, and search your notes effortlessly to retrieve information quickly.
+Reinforce Learning: Receive personalized reminders to review your notes and solidify your understanding.
+Key Features:
 
-Branch `development` adalah default branch. Setiap kali developer ingin membuat branch baru yang ter-update, **_maka wajib membuat dari branch development sebagai source_**
+Intelligent Note-Taking:
+Prompt-based note creation
+Image capture with page recognition
+Text highlighting with PencilKit
+Organized Note Library:
+Customizable filters and sorting options
+Easy search functionality
+Personalized Review System:
+Tailored notification schedules
+Progress tracking and analytics
+Technical Implementation:
 
-### Branch Naming
+SwiftUI: A modern UI framework for building intuitive user interfaces.
+Swift Data: A powerful data persistence solution for managing notes and settings.
+UIKit Camera: Custom camera integration for capturing book pages.
+PencilKit: Advanced drawing and annotation capabilities for highlighting text.
+Notifications: Timely reminders to reinforce learning.
+Developed at Apple Developer Academy:
 
-Ada 4 tipe penamaan branch, yaitu `feature`, `fixing`, `hot-fix`, dan `docs`.
+This project was crafted within the rigorous and innovative environment of the Apple Developer Academy. Over 25 intensive days, we dedicated ourselves to creating a user-centric app that enhances the reading journey.
 
-- `feature` digunakan untuk branch yang tujuannya untuk pembuatan fitur baru.
+Team Member:
+1. Diky Nawa
+2. Faiz Hadiyan
+3. Marizka
+4. Mochamad Irwinansyah
+5. Zahratul Wardah
 
-- `fixing` digunakan untuk branch yang tujuannya untuk memperbaiki issue/bug yang major.
-
-- `hot-fix` digunakan untuk branch yang tujuannya untuk memperbaiki issue/bug yang minor.
-
-- `docs` digunakan untuk branch yang tujuannya untuk merubah dokumentasi (readme).
-
-```
-Contoh:
-- feature/login //branch untuk fitur login
-- fixing/login //branch untuk memperbaiki issue/bug major di fitur login
-- hot-fix/login //branch untuk memperbaiki issue/bug minor di fitur login
-- docs/commit-rule //branch untuk merubah dokumentasi terkait commit rule
-```
-
-### Merge Branch
-
-Untuk melakukan merge antar branch, maka dilakukan dengan menggunakan fitur pull request (PR) yang disediakan oleh github. Lebih jauh tentang pembuatan pull request bisa cek [disini](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
-
-### Commit Rule
-
-Berikan pesan commit dengan template berikut:
-`type(scope): message`
-
-- `type`:
-  - `feat`: jika yang dilakukan ada membuat fitur baru.
-  - `fix`: jika yang dilakukan adalah fixing major bug.
-  - `hot-fix`: jika yang dilakukan adalah fixing minor bug.
-  - `docs`: jika yang dilakukan adalah update readme.
-- `scope`: mendeskripsikan bagian yang terkena dampak perubahan code.
-- `message`: pesan commit secara singkat yang mendeskripsikan perubahan yang dilakukan.
-
-```
-Contoh:
-- feat(History): add thumbnail history
-- feat(drawing): add drawing feature
-- docs(main readme): update folder structure
-```
 
